@@ -1,0 +1,398 @@
+body {
+    background-image: url('../../images/BG-Enhance.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    backdrop-filter: blur(3px);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Center the main content relative to the background image, not the logo */
+.main-content {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    position: relative;
+    z-index: 2;
+    padding-bottom: 70px;
+}
+
+/* Remove left margin and ensure perfect centering */
+.main-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    margin: 0;
+}
+
+.login-container {
+    background-color: rgba(13, 110, 253, 0.13);
+    padding: 35px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(13, 110, 253, 0.2);
+    width: 100%;
+    max-width: 420px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Element Styles */
+.input-group {
+    transition: transform 0.3s ease;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group:hover {
+    transform: translateY(-2px);
+}
+
+.input-group-text {
+    background: #23243a;
+    color: #ffc107;
+    border: none;
+    min-width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-group > .input-group-text,
+.input-group > .form-control,
+.input-group > .btn {
+    height: 48px;
+    box-sizing: border-box;
+}
+
+.form-control {
+    background: rgba(255,255,255,0.10);
+    color: white;
+    border: 1px solid #44465a;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.2s;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    margin-left: -1px;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 2px #ffc10755;
+    border-color: #ffc107;
+    background: rgba(255,255,255,0.18);
+}
+
+/* Make placeholder text white for all browsers */
+.form-control::placeholder {
+    color: #fff !important;
+    opacity: 1;
+}
+.form-control::-webkit-input-placeholder {
+    color: #fff !important;
+    opacity: 1;
+}
+.form-control::-moz-placeholder {
+    color: #fff !important;
+    opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+    color: #fff !important;
+    opacity: 1;
+}
+.form-control::-ms-input-placeholder {
+    color: #fff !important;
+    opacity: 1;
+}
+
+/* Button Styles */
+.btn-primary {
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg,#ffc107 0%, #ffb347 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(255,193,7,0.15);
+    transition: background 0.2s, color 0.2s;
+}
+
+.d-grid .btn-primary {
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.85rem 0;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background: linear-gradient(90deg,#ffb347 0%, #ffc107 100%);
+    color: #1a1a1a;
+}
+
+/* Toggle Password Button */
+#togglePassword {
+    transition: all 0.3s ease;
+    border-color: #ced4da;
+    height: 48px;
+}
+
+#togglePassword:hover {
+    background-color: #f8f9fa;
+}
+
+/* Validation Styles */
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: none;
+}
+
+.form-control.is-invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Alert Animations */
+.alert {
+    animation: slideDown 0.4s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Consolidated Responsive Styles */
+@media (max-width: 576px) {
+    .main-content, .main-container {
+        padding: 0;
+        min-height: 100vh;
+        height: 100vh;
+    }
+    .login-container {
+        padding: 25px 20px;
+        max-width: 100%;
+    }
+    .main-container {
+        justify-content: center;
+        padding: 15px;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    footer.bg-dark {
+        font-size: 0.95rem;
+        padding-bottom: 10px;
+    }
+    .modal-content.bg-dark {
+        padding: 0 2px;
+    }
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+}
+
+@media (max-height: 600px) {
+    .login-container {
+        padding: 20px 15px;
+    }
+    .mb-3 {
+        margin-bottom: 0.75rem !important;
+    }
+}
+
+/* Consolidate modal-title styling */
+.modal-title {
+    color: #ffc107;
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 2rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+
+/* Navbar: make it semi-transparent and blurred for background harmony */
+.navbar {
+    background: rgba(30, 34, 90, 0.65) !important;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* Navbar Links Styling */
+.navbar-nav .nav-link, .navbar .dropdown-item {
+    color: #ffc107 !important;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    transition: color 0.2s, background 0.2s;
+    border-radius: 1.25rem;
+    padding: 8px 20px;
+    margin: 0 2px;
+}
+.navbar-nav .nav-link:hover, .navbar-nav .nav-link:focus,
+.navbar .dropdown-item:hover, .navbar .dropdown-item:focus {
+    color: #23243a !important;
+    background: linear-gradient(90deg, #ffc107 0%, #ffb347 100%);
+    text-decoration: none;
+}
+
+/* Divider color for dropdown */
+.navbar .dropdown-divider {
+    border-top: 1.5px solid #ffc10733;
+}
+
+/* Navbar Login Button Styling */
+.btn-navbar-login {
+    background: linear-gradient(90deg, #ffc107 0%, #ffb347 100%);
+    color: #23243a !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(255,193,7,0.18);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+}
+.btn-navbar-login:hover, .btn-navbar-login:focus {
+    background: linear-gradient(90deg, #ffb347 0%, #ffc107 100%);
+    color: #1a1a1a !important;
+    box-shadow: 0 4px 16px rgba(255,193,7,0.23);
+    transform: translateY(-2px) scale(1.04);
+    text-decoration: none;
+}
+.btn-navbar-login i {
+    font-size: 1.2em;
+}
+
+/* Unified Action Button Styling for Dashboard & Appointment */
+.btn-dashboard, .btn-appointment {
+    background: linear-gradient(90deg, #ffc107 0%, #ffb347 100%);
+    color: #23243a !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.7rem 2.2rem;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(255,193,7,0.18);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-dashboard:hover, .btn-dashboard:focus,
+.btn-appointment:hover, .btn-appointment:focus {
+    background: linear-gradient(90deg, #ffb347 0%, #ffc107 100%);
+    color: #1a1a1a !important;
+    box-shadow: 0 4px 16px rgba(255,193,7,0.23);
+    transform: translateY(-2px) scale(1.04);
+    text-decoration: none;
+}
+.btn-dashboard i, .btn-appointment i {
+    font-size: 1.2em;
+}
+
+/* Footer: semi-transparent, blurred, and non-overlapping */
+footer.bg-dark {
+    background: rgba(30, 34, 90, 0.65) !important;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.10);
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Ensure footer text is always readable */
+footer.bg-dark .container {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+}
+
+/* Login Modal: center, blur, and readable background */
+.modal-content.bg-dark {
+    background: rgba(30, 34, 90, 0.75) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+}
+
+.modal-header, .modal-body {
+    border: none;
+}
+
+.login-container {
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    border-radius: 1.25rem;
+    background: rgba(255,255,255,0.02);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+}
+
+.login-avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+}
+
+.login-avatar img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid #ffc107;
+    background: #fff;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.alert {
+    border-radius: 0.75rem;
+    font-size: 0.98rem;
+}
+
+#attempt-info, #password-strength-message {
+    font-size: 0.93em;
+}

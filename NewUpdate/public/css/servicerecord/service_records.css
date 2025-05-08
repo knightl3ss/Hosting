@@ -1,0 +1,68 @@
+/* Service Records Styling */
+
+/* Status badge styling */
+.status-badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    display: inline-block;
+    width: 100%;
+    max-width: 120px;
+    text-align: center;
+}
+
+/* Employment status badges */
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Status background colors with hover effect */
+.bg-success {
+    transition: background-color 0.2s;
+}
+.bg-success:hover {
+    background-color: #198754 !important;
+}
+
+.bg-danger {
+    transition: background-color 0.2s;
+}
+.bg-danger:hover {
+    background-color: #dc3545 !important;
+}
+
+.bg-warning {
+    transition: background-color 0.2s;
+}
+.bg-warning:hover {
+    background-color: #ffc107 !important;
+}
+
+.bg-info {
+    transition: background-color 0.2s;
+}
+.bg-info:hover {
+    background-color: #0dcaf0 !important;
+}
+
+.bg-primary {
+    transition: background-color 0.2s;
+}
+.bg-primary:hover {
+    background-color: #0d6efd !important;
+}
+
+.bg-secondary {
+    transition: background-color 0.2s;
+}
+.bg-secondary:hover {
+    background-color: #6c757d !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .status-badge {
+        font-size: 0.75rem;
+        padding: 0.25em 0.5em;
+    }
+}

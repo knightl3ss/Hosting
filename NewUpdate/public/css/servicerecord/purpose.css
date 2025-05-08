@@ -1,0 +1,96 @@
+
+    .purpose-card {
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border: none;
+    }
+    
+    .purpose-header {
+        background-color: #f8f9fc;
+        border-bottom: 1px solid #e3e6f0;
+    }
+    
+    .purpose-form label {
+        font-weight: 600;
+        color: #5a5c69;
+    }
+    
+    .purpose-options {
+        margin-bottom: 1.5rem;
+    }
+    
+    .purpose-option {
+        padding: 15px;
+        border: 1px solid #e3e6f0;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .purpose-option:hover {
+        background-color: #f8f9fc;
+        border-color: #4e73df;
+    }
+    
+    .purpose-option.selected {
+        background-color: #eaedff;
+        border-color: #4e73df;
+    }
+    
+    .purpose-option-title {
+        font-weight: 600;
+        color: #4e73df;
+        margin-bottom: 5px;
+    }
+    
+    .purpose-option-desc {
+        color: #858796;
+        font-size: 0.875rem;
+    }
+    
+    .employee-info {
+        background-color: #f8f9fc;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .employee-name {
+        font-weight: 600;
+        color: #4e73df;
+        font-size: 1.1rem;
+    }
+    
+    .employee-details {
+        color: #5a5c69;
+        font-size: 0.9rem;
+    }
+    
+    /* Purpose History Table Styles */
+    .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead th {
+        background-color: #f8f9fc;
+        color: #4e73df;
+        font-weight: 600;
+        border-bottom: 2px solid #e3e6f0;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(78, 115, 223, 0.05);
+    }
+    
+    .badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.35em 0.65em;
+        border-radius: 0.25rem;
+    }

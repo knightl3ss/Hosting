@@ -1,0 +1,176 @@
+document.addEventListener('DOMContentLoaded', function () {
+    // Store the current filter criteria
+    var currentFilters = {
+        remarks: '',
+        office: '',
+        status: ''
+    };
+
+    // Handle filter button click
+    document.getElementById('filterBtn').addEventListener('click', function () {
+        const officeFilter = document.getElementById('officeFilter').value;
+        const remarksFilter = document.getElementById('remarksFilter').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+
+        console.log('Filters:', {
+            office: officeFilter,
+            remarks: remarksFilter,
+            status: statusFilter
+        });
+
+        currentFilters = { remarks: remarksFilter, office: officeFilter, status: statusFilter };
+
+        // Send the filters to the server to get the filtered data
+        fetchFilteredData(currentFilters);
+    });
+
+    // Function to send the filters and fetch filtered data from the server
+    function fetchFilteredData(filters) {
+        fetch(filterUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            },
+            body: JSON.stringify(filters),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Filtered Data:', data); // Debugging log
+                const tableBody = document.getElementById('employeeTable');
+                tableBody.innerHTML = '';  // Clear current table rows
+
+                if (data.personnels && data.personnels.length > 0) {
+                    // Populate the table with the filtered data
+                    data.personnels.forEach(personnel => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${personnel.office}</td>
+                            <td>${personnel.itemNo}</td>
+                            <td>${personnel.position}</td>
+                            <td>${personnel.salaryGrade}</td>
+                            <td>${personnel.authorizedSalary}</td>
+                            <td>${personnel.actualSalary}</td>
+                            <td>${personnel.step}</td>
+                            <td>${personnel.code}</td>
+                            <td>${personnel.type}</td>
+                            <td>${personnel.level}</td>
+                            <td>${personnel.lastName}</td>
+                            <td>${personnel.firstName}</td>
+                            <td>${personnel.middleName ?? ''}</td>
+                            <td>${personnel.dob}</td>
+                            <td>${personnel.originalAppointment}</td>
+                            <td>${personnel.lastPromotion ?? 'N/A'}</td>
+                            <td>${personnel.status}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td colspan="17" class="text-center">No personnel found.</td>`;
+                    tableBody.appendChild(row);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching filtered data:', error);
+            });
+    }
+
+    // jQuery-based filter logic for table on client-side
+    $('#remarksFilter, #officeFilter, #statusFilter').on('change', function () {
+        var remarks = $('#remarksFilter').val();  // Get selected remarks value
+        var office = $('#officeFilter').val();    // Get selected office value
+        var status = $('#statusFilter').val();    // Get selected status value
+
+        // Update the current filter values
+        currentFilters = { remarks, office, status };
+
+        // Apply filter based on client-side data
+        if (remarks) {
+            $('#originalPersonnelTableContainer').hide();
+            $('#filteredPersonnelTableContainer').show();
+            filterPersonnelData(remarks, office, status);
+        } else if (office || status) {
+            // If no remarks filter but other filters applied, show the original table
+            $('#originalPersonnelTableContainer').show();
+            $('#filteredPersonnelTableContainer').hide();
+        } else {
+            // If no filters applied, show the original table and hide the filtered table
+            $('#originalPersonnelTableContainer').show();
+            $('#filteredPersonnelTableContainer').hide();
+        }
+    });
+
+    // Function to filter personnel data based on criteria (for client-side filtering)
+    function filterPersonnelData(remarks, office, status) {
+        var filteredPersonnel = [];
+
+        // Loop through all personnel data and filter based on all provided criteria
+        $('.employee-data').each(function () {
+            var personnel = $(this);
+
+            var matchesRemarks = !remarks || personnel.data('remarks') === remarks;
+            var matchesOffice = !office || personnel.data('office') === office;
+            var matchesStatus = !status || personnel.data('status') === status;
+
+            // Check if all the filter conditions are met
+            if (matchesRemarks && matchesOffice && matchesStatus) {
+                var dob = personnel.find('td').eq(13).text();  // Get the date of birth
+                var retirementDate = getRetirementDate(dob);  // Calculate the retirement date
+
+                // Push the matched personnel into the filtered array
+                filteredPersonnel.push({
+                    office: personnel.find('td').eq(0).text(),
+                    position: personnel.find('td').eq(2).text(),
+                    lastName: personnel.find('td').eq(10).text(),
+                    firstName: personnel.find('td').eq(11).text(),
+                    middleName: personnel.find('td').eq(12).text(),
+                    dob: dob,
+                    retirementDate: retirementDate,
+                    remarks: personnel.find('td').eq(7).text() // Remarks column
+                });
+            }
+        });
+
+        // Clear previous filtered data from the table body
+        $('#filteredEmployeeTableBody').empty();
+
+        // If there is any filtered personnel, display them in the filtered table
+        if (filteredPersonnel.length > 0) {
+            filteredPersonnel.forEach(function (personnel) {
+                var row = `<tr>
+                             <td>${personnel.office}</td>
+                             <td>${personnel.position}</td>
+                             <td>${personnel.lastName}</td>
+                             <td>${personnel.firstName}</td>
+                             <td>${personnel.middleName}</td>
+                             <td>${getAge(personnel.dob)}</td>
+                             <td>${personnel.retirementDate}</td>
+                             </tr>`;
+                $('#filteredEmployeeTableBody').append(row);
+            });
+        } else {
+            $('#filteredEmployeeTableBody').append('<tr><td colspan="8" class="text-center">No personnel found.</td></tr>');
+        }
+    }
+
+    // Helper function to calculate retirement date based on birthdate
+    function getRetirementDate(dob) {
+        var birthDate = new Date(dob);
+        var retirementYear = birthDate.getFullYear() + 60;  // Add 60 years to the birth year
+        var retirementDate = new Date(retirementYear, birthDate.getMonth(), birthDate.getDate());
+        return retirementDate.toLocaleDateString();  // Customize date format if needed
+    }
+
+    // Helper function to calculate age from birthdate
+    function getAge(birthDate) {
+        var birth = new Date(birthDate);
+        var today = new Date();
+        var age = today.getFullYear() - birth.getFullYear();
+        var m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        return age;
+    }
+});
