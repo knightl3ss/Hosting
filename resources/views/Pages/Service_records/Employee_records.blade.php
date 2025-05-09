@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('Layout.app')
 
 <link rel="stylesheet" href="{{ asset('css/servicerecord/employee_records.css') }}">
 

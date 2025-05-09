@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('Layout.app')
 
 @section('title', 'Appointment Page')
 

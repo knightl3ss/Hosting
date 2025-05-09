@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('Layout.app')
 
 @php $typeLabels = config('appointment_types'); @endphp
 
