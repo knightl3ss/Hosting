@@ -38,7 +38,7 @@
         @yield('content1')
     </div>
 
-    @include('Layout.Partial.Footer')
+    @include('Layout.Partial.footer')
 
     <!-- Core Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
