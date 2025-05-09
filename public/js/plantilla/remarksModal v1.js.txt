@@ -1,0 +1,81 @@
+$(document).ready(function() {
+    // Function to populate remarks table based on selected filter
+    function populateRemarksTable(remarksFilter) {
+        var rowsToDisplay = [];
+
+        // Loop through each row in the employee table
+        $('#employeeTable .employee-data').each(function() {
+            var remarks = $(this).data('remarks');
+            var office = $(this).data('office');
+            var position = $(this).find('td:eq(1)').text(); // Position
+            var lastName = $(this).find('td:eq(10)').text(); // Last Name
+            var firstName = $(this).find('td:eq(11)').text(); // First Name
+            var middleName = $(this).find('td:eq(12)').text(); // Middle Name
+            var dob = $(this).find('td:eq(13)').text(); // Date of Birth
+            var eligibleDate = calculateEligibilityDate(dob); // Calculate Date Eligible for Retirement
+
+            // Check if the current row matches the remarks filter or show all if filter is empty
+            if (remarksFilter === '' || remarks.toLowerCase() === remarksFilter.toLowerCase()) {
+                rowsToDisplay.push(`
+                    <tr>
+                        <td>${office}</td>
+                        <td>${position}</td>
+                        <td>${lastName}</td>
+                        <td>${firstName}</td>
+                        <td>${middleName}</td>
+                        <td>${calculateAge(dob)}</td>
+                        <td>${eligibleDate}</td>
+                    </tr>
+                `);
+            }
+        });
+
+        // Update the table body with the filtered rows
+        $('#remarksTable tbody').html(rowsToDisplay.join(''));
+    }
+
+    // Function to calculate age from DOB (date of birth)
+    function calculateAge(dob) {
+        var birthDate = new Date(dob);
+        var age = new Date().getFullYear() - birthDate.getFullYear();
+        var m = new Date().getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && new Date().getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    // Function to calculate eligibility date for retirement based on DOB, adjusted for Philippines time zone (UTC+8)
+    function calculateEligibilityDate(dob) {
+        var retirementAge = 60; // Adjust this based on your retirement policy
+        var birthDate = new Date(dob);
+        var eligibilityYear = birthDate.getFullYear() + retirementAge;
+        
+        // Create the date of eligibility in the Philippines timezone (UTC+8)
+        var eligibilityDate = new Date(eligibilityYear, birthDate.getMonth(), birthDate.getDate());
+        
+        // Adjust for Philippines time zone (UTC+8) by setting the time to noon (12:00:00)
+        eligibilityDate.setHours(12, 0, 0, 0);  // Noon to avoid time zone issues
+
+        // Format the eligibility date as 'YYYY-MM-DD' (or another format)
+        return eligibilityDate.toISOString().split('T')[0]; // Converts to 'YYYY-MM-DD' format
+    }
+
+    // Apply filter when the user clicks on any of the remarks filter buttons
+    $('#retirableFilter').on('click', function() {
+        populateRemarksTable('retirable');
+    });
+
+    $('#retiredFilter').on('click', function() {
+        populateRemarksTable('retired');
+    });
+
+    $('#nonRetirableFilter').on('click', function() {
+        populateRemarksTable('non-retirable');
+    });
+
+    // Load all data when the modal is opened for the first time
+    $('#remarksModal').on('show.bs.modal', function() {
+        populateRemarksTable('');
+    });
+});

@@ -1,0 +1,36 @@
+.modal-xl {
+    max-width: 90%;
+}
+
+.profile-upload-container {
+    text-align: center;
+}
+
+.profile-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    margin: 0 auto;
+}
+    #adminTable th, #adminTable td {
+        vertical-align: middle;
+    }
+    
+    /* Password strength indicator */
+    .password-strength-meter {
+        height: 5px;
+        margin-top: 5px;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+    
+    .weak { background-color: #ff4d4d; width: 25%; }
+    .medium { background-color: #ffa64d; width: 50%; }
+    .strong { background-color: #ffff4d; width: 75%; }
+    .very-strong { background-color: #4dff4d; width: 100%; }
+    
+    .password-field-container {
+        position: relative;
+    }
