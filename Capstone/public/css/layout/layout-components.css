@@ -1,0 +1,299 @@
+/* --- Navbar Styles --- */
+
+/* Navbar Styles */
+.navbar {
+    top: 0;
+    background: linear-gradient(90deg, #4e73df 70%, #67c6ff 100%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 0 32px;
+    width:calc(100% - 500px);
+    left: 250px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+}
+
+.main-content, .container, .content-wrapper {
+    width: 100%;
+}
+#sidebar-toggle {
+    border: none;
+    padding: 5px;
+    font-size: 20px;
+    color: var(--secondary-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+#sidebar-toggle:hover {
+    transform: scale(1.1);
+}
+.navbar-expand-lg{
+    top: 0;
+    background: linear-gradient(90deg, #4f4f52 0%, #5a5959 100%);
+}
+.navbar-nav .nav-link {
+    padding: 6px 18px;
+    color: #fff;
+    position: relative;
+    font-size: 17px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+    color: #ffe259;
+    text-shadow: 0 2px 8px rgba(255,226,89,0.07);
+}
+.fa-bars{
+    color: #fff;
+}
+/* Profile Dropdown Styling */
+.navbar .nav-item.dropdown .dropdown-menu {
+    min-width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item {
+    transition: background-color 0.3s ease;
+}
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.navbar .nav-item.dropdown .dropdown-toggle img,
+.navbar .nav-item.dropdown .dropdown-menu img {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+/* Notification Dropdown Styling */
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item {
+    transition: background-color 0.3s ease;
+}
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.navbar .nav-item.dropdown .dropdown-toggle .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.6rem;
+    padding: 0.2em 0.4em;
+}
+/* Navbar Modern Animations */
+.navbar.animate-navbar {
+    animation: navbarFadeIn 0.5s cubic-bezier(.4,0,.2,1);
+}
+@keyframes navbarFadeIn {
+    from { opacity: 0; transform: translateY(-24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Improve nav-item hover/focus */
+.nav-item a {
+    transition: background 0.2s, color 0.2s;
+}
+.nav-item a:hover, .nav-item.active a {
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(37,117,252,0.09);
+    border-radius: 20px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-radius 0.2s;
+}
+
+/* --- Responsive Sidebar & Main Content Animation --- */
+.main-content-wrapper,
+.navbar {
+    transition: margin-left 0.3s cubic-bezier(.4,0,.2,1), width 0.3s cubic-bezier(.4,0,.2,1), left 0.3s cubic-bezier(.4,0,.2,1);
+    width: calc(100% - 250px);
+    position: relative;
+}
+
+.sidebar.collapsed ~ .navbar{
+    width: calc(100% - 70px);
+    left: 70px;
+    margin-left: 30px;
+}
+
+.sidebar.collapsed ~ .main-content-wrapper {
+    width: calc(100% - 100px);
+    left: 40px;
+    
+}
+
+/* For body class fallback (if JS toggles body.sidebar-collapsed) */
+body.sidebar-collapsed .main-content-wrapper,
+body.sidebar-collapsed .navbar {
+    width: calc(100% - 70px);
+}
+
+.main-content,
+.main-content-wrapper,
+.container-fluid {
+    padding-bottom: 80px; /* Increased to ensure content is never hidden behind the fixed footer */
+}
+
+/* --- Sidebar Styles --- */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: linear-gradient(90deg, #4f4f52 0%, #5a5959 100%);
+    padding: 32px 0 20px 0;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    z-index: 1000;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 18px;
+    box-shadow: 4px 0 24px rgba(30,34,90,0.05);
+}
+.sidebar .icon {
+    width: 24px;
+    height: 24px;
+}
+.sidebar.collapsed {
+    width: 100px;
+}
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+.logo img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.sidebar.collapsed .logo span {
+    display: none;
+}
+.nav-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.nav-item {
+    position: relative;
+    margin: 8px 0;
+}
+
+/* Sidebar link underline animation */
+.sidebar .nav-item a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 12px 28px 12px 24px;
+    text-decoration: none;
+    transition: background 0.25s, color 0.2s;
+    font-size: 17px;
+    position: relative;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+    overflow: hidden;
+}
+.sidebar .nav-item a::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 8px;
+    height: 3px;
+    background: linear-gradient(90deg, #ffe259 0%, #ffa751 100%);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    z-index: 1;
+}
+.sidebar .nav-item a:hover::after,
+.sidebar .nav-item a:focus::after {
+    transform: scaleX(1);
+}
+.sidebar .nav-item a:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #ffe259;
+}
+.sidebar .nav-item.active a {
+    color: #ffe259 !important;
+    font-weight: bold;
+}
+.sidebar .nav-item i {
+    font-size: 18px;
+    min-width: 30px;
+    text-align: center;
+    margin-right: 14px;
+    
+}
+.sidebar.collapsed .nav-item i {
+    font-size: 18px;
+    margin-right: 0;
+}
+.sidebar.collapsed .nav-item span {
+    display: none;
+}
+/* Sidebar Active Route Styling */
+.sidebar .nav-list .nav-item.active {
+    background-color: rgba(255, 0, 0, 0.1);
+    border-left: 4px solid #ffe259;
+}
+
+/* Sidebar & Navbar Modern Animations */
+.sidebar, .sidebar-overlay {
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+.sidebar.active {
+    left: 0 !important;
+    box-shadow: 8px 0 24px rgba(0,0,0,0.12);
+}
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(30,34,90,0.18);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+.sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+    display: block;
+    transition: opacity 0.3s cubic-bezier(.4,0,.2,1);
+}
+/* Responsive Design for Sidebar */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -var(--sidebar-width);
+        font-size: 16px;
+        border-radius: 0 16px 16px 0;
+    }
+    .sidebar .icon {
+        width: 20px;
+        height: 20px;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+}
+
+/* --- Footer Styles --- */
+
+.footer, footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    box-sizing: border-box;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1100;
+}
+/* If there are custom footer styles from custom-design.css, add here. */
+/* (No custom footer rules were found in the reviewed custom-design.css sections.) */

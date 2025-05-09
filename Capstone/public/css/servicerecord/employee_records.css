@@ -1,0 +1,216 @@
+
+/* Enhanced Responsive Design */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --light-bg: #f8f9fa;
+    --text-color: #333;
+    --in-service-color: #28a745;
+    --suspension-color: #ffc107;
+    --not-in-service-color: #dc3545;
+}
+
+/* Service Status Styling */
+.status-cell {
+    font-weight: bold;
+}
+
+/* Status colors */
+.status-in-service {
+    background-color: rgba(40, 167, 69, 0.1);
+}
+
+.status-suspension {
+    background-color: rgba(255, 193, 7, 0.1);
+}
+
+.status-not-in-service {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Badge styling */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.65em;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.badge-in-service {
+    background-color: var(--in-service-color);
+    color: white;
+}
+
+.badge-suspension {
+    background-color: var(--suspension-color);
+    color: #212529;
+}
+
+.badge-not-in-service {
+    background-color: var(--not-in-service-color);
+    color: white;
+}
+
+/* Admin column styling */
+.admin-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.admin-name {
+    margin-bottom: 0.25rem;
+}
+
+.admin-time {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+.employee-record-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.header-container {
+    color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.header-container h1 {
+    color: black;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.employee-details-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.employee-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--light-bg);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.service-record-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.service-record-table thead {
+    color: var(--text-color);
+}
+
+.service-record-table thead tr:first-child th {
+    padding: 0.75rem;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid black;
+    font-weight: 600;
+}
+
+.service-record-table thead tr:nth-child(2) th {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border: 1px solid black;
+}
+
+.service-record-table tbody td {
+    padding: 0.6rem;
+    text-align: center;
+    border: 1px solid black;
+    vertical-align: middle;
+}
+
+.service-record-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.service-record-table tbody tr:hover {
+    background-color: rgba(37, 117, 252, 0.05);
+}
+
+/* Return button styling */
+.return-btn {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.return-btn:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.return-btn i {
+    transition: transform 0.3s ease;
+}
+
+.return-btn:hover i {
+    transform: translateX(-3px);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .service-record-table {
+        font-size: 0.8rem;
+    }
+
+    .service-record-table thead tr:first-child th,
+    .service-record-table thead tr:nth-child(2) th,
+    .service-record-table tbody td {
+        padding: 0.4rem;
+    }
+    
+    .status-badge {
+        padding: 0.25em 0.5em;
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-record-table {
+        font-size: 0.7rem;
+    }
+
+    .service-record-table thead tr:first-child th {
+        font-size: 0.7rem;
+    }
+
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .badge {
+        font-size: 0.65em;
+        padding: 0.2em 0.4em;
+    }
+}

@@ -1,0 +1,128 @@
+$(document).ready(function() {
+    // Variable to track the last applied filter criteria
+    var lastFilter = {
+        remarks: '',
+        office: '',
+        service: '',
+        status: ''
+    };
+
+    // Trigger the filter when the user changes any of the filters
+    $('#remarksFilter, #officeFilter, #serviceFilter, #statusFilter').on('change', function() {
+        var remarks = $('#remarksFilter').val();  // Get selected remarks value
+        var office = $('#officeFilter').val();    // Get selected office value
+        var service = $('#serviceFilter').val();  // Get selected service value
+        var status = $('#statusFilter').val();    // Get selected status value
+
+        // If the remarks filter is removed (empty value), we should go back to the original table
+        if (!remarks) {
+            // Show original table and hide filtered table when remarks filter is cleared
+            $('#originalPersonnelTableContainer').show();
+            $('#filteredPersonnelTableContainer').hide();
+        } else {
+            // Proceed with applying all filters
+            // Check if the current filter is the same as the last applied filter
+            if (
+                remarks === lastFilter.remarks &&
+                office === lastFilter.office &&
+                service === lastFilter.service &&
+                status === lastFilter.status
+            ) {
+                // If the filter is the same, don't apply the filter again
+                return;
+            }
+
+            // Update the last applied filter criteria
+            lastFilter.remarks = remarks;
+            lastFilter.office = office;
+            lastFilter.service = service;
+            lastFilter.status = status;
+
+            // Show or hide tables based on the filter criteria
+            if (remarks || office || service || status) {
+                // If filter is applied, show filtered table and hide original table
+                $('#originalPersonnelTableContainer').hide();
+                $('#filteredPersonnelTableContainer').show();
+                
+                // Now, filter the personnel data dynamically
+                filterPersonnelData(remarks, office, service, status);
+            } else {
+                // If no filter is applied, show original table and hide filtered table
+                $('#originalPersonnelTableContainer').show();
+                $('#filteredPersonnelTableContainer').hide();
+            }
+        }
+    });
+
+    function filterPersonnelData(remarks, office, service, status) {
+        var filteredPersonnel = [];
+        
+        // Loop through all personnel data and filter
+        $('.employee-data').each(function() {
+            var personnel = $(this);
+            var matchesRemarks = !remarks || personnel.data('remarks') === remarks;  // Ensure that remarks is included as data-remarks
+            var matchesOffice = !office || personnel.data('office') === office;
+            var matchesService = !service || personnel.data('years') === service;
+            var matchesStatus = !status || personnel.data('status') === status;
+
+            if (matchesRemarks && matchesOffice && matchesService && matchesStatus) {
+                var dob = personnel.find('td').eq(13).text();  // Get the date of birth
+                var retirementDate = getRetirementDate(dob);  // Calculate the retirement date
+                
+                filteredPersonnel.push({
+                    office: personnel.find('td').eq(0).text(),
+                    position: personnel.find('td').eq(2).text(),
+                    lastName: personnel.find('td').eq(10).text(),
+                    firstName: personnel.find('td').eq(11).text(),
+                    middleName: personnel.find('td').eq(12).text(),
+                    dob: dob,
+                    retirementDate: retirementDate  // Store dynamic retirement date
+                });
+            }
+        });
+
+        // Clear previous filtered data from the table body
+        $('#filteredEmployeeTableBody').empty(); 
+
+        if (filteredPersonnel.length > 0) {
+            filteredPersonnel.forEach(function(personnel) {
+                var row = `<tr>
+                             <td>${personnel.office}</td>
+                             <td>${personnel.position}</td>
+                             <td>${personnel.lastName}</td>
+                             <td>${personnel.firstName}</td>
+                             <td>${personnel.middleName}</td>
+                             <td>${getAge(personnel.dob)}</td>
+                             <td>${personnel.retirementDate}</td>
+                             </tr>`;
+                $('#filteredEmployeeTableBody').append(row);
+            });
+        } else {
+            $('#filteredEmployeeTableBody').append('<tr><td colspan="7" class="text-center">No personnel found.</td></tr>');
+        }
+    }
+
+    // Helper function to calculate retirement date based on birthdate
+    function getRetirementDate(dob) {
+        var birthDate = new Date(dob);
+        var retirementYear = birthDate.getFullYear() + 60;  // Add 60 years to the birth year
+
+        // Set the retirement date to the person's 60th birthday (on the same day and month)
+        var retirementDate = new Date(retirementYear, birthDate.getMonth(), birthDate.getDate());
+        
+        // Return formatted date as string (e.g., "June 30, 2050")
+        return retirementDate.toLocaleDateString();  // You can customize this format
+    }
+
+    // Helper function to calculate age from birthdate
+    function getAge(birthDate) {
+        var birth = new Date(birthDate);
+        var today = new Date();
+        var age = today.getFullYear() - birth.getFullYear();
+        var m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+            age--;
+        }
+        return age;
+    }
+});
