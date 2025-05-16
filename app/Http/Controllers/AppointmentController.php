@@ -15,7 +15,15 @@ class AppointmentController extends Controller
         try {
             DB::beginTransaction();
 
-            $appointment = Appointment::create($request->validated());
+            // Get the validated data
+            $data = $request->validated();
+            
+            // Ensure rate_per_day is a string
+            if (isset($data['rate_per_day'])) {
+                $data['rate_per_day'] = (string)$data['rate_per_day'];
+            }
+
+            $appointment = Appointment::create($data);
 
             DB::commit();
 
@@ -34,8 +42,16 @@ class AppointmentController extends Controller
         try {
             DB::beginTransaction();
 
+            // Get the validated data
+            $data = $request->validated();
+            
+            // Ensure rate_per_day is a string
+            if (isset($data['rate_per_day'])) {
+                $data['rate_per_day'] = (string)$data['rate_per_day'];
+            }
+
             $appointment = Appointment::findOrFail($id);
-            $appointment->update($request->validated());
+            $appointment->update($data);
 
             DB::commit();
 
@@ -144,6 +160,11 @@ class AppointmentController extends Controller
                             // Instead of silently modifying, throw an exception
                             throw new \Exception("Row " . ($index + 1) . ": Job Order employment duration cannot exceed 6 months");
                         }
+                    }
+                    
+                    // Ensure rate_per_day is a string
+                    if (isset($data['rate_per_day'])) {
+                        $data['rate_per_day'] = (string)$data['rate_per_day'];
                     }
 
                     Appointment::create($data);

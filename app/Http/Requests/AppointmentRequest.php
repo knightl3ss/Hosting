@@ -26,7 +26,7 @@ class AppointmentRequest extends FormRequest
             'birthday' => 'required|date|before:today',
             'age' => 'required|integer|min:18|max:65',
             'position' => 'required|string|min:3|max:255|regex:/^[a-zA-Z\s\-\']+$/',
-            'rate_per_day' => 'required|numeric|min:500|max:5000',
+            'rate_per_day' => 'required|string|max:255',
             'employment_start' => 'required|date',
             'source_of_fund' => 'required|string|max:255',
             'location' => 'nullable|string|max:255',
@@ -176,8 +176,6 @@ class AppointmentRequest extends FormRequest
             'position.regex' => 'Position can only contain letters, spaces, hyphens, and apostrophes.',
             
             'rate_per_day.required' => 'Rate per day is required.',
-            'rate_per_day.min' => 'Rate per day cannot be less than ₱500.',
-            'rate_per_day.max' => 'Rate per day cannot exceed ₱5000.',
             
             'employment_start.required' => 'Employment start date is required.',
             'employment_end.required' => 'Employment end date is required.',
@@ -215,6 +213,13 @@ class AppointmentRequest extends FormRequest
                     'employment_end' => $start->copy()->addMonths(6)->format('Y-m-d')
                 ]);
             }
+        }
+        
+        // Ensure rate_per_day is always a string
+        if ($this->has('rate_per_day')) {
+            $this->merge([
+                'rate_per_day' => (string)$this->rate_per_day
+            ]);
         }
     }
 } 
