@@ -22,7 +22,7 @@
       <div class="container-fluid">
         <a class="navbar-brand fw-bold d-flex align-items-center" href="#" style="font-size:1.5rem;">
           <img src="{{ asset('images/logo.png') }}" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2" style="border-radius:50%;background:#fff;padding:2px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
-          <span>LGU Capstone</span>
+          <span>LGU Magallanes</span>
         </a>
         <div class="ms-auto">
           @if(auth()->check())
