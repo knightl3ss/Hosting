@@ -287,7 +287,7 @@
                         <div class="action-icon">
                             <i class="fas fa-calendar-check"></i>
                         </div>
-                        <div class="action-text">Appointment</div>
+                        <div class="action-text">Employee</div>
                     </a>
                 </div>
             </div>
