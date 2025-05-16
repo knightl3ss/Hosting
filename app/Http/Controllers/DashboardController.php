@@ -25,7 +25,10 @@ class DashboardController extends Controller
         $selectedAppointmentType = $request->input('appointment_type');
 
         // Count admins (users with admin role)
-        $adminCount = User::where('role', 'admin')->count();
+        $adminCount = User::where(function($query) {
+            $query->where('role', 'admin')
+                  ->orWhere('role', 'Admin');
+        })->count();
 
         // Base query for appointments
         $appointmentQuery = Appointment::query();
