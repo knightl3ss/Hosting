@@ -38,9 +38,8 @@ class ServiceRecordRequest extends FormRequest
             ],
             'salary' => [
                 'required', 
-                'numeric', 
-                'min:0',
-                'max:1000000' // Maximum salary cap
+                'string',
+                'max:255'
             ],
             'station' => [
                 'required', 
@@ -337,8 +336,7 @@ class ServiceRecordRequest extends FormRequest
             'payment_frequency.required' => 'The payment frequency is required.',
             'payment_frequency.in' => 'The selected payment frequency is invalid.',
             'salary.required' => 'The salary is required.',
-            'salary.numeric' => 'The salary must be a number.',
-            'salary.min' => 'The salary must be greater than zero.',
+            'salary.string' => 'The salary must be a string.',
             'salary.max' => 'The salary exceeds the maximum allowed amount.',
             'station.required' => 'The station is required.',
             'station.min' => 'The station must be at least 3 characters.',
@@ -349,5 +347,20 @@ class ServiceRecordRequest extends FormRequest
             'separation_date.after_or_equal' => 'The separation date must be after or equal to the start date.',
             'separation_date.before_or_equal' => 'The separation date must be before or equal to the end date.',
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     * 
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        // Ensure salary is always a string to prevent PostgreSQL numeric type issues
+        if ($this->has('salary')) {
+            $this->merge([
+                'salary' => (string)$this->salary
+            ]);
+        }
     }
 } 

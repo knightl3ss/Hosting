@@ -22,7 +22,7 @@ class ServiceRecordController extends Controller
             $serviceRecord->designation = $request->designation;
             $serviceRecord->status = $request->status;
             $serviceRecord->payment_frequency = $request->payment_frequency;
-            $serviceRecord->salary = $request->salary;
+            $serviceRecord->salary = (string)$request->salary;
             $serviceRecord->station = $request->station;
             $serviceRecord->service_status = $request->service_status;
             $serviceRecord->separation_date = $request->separation_date;
@@ -51,7 +51,7 @@ class ServiceRecordController extends Controller
             $serviceRecord->designation = $request->designation;
             $serviceRecord->status = $request->status;
             $serviceRecord->payment_frequency = $request->payment_frequency;
-            $serviceRecord->salary = $request->salary;
+            $serviceRecord->salary = (string)$request->salary;
             $serviceRecord->station = $request->station;
             $serviceRecord->service_status = $request->service_status;
             $serviceRecord->separation_date = $request->separation_date;

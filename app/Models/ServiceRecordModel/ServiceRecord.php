@@ -46,6 +46,19 @@ class ServiceRecord extends Model
         'created_by' => 'integer',
         'updated_by' => 'integer',
     ];
+    
+    /**
+     * Explicitly set the salary attribute to ensure it's a string.
+     * This helps prevent PostgreSQL from trying to cast it to numeric.
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function setSalaryAttribute($value)
+    {
+        // Force the value to be a string to prevent numeric conversion in PostgreSQL
+        $this->attributes['salary'] = (string)$value;
+    }
 
     /**
      * Get the employee that owns the service record.
