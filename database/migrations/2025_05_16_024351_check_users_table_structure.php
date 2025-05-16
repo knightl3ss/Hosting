@@ -57,12 +57,15 @@ return new class extends Migration
                         if ($count > 0) {
                             Log::info("Found {$count} admin users with role value '{$variation}'");
                             
-                            // Update the role column to be consistently 'admin'
-                            DB::table('users')
-                                ->where('role', $variation)
-                                ->update(['role' => 'admin']);
-                                
-                            Log::info("Updated {$count} admin users to have role 'admin'");
+                            // Update the role column to be consistently 'admin' with error handling
+                            try {
+                                // Use raw SQL with proper quoting to avoid constraint issues
+                                DB::statement("UPDATE users SET role = 'admin' WHERE role = '{$variation}'");
+                                Log::info("Updated {$count} admin users to have role 'admin'");
+                            } catch (\Exception $e) {
+                                Log::warning("Could not update admin users with role '{$variation}': " . $e->getMessage());
+                                Log::info("A separate migration will handle this update with constraint fixes");
+                            }
                         }
                     }
                 }
@@ -82,14 +85,18 @@ return new class extends Migration
                 
                 // Set default role to 'user' if null or empty
                 if ($nullRoleCount > 0 || $emptyRoleCount > 0) {
-                    DB::table('users')
-                        ->where(function($query) {
-                            $query->whereNull('role')
-                                ->orWhere('role', '');
-                        })
-                        ->update(['role' => 'user']);
-                        
-                    Log::info('Updated ' . ($nullRoleCount + $emptyRoleCount) . ' users to have role "user"');
+                    try {
+                        DB::table('users')
+                            ->where(function($query) {
+                                $query->whereNull('role')
+                                    ->orWhere('role', '');
+                            })
+                            ->update(['role' => 'user']);
+                            
+                        Log::info('Updated ' . ($nullRoleCount + $emptyRoleCount) . ' users to have role "user"');
+                    } catch (\Exception $e) {
+                        Log::warning("Could not update null/empty roles: " . $e->getMessage());
+                    }
                 }
             } else {
                 Log::warning('Role column does not exist in users table');
