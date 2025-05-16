@@ -27,6 +27,8 @@ Route::get('/view_account/{id}', [RegisterController::class, 'viewAccount'])->na
 Route::get('/edit_account/{id}', [RegisterController::class, 'editAccount'])->name('edit_account');
 Route::put('/update_account/{id}', [RegisterController::class, 'updateAccount'])->name('update_account');
 Route::post('/delete_account/{id}', [RegisterController::class, 'deleteAccount'])->name('delete_account');
+Route::post('/block_account/{id}', [RegisterController::class, 'blockAccount'])->name('block_account');
+Route::post('/unblock_account/{id}', [RegisterController::class, 'unblockAccount'])->name('unblock_account');
 
 Route::get('/print-employee-records/{id}', [PrintController::class, 'printEmployeeRecords'])->name('print_employee_records');
 

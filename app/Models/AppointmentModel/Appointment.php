@@ -5,10 +5,22 @@ namespace App\Models\AppointmentModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Traits\EncryptsAttributes;
 
 class Appointment extends Model
 {
-    use HasFactory;
+    use HasFactory, EncryptsAttributes;
+    
+    /**
+     * The attributes that should be encrypted.
+     *
+     * @var array
+     */
+    protected $encrypted = [
+        'rate_per_day',
+        'employee_id',
+        'item_no',
+    ];
 
     protected $fillable = [
         'name',

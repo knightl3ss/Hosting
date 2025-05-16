@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="editPersonalDetailsModalLabel">Edit Personal Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('appointment.updatePersonalDetails', $appointment->id ?? '') }}" method="POST">
+            <form id="editPersonalDetailsForm" action="{{ route('appointment.updatePersonalDetails', $appointment->id ?? '') }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
@@ -31,19 +31,23 @@
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="firstName" class="form-label">First Name*</label>
-                            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ $appointment->first_name ?? '' }}" required>
+                            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ $appointment->first_name ?? '' }}" required pattern="[A-Za-z\s]+" title="Please enter alphabets only">
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="middleName" class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" id="middleName" name="middle_name" value="{{ $appointment->middle_name ?? '' }}">
+                            <input type="text" class="form-control" id="middleName" name="middle_name" value="{{ $appointment->middle_name ?? '' }}" pattern="[A-Za-z\s]*" title="Please enter alphabets only">
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="lastName" class="form-label">Last Name*</label>
-                            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ $appointment->last_name ?? '' }}" required>
+                            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ $appointment->last_name ?? '' }}" required pattern="[A-Za-z\s]+" title="Please enter alphabets only">
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="extensionName" class="form-label">Name Extension</label>
-                            <input type="text" class="form-control" id="extensionName" name="extension_name" placeholder="e.g. Jr., Sr., III" value="{{ $appointment->extension_name ?? '' }}">
+                            <input type="text" class="form-control" id="extensionName" name="extension_name" placeholder="e.g. Jr., Sr., III" value="{{ $appointment->extension_name ?? '' }}" pattern="[A-Za-z\s\.]+" title="Please enter valid extension (e.g., Jr., Sr.)">
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -55,18 +59,24 @@
                                 <option value="female" {{ (isset($appointment) && $appointment->gender == 'female') ? 'selected' : '' }}>Female</option>
                                 <option value="other" {{ (isset($appointment) && $appointment->gender == 'other') ? 'selected' : '' }}>Other</option>
                             </select>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="dob" class="form-label">Date of Birth*</label>
-                            <input type="date" class="form-control" id="dob" name="birthday" value="{{ isset($appointment->birthday) ? \Carbon\Carbon::parse($appointment->birthday)->format('Y-m-d') : '' }}" required>
+                            <input type="date" class="form-control" id="dob" name="birthday" value="{{ isset($appointment->birthday) ? \Carbon\Carbon::parse($appointment->birthday)->format('Y-m-d') : '' }}" required max="{{ date('Y-m-d', strtotime('-18 years')) }}">
+                            <div class="invalid-feedback"></div>
+                            <small id="birthdayFeedback" class="form-text"></small>
                         </div>
                         <div class="col-md-3 mb-3 mb-md-0">
                             <label for="age" class="form-label">Age*</label>
-                            <input type="number" class="form-control" id="age" name="age" value="{{ isset($appointment->age) ? $appointment->age : '' }}" required>
+                            <input type="number" class="form-control" id="age" name="age" value="{{ isset($appointment->age) ? $appointment->age : '' }}" required readonly>
+                            <div class="invalid-feedback"></div>
+                            <small id="ageFeedback" class="form-text"></small>
                         </div>
                         <div class="col-md-6">
                             <label for="appointmentLocation" class="form-label">Street/Municipality/Province/Postal Code</label>
                             <input type="text" name="location" id="appointmentLocation" class="form-control" placeholder="Enter location" value="{{ $appointment->location ?? '' }}">
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
@@ -134,7 +144,6 @@
                 $appointmentCount = \App\Models\AppointmentModel\Appointment::where('employee_id', $appointment->employee_id)->count();
                 @endphp
                 <p class="mb-0"><strong>Employee ID/Item No:</strong> {{ $appointment->employee_id }}</p>
-                <p class="mb-3"><strong>Total appointment records to be deleted:</strong> {{ $appointmentCount }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -154,3 +163,110 @@
         </div>
     </div>
 </div>
+
+<!-- Include Validation Script -->
+<script src="{{ asset('js/appointments/validation.js') }}"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize validation for edit personal details form
+    const editPersonalDetailsForm = document.getElementById('editPersonalDetailsForm');
+    if (editPersonalDetailsForm) {
+        // Add event listeners for real-time validation
+        const inputs = editPersonalDetailsForm.querySelectorAll('input, select');
+        
+        // Auto-calculate age when birthday changes
+        const dobField = editPersonalDetailsForm.querySelector('#dob');
+        const ageField = editPersonalDetailsForm.querySelector('#age');
+        
+        if (dobField && ageField) {
+            ageField.readOnly = true;
+            dobField.addEventListener('change', function() {
+                const dob = new Date(this.value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const monthDiff = today.getMonth() - dob.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+                ageField.value = age > 0 ? age : '';
+                
+                // Validate age
+                if (age < 18 || age > 100) {
+                    showError(dobField, 'Age must be between 18 and 100 years');
+                } else {
+                    clearError(dobField);
+                }
+            });
+        }
+        
+        // Name field validation
+        const nameFields = ['firstName', 'middleName', 'lastName', 'extensionName'];
+        nameFields.forEach(fieldId => {
+            const field = editPersonalDetailsForm.querySelector(`#${fieldId}`);
+            if (field) {
+                field.addEventListener('input', function() {
+                    let value = this.value.trim();
+                    // Remove double spaces
+                    value = value.replace(/\s{2,}/g, ' ');
+                    // Uppercase the first letter of each word
+                    value = value.replace(/\b\w/g, c => c.toUpperCase());
+                    this.value = value;
+                    
+                    // Validate name
+                    const namePattern = /^[a-zA-Z\s\-'\.]+$/;
+                    if (fieldId !== 'middleName' && fieldId !== 'extensionName' && value.length < 2) {
+                        showError(this, 'Name must be at least 2 characters long');
+                    } else if (!namePattern.test(value) && value.length > 0) {
+                        showError(this, 'Name can only contain letters, spaces, hyphens, apostrophes, and periods');
+                    } else {
+                        clearError(this);
+                    }
+                });
+            }
+        });
+        
+        // Form submission validation
+        editPersonalDetailsForm.addEventListener('submit', function(e) {
+            let isValid = true;
+            
+            // Validate all required fields
+            inputs.forEach(input => {
+                if (input.required && !input.value.trim()) {
+                    showError(input, 'This field is required');
+                    isValid = false;
+                }
+            });
+            
+            // Validate age range
+            if (ageField && (parseInt(ageField.value) < 18 || parseInt(ageField.value) > 100)) {
+                showError(ageField, 'Age must be between 18 and 100 years');
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Helper functions for validation
+    function showError(input, message) {
+        input.classList.add('is-invalid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    }
+    
+    function clearError(input) {
+        input.classList.remove('is-invalid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+            errorDiv.textContent = '';
+            errorDiv.style.display = 'none';
+        }
+    }
+});
+</script>

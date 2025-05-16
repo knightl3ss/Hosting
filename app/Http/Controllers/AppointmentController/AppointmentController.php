@@ -37,24 +37,32 @@ class AppointmentController extends Controller
             'age' => 'required|integer',
             'location' => 'nullable|string|max:255',
             'position' => 'required|string|max:255',
-            'rate_per_day' => 'required|numeric',
+            'rate_per_day' => 'required|string|max:255',
             'employment_start' => 'required|date',
             'employment_end' => (in_array($request->appointment_type, $plantillaTypes) ? 'nullable|date' : 'required|date|after_or_equal:employment_start'),
             'source_of_fund' => 'required|string|max:255',
             'office_assignment' => 'required|string|max:255',
         ];
         if ($request->appointment_type === 'job_order') {
-            $rules['employee_id'] = 'required|string'; // Removed unique constraint
+            $rules['employee_id'] = ['required', 'string', 'regex:/^[a-zA-Z0-9\-]+$/'];
         } else {
-            $rules['item_no'] = 'required|string';
+            $rules['item_no'] = ['required', 'string', 'regex:/^[a-zA-Z0-9\-]+$/'];
+            // Also validate employee_id for non-job orders, but it's not required as it will be copied from item_no
+            $rules['employee_id'] = ['nullable', 'string', 'regex:/^[a-zA-Z0-9\-]+$/'];
         }
-        $validated = $request->validate($rules);
 
-        // Remove unused ID field before saving
-        if ($request->appointment_type === 'job_order') {
-            unset($validated['item_no']);
-        } else {
-            unset($validated['employee_id']);
+        $messages = [
+            'employee_id.required' => 'Employee ID is required for Job Order appointments.',
+            'employee_id.regex' => 'Employee ID can only contain letters, numbers, and hyphens.',
+            'item_no.required' => 'Item No is required for non-Job Order appointments.',
+            'item_no.regex' => 'Item No can only contain letters, numbers, and hyphens.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
+
+        // For non-job orders, ensure employee_id matches item_no
+        if ($request->appointment_type !== 'job_order') {
+            $validated['employee_id'] = $validated['item_no'];
         }
 
         // Create the appointment
@@ -155,22 +163,103 @@ class AppointmentController extends Controller
     // Delete all appointments and the employee
     public function destroyEmployee($identifier)
     {
-        // Try to delete by employee_id first
-        $deleted = Appointment::where('employee_id', $identifier)->delete();
-
-        // If nothing deleted, try by item_no (for plantilla)
-        $deleted = Appointment::where('item_no', $identifier)->delete();
-        // \App\Models\ServiceRecordModel\ServiceRecord::where('item_no', $identifier)->delete();
-        // Removed PlantillaModel\Personnel deletion
-        if ($deleted === 0) {
-            // Also delete from ServiceRecord by item_no if needed
-            \App\Models\ServiceRecordModel\ServiceRecord::where('item_no', $identifier)->delete();
-        } else {
-            // Also delete from ServiceRecord by employee_id
-            \App\Models\ServiceRecordModel\ServiceRecord::where('employee_id', $identifier)->delete();
+        try {
+            DB::beginTransaction();
+            
+            Log::info('Starting employee deletion process', ['identifier' => $identifier]);
+            
+            // The issue is that employee_id and item_no are encrypted in the database
+            // We need to get all appointments first and then delete them one by one
+            $appointments = Appointment::all();
+            $deletedCount = 0;
+            
+            foreach ($appointments as $appointment) {
+                // Check if this appointment matches our identifier
+                // We need to compare decrypted values
+                if ($appointment->employee_id == $identifier || $appointment->item_no == $identifier) {
+                    $appointmentId = $appointment->id;
+                    Log::info('Found matching appointment', ['id' => $appointmentId]);
+                    
+                    // Delete the appointment by ID (which is not encrypted)
+                    $appointment->delete();
+                    $deletedCount++;
+                }
+            }
+            
+            Log::info('Deleted appointments', ['count' => $deletedCount]);
+            
+            // For service records, we need the same approach if they use encryption
+            if (class_exists('\App\Models\ServiceRecordModel\ServiceRecord')) {
+                $serviceRecords = \App\Models\ServiceRecordModel\ServiceRecord::all();
+                $deletedServiceRecords = 0;
+                
+                foreach ($serviceRecords as $record) {
+                    // Check if the service record has the same methods for accessing encrypted attributes
+                    $recordEmployeeId = method_exists($record, 'getAttribute') ? $record->employee_id : $record->getRawOriginal('employee_id');
+                    $recordItemNo = method_exists($record, 'getAttribute') ? $record->item_no : $record->getRawOriginal('item_no');
+                    
+                    if ($recordEmployeeId == $identifier || $recordItemNo == $identifier) {
+                        $record->delete();
+                        $deletedServiceRecords++;
+                    }
+                }
+                
+                Log::info('Deleted service records', ['count' => $deletedServiceRecords]);
+            }
+            
+            // Check if Personnel model exists and delete from there too
+            if (class_exists('\App\Models\PlantillaModel\Personnel')) {
+                $personnel = \App\Models\PlantillaModel\Personnel::all();
+                $deletedPersonnel = 0;
+                
+                foreach ($personnel as $person) {
+                    // Check if the personnel record has the same methods for accessing encrypted attributes
+                    $personEmployeeId = method_exists($person, 'getAttribute') ? $person->employee_id : $person->getRawOriginal('employee_id');
+                    $personItemNo = method_exists($person, 'getAttribute') ? $person->item_no : $person->getRawOriginal('item_no');
+                    
+                    if ($personEmployeeId == $identifier || $personItemNo == $identifier) {
+                        $person->delete();
+                        $deletedPersonnel++;
+                    }
+                }
+                
+                Log::info('Deleted personnel records', ['count' => $deletedPersonnel]);
+            }
+            
+            // Check if any User is associated with this employee and update their status if needed
+            $users = \App\Models\User::all();
+            foreach ($users as $user) {
+                $userEmployeeId = method_exists($user, 'getAttribute') ? $user->employee_id : $user->getRawOriginal('employee_id');
+                
+                if ($userEmployeeId == $identifier) {
+                    Log::info('Found associated user account', ['user_id' => $user->id]);
+                    // Option 1: Update user status to inactive
+                    // $user->status = 'inactive';
+                    // $user->save();
+                    
+                    // Option 2: Delete the user account
+                    // $user->delete();
+                }
+            }
+            
+            DB::commit();
+            Log::info('Employee deletion completed successfully');
+            
+            if ($deletedCount > 0) {
+                return redirect()->route('appointment.schedule')->with('success', 'Employee and all related records deleted successfully!');
+            } else {
+                return redirect()->route('appointment.schedule')->with('warning', 'No matching employee records found for deletion.');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to delete employee records', [
+                'identifier' => $identifier,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            return redirect()->route('appointment.schedule')->with('error', 'Failed to delete employee records: ' . $e->getMessage());
         }
-
-        return redirect()->route('appointment.schedule')->with('success', 'Employee and all related records deleted successfully!');
     }
 
     // Import CSV (AJAX JSON import)
@@ -194,8 +283,8 @@ class AppointmentController extends Controller
                     'location' => 'nullable|string|max:255',
                     'office_assignment' => 'required|string|max:255',
                     'appointment_type' => 'required|string',
-                    'item_no' => 'nullable|string|max:255',
-                    'employee_id' => 'required|string',
+                    'item_no' => 'nullable|string|regex:/^[a-zA-Z0-9\-]+$/',
+                    'employee_id' => 'required|string|regex:/^[a-zA-Z0-9\-]+$/',
                     'first_name' => 'required|string|max:255',
                     'middle_name' => 'nullable|string|max:255',
                     'last_name' => 'required|string|max:255',
@@ -230,12 +319,30 @@ class AppointmentController extends Controller
     {
         $type = $request->input('type'); // 'employee_id' or 'item_no'
         $value = $request->input('value');
+        $excludeId = $request->input('exclude_id'); // for edit form, exclude the current record
+        
         $exists = false;
+        $query = Appointment::query();
+        
+        // Add condition based on type
         if ($type === 'employee_id') {
-            $exists = Appointment::where('employee_id', $value)->exists();
+            $query->where('employee_id', $value);
         } elseif ($type === 'item_no') {
-            $exists = Appointment::where('item_no', $value)->exists();
+            $query->where('item_no', $value);
+        } else {
+            return response()->json(['error' => 'Invalid type specified'], 400);
         }
+        
+        // Exclude current record if editing
+        if ($excludeId) {
+            $query->where('id', '!=', $excludeId);
+        }
+        
+        // Check only active records
+        $query->where('is_active', true);
+        
+        $exists = $query->exists();
+        
         return response()->json(['exists' => $exists]);
     }
 

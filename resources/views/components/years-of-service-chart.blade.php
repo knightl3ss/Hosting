@@ -46,9 +46,12 @@
                             </span>
                         </td>
                         <td class="text-center">
+                            @php
+                                $tenYearsCount = $serviceGroups['10 Years+']->count();
+                            @endphp
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal-10years" class="text-decoration-none">
-                                <span class="badge bg-primary rounded-pill px-3 py-2">
-                                    {{ $serviceGroups['10 Years+']->count() }}
+                                <span class="badge bg-primary rounded-pill px-3 py-2" id="ten-years-count">
+                                    {{ $tenYearsCount }}
                                 </span>
                             </a>
                         </td>
@@ -60,9 +63,12 @@
                             </span>
                         </td>
                         <td class="text-center">
+                            @php
+                                $fiveToNineCount = $serviceGroups['5-9 Years']->count();
+                            @endphp
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal-5to9years" class="text-decoration-none">
-                                <span class="badge bg-success rounded-pill px-3 py-2">
-                                    {{ $serviceGroups['5-9 Years']->count() }}
+                                <span class="badge bg-success rounded-pill px-3 py-2" id="five-to-nine-count">
+                                    {{ $fiveToNineCount }}
                                 </span>
                             </a>
                         </td>
@@ -74,9 +80,12 @@
                             </span>
                         </td>
                         <td class="text-center">
+                            @php
+                                $belowFiveCount = $serviceGroups['Below 5 Years']->count();
+                            @endphp
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modal-below5years" class="text-decoration-none">
-                                <span class="badge bg-info rounded-pill px-3 py-2">
-                                    {{ $serviceGroups['Below 5 Years']->count() }}
+                                <span class="badge bg-info rounded-pill px-3 py-2" id="below-five-count">
+                                    {{ $belowFiveCount }}
                                 </span>
                             </a>
                         </td>
@@ -94,6 +103,12 @@
 window.addEventListener('load', function() {
     let chart = null;
     let isDoughnut = true;
+    
+    // Add event listener for custom refresh event
+    document.addEventListener('service-data-updated', function() {
+        console.log('Service data update event received');
+        initChart();
+    });
 
     function initChart() {
         const ctx = document.getElementById('yearsOfServiceChart');
@@ -102,13 +117,40 @@ window.addEventListener('load', function() {
             return;
         }
 
+        // Get the counts directly to ensure they're current
+        @php
+            $tenYearsCount = $serviceGroups['10 Years+']->count();
+            $fiveToNineCount = $serviceGroups['5-9 Years']->count();
+            $belowFiveCount = $serviceGroups['Below 5 Years']->count();
+        @endphp
+        
+        const tenYearsCount = {{ $tenYearsCount }};
+        const fiveToNineCount = {{ $fiveToNineCount }};
+        const belowFiveCount = {{ $belowFiveCount }};
+        
+        // Debug output to console
+        console.log('Service Groups Data (from DOM):', {
+            '10Years+': tenYearsCount,
+            '5-9Years': fiveToNineCount,
+            'Below5Years': belowFiveCount
+        });
+        
+        // Ensure we have valid numbers
+        const validTenYears = isNaN(tenYearsCount) ? 0 : tenYearsCount;
+        const validFiveToNine = isNaN(fiveToNineCount) ? 0 : fiveToNineCount;
+        const validBelowFive = isNaN(belowFiveCount) ? 0 : belowFiveCount;
+        
         const data = {
-            labels: ['10+ Years', '5-9 Years', 'Below 5 Years'],
+            labels: [
+                '10 Years+',
+                '5-9 Years',
+                'Below 5 Years'
+            ],
             datasets: [{
                 data: [
-                    {{ $serviceGroups['10 Years+']->count() }},
-                    {{ $serviceGroups['5-9 Years']->count() }},
-                    {{ $serviceGroups['Below 5 Years']->count() }}
+                    validTenYears,
+                    validFiveToNine,
+                    validBelowFive
                 ],
                 backgroundColor: [
                     'rgba(13, 110, 253, 0.8)',  // Primary blue

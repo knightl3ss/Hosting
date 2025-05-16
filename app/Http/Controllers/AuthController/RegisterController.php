@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -24,7 +25,7 @@ class RegisterController extends Controller
             'address_city' => 'required|string|max:255',
             'address_state' => 'required|string|max:255',
             'address_postal_code' => 'required|string|max:10',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|max:100|unique:users,email',
             'username' => 'required|string|alpha_dash|max:255|unique:users,username',
             'role' => 'required|in:Admin',
             'password' => 'required|string|min:8|confirmed',
@@ -109,7 +110,7 @@ class RegisterController extends Controller
             'address_city' => 'required|string|max:255',
             'address_state' => 'required|string|max:255',
             'address_postal_code' => 'required|string|max:10',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|max:100|unique:users,email',
             'username' => 'required|string|alpha_dash|max:255|unique:users,username',
             'role' => 'required|in:Admin',
             'password' => 'required|string|min:8|confirmed',
@@ -193,13 +194,29 @@ class RegisterController extends Controller
         $type = $request->input('type');
         $value = $request->input('value');
         $exists = false;
+        
+        // Check in users table
         if ($type === 'username') {
             $exists = \App\Models\User::where('username', $value)->exists();
         } elseif ($type === 'email') {
             $exists = \App\Models\User::where('email', $value)->exists();
         } elseif ($type === 'employee_id') {
+            // Check in both users and appointments tables
             $exists = \App\Models\User::where('employee_id', $value)->exists();
+            
+            // If not found in users, check appointments
+            if (!$exists) {
+                $exists = \App\Models\AppointmentModel\Appointment::where('employee_id', $value)
+                    ->where('is_active', true)
+                    ->exists();
+            }
+        } elseif ($type === 'item_no') {
+            // Check in appointments table for item_no
+            $exists = \App\Models\AppointmentModel\Appointment::where('item_no', $value)
+                ->where('is_active', true)
+                ->exists();
         }
+        
         return response()->json(['exists' => $exists]);
     }
 
@@ -210,11 +227,26 @@ class RegisterController extends Controller
         return view('Pages.Account.account_view', compact('user'));
     }
 
+    // Check if a user has any service records
+    private function userHasServiceRecords($userId)
+    {
+        return DB::table('service_records')
+            ->where('created_by', $userId)
+            ->exists();
+    }
+
     // Display a list of all accounts
     public function accountList()
     {
         $users = User::all();
-        return view('Pages.Account.account_list', compact('users'));
+        
+        // Check which users have service records
+        $usersWithRecords = [];
+        foreach ($users as $user) {
+            $usersWithRecords[$user->id] = $this->userHasServiceRecords($user->id);
+        }
+        
+        return view('Pages.Account.account_list', compact('users', 'usersWithRecords'));
     }
 
     // Show the form for editing a specific account
@@ -228,8 +260,34 @@ class RegisterController extends Controller
     public function deleteAccount($id)
     {
         $user = User::findOrFail($id);
+        
+        // Check if user has service records
+        if ($this->userHasServiceRecords($user->id)) {
+            return redirect()->route('account_list')->with('error', 'This account cannot be deleted because it has associated service records. Please block the account instead.');
+        }
+        
         $user->delete();
         return redirect()->route('account_list')->with('success', 'Account deleted successfully.');
+    }
+    
+    // Block a specific account by ID
+    public function blockAccount($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 'Blocked';
+        $user->save();
+        
+        return redirect()->route('account_list')->with('success', 'Account has been blocked successfully.');
+    }
+    
+    // Unblock a specific account by ID
+    public function unblockAccount($id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = 'Active';
+        $user->save();
+        
+        return redirect()->route('account_list')->with('success', 'Account has been unblocked successfully.');
     }
 
     // Update a specific account by ID
@@ -237,18 +295,48 @@ class RegisterController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Debug logging: show current and incoming values
-        \Log::info('UpdateAccount Debug', [
+        // Enhanced debug logging
+        \Log::info('UpdateAccount Detailed Debug', [
             'user_id' => $user->id,
-            'current_email' => $user->email,
-            'current_username' => $user->username,
-            'current_employee_id' => $user->employee_id,
-            'submitted_email' => $request->input('email'),
-            'submitted_username' => $request->input('username'),
-            'submitted_employee_id' => $request->input('employee_id'),
+            'current_values' => [
+                'email' => $user->email,
+                'username' => $user->username,
+                'employee_id' => $user->employee_id,
+            ],
+            'submitted_values' => [
+                'email' => $request->input('email'),
+                'username' => $request->input('username'),
+                'employee_id' => $request->input('employee_id'),
+            ],
+            'form_data' => $request->all(),
+            'read_only_checks' => [
+                'email_readonly' => $request->has('email_readonly') ? $request->input('email_readonly') : 'not_set',
+                'username_readonly' => $request->has('username_readonly') ? $request->input('username_readonly') : 'not_set',
+                'employee_id_readonly' => $request->has('employee_id_readonly') ? $request->input('employee_id_readonly') : 'not_set',
+            ]
         ]);
 
-        $validated = $request->validate([
+        // Create a new request with the existing user data for fields that are readonly
+        $modifiedRequest = $request->all();
+        
+        // Check each unique field and force it to use existing value if readonly
+        if ($request->has('email_readonly') && $request->input('email_readonly') === 'true') {
+            $modifiedRequest['email'] = $user->email;
+        }
+        
+        if ($request->has('username_readonly') && $request->input('username_readonly') === 'true') {
+            $modifiedRequest['username'] = $user->username;
+        }
+        
+        if ($request->has('employee_id_readonly') && $request->input('employee_id_readonly') === 'true') {
+            $modifiedRequest['employee_id'] = $user->employee_id;
+        }
+        
+        // Create a new request with our modified data
+        $cleanRequest = new \Illuminate\Http\Request($modifiedRequest);
+
+        // Define base validation rules
+        $rules = [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
@@ -259,18 +347,51 @@ class RegisterController extends Controller
             'address_city' => 'required|string|max:255',
             'address_state' => 'required|string|max:255',
             'address_postal_code' => 'required|string|max:10',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'username' => 'required|string|alpha_dash|max:255|unique:users,username,' . $user->id,
-            'role' => 'required|in:Admin',
             'phone_number' => 'required|string|regex:/^[0-9]{10,15}$/',
             'gender' => 'required|string|in:male,female,other',
             'extension_name' => 'nullable|string|max:10',
-            'employee_id' => 'required|string|unique:users,employee_id,' . $user->id . '|max:20',
+            'role' => 'required|in:Admin',
+        ];
+
+        // Skip uniqueness validation completely for fields that match the current user values
+        if ($cleanRequest->input('email') === $user->email) {
+            $rules['email'] = 'required|email|max:100';
+        } else {
+            $rules['email'] = 'required|email|max:100|unique:users,email,' . $user->id;
+        }
+
+        if ($cleanRequest->input('username') === $user->username) {
+            $rules['username'] = 'required|string|alpha_dash|max:255';
+        } else {
+            $rules['username'] = 'required|string|alpha_dash|max:255|unique:users,username,' . $user->id;
+        }
+
+        if ($cleanRequest->input('employee_id') === $user->employee_id) {
+            $rules['employee_id'] = 'required|string|max:20';
+        } else {
+            $rules['employee_id'] = 'required|string|max:20|unique:users,employee_id,' . $user->id;
+        }
+
+        // Log final validation rules and data
+        \Log::info('Final validation data', [
+            'rules' => $rules,
+            'modified_request' => $modifiedRequest
         ]);
 
-        $user->fill($validated);
-        $user->save();
-
-        return redirect()->route('account_list')->with('success', 'Account updated successfully.');
+        try {
+            $validated = \Illuminate\Support\Facades\Validator::make($modifiedRequest, $rules)->validate();
+            
+            $user->fill($validated);
+            $user->save();
+            
+            return redirect()->route('account_list')->with('success', 'Account updated successfully.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Log validation errors
+            \Log::error('Validation failed', [
+                'errors' => $e->errors(),
+            ]);
+            
+            throw $e;
+        }
     }
 }

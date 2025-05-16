@@ -6,13 +6,23 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AppointmentModel\Appointment;
 use App\Models\User;
-
+use App\Traits\EncryptsAttributes;
 
 class ServiceRecord extends Model
 {
-    use HasFactory;
+    use HasFactory, EncryptsAttributes;
+
+    /**
+     * The attributes that should be encrypted.
+     *
+     * @var array
+     */
+    protected $encrypted = [
+        'salary',
+    ];
 
     protected $fillable = [
+        'item_no',
         'employee_id',
         'date_from',
         'date_to',
@@ -32,6 +42,9 @@ class ServiceRecord extends Model
         'date_from' => 'date',
         'date_to' => 'date',
         'is_permanent' => 'boolean',
+        'employee_id' => 'integer',
+        'created_by' => 'integer',
+        'updated_by' => 'integer',
     ];
 
     /**

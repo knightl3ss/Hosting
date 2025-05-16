@@ -4,6 +4,13 @@
 
 @php $typeLabels = config('appointment_types'); @endphp
 
+@php
+    $salaryFormat = null;
+    if (isset($serviceRecords) && count($serviceRecords) > 0) {
+        $salaryFormat = strtolower($serviceRecords[count($serviceRecords)-1]->payment_frequency ?? '');
+    }
+@endphp
+
 @section('content')
     <div class="container-fluid employee-record-container">
         <div class="header-container d-flex justify-content-between align-items-center">
@@ -41,14 +48,7 @@
         </div>
         @endif
 
-        @if(!$isLatestAppointment)
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            <strong>Note:</strong> You are viewing an older version of this employee's appointment record. 
-            The most recent appointment data may contain updated information.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+
 
         <div class="card employee-details-card mb-4">
             <div class="employee-details-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
@@ -92,19 +92,18 @@
                                         @endphp
                                         @if($singleType === 'job_order' || $singleType === 'joborder' || $singleType === 'job order')
                                             <select class="form-select form-select-sm ms-2 fw-bold" id="salaryFormat" onchange="updateSalaryFormat(this.value)" style="min-width: 100px;">
-                                                <option value="daily" selected>Daily</option>
+                                                <option value="daily" {{ $salaryFormat == 'daily' ? 'selected' : '' }}>Daily</option>
                                             </select>
                                         @elseif($singleType)
                                             <select class="form-select form-select-sm ms-2 fw-bold" id="salaryFormat" onchange="updateSalaryFormat(this.value)" style="min-width: 100px;">
-                                                <option value="annum" {{ (old('salary_format', 'annum') == 'annum') ? 'selected' : ''}}>Annum</option>
-                                                <option value="monthly" {{ (old('salary_format', 'annum') == 'monthly') ? 'selected' : '' }}>Monthly</option>
-                                                
+                                                <option value="annum" {{ $salaryFormat == 'annum' ? 'selected' : '' }}>Annum</option>
+                                                <option value="monthly" {{ $salaryFormat == 'monthly' ? 'selected' : '' }}>Monthly</option>
                                             </select>
                                         @else
                                             <select class="form-select form-select-sm ms-2 fw-bold" id="salaryFormat" onchange="updateSalaryFormat(this.value)" style="min-width: 100px;">
-                                                <option value="annum" {{ (old('salary_format', 'annum') == 'annum') ? 'selected' : ''}}>Annum</option>
-                                                <option value="monthly" {{ (old('salary_format', 'annum') == 'monthly') ? 'selected' : '' }}>Monthly</option>
-                                                <option value="daily" {{ (old('salary_format', 'annum') == 'daily') ? 'selected' : '' }}>Daily</option>
+                                                <option value="annum" {{ $salaryFormat == 'annum' ? 'selected' : '' }}>Annum</option>
+                                                <option value="monthly" {{ $salaryFormat == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                                <option value="daily" {{ $salaryFormat == 'daily' ? 'selected' : '' }}>Daily</option>
                                             </select>
                                         @endif
                                     </div>
@@ -129,7 +128,7 @@
             {{-- Status Salary (Appointment Type Label) --}}
             {{ $typeLabels[$record->status] ?? ucwords(str_replace('_', ' ', $record->status)) }}{{ isset($record->payment_frequency) && !empty($record->payment_frequency) ? '/'.$record->payment_frequency : '' }}
         </td>
-        <td style="border: 1px solid black;" data-salary="{{ $record->salary }}">{{ number_format($record->salary, 2) }}</td>
+        <td style="border: 1px solid black;">₱{{ isset($record->salary) ? number_format((float)$record->salary, 2) : '0.00' }}</td>
         <td colspan="4" style="border: 1px solid black;">{{ $record->station }}</td>
         <td style="border: 1px solid black;">
             {{ $record->separation_date ? $record->separation_date : '-' }}
@@ -218,138 +217,32 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Date Range Validation for Service Records ---
-    function validateDateOrder() {
-        // For all visible modals (Add/Edit)
-        document.querySelectorAll('.modal.show').forEach(function(modal) {
-            const dateFrom = modal.querySelector('input[name="date_from"]');
-            const dateTo = modal.querySelector('input[name="date_to"]');
-            if (dateFrom && dateTo) {
-                // --- Set min for Add Service Record modal ---
-                const serviceRecords = @json($serviceRecords ?? []);
-                if (modal.id === 'addServiceRecordModal') {
-                    let latestDateTo = null;
-                    serviceRecords.forEach(function(record) {
-                        if (record.date_to && (!latestDateTo || record.date_to > latestDateTo)) {
-                            latestDateTo = record.date_to;
-                        }
-                    });
-                    if (latestDateTo) {
-                        // Add 1 day to latestDateTo
-                        const minFrom = new Date(latestDateTo);
-                        minFrom.setDate(minFrom.getDate() + 1);
-                        const minFromStr = minFrom.toISOString().slice(0, 10);
-                        dateFrom.min = minFromStr;
-                        dateTo.min = minFromStr;
-                    }
-                }
-                // --- Set min/max for Edit Service Record modal ---
-                if (modal.id.startsWith('editServiceRecordModal')) {
-                    // Extract record id from modal id
-                    const recordId = modal.id.replace('editServiceRecordModal', '');
-                    // Find index of this record in serviceRecords
-                    const idx = serviceRecords.findIndex(r => String(r.id) === String(recordId));
-                    if (idx !== -1) {
-                        // Previous record's date_to
-                        if (idx > 0 && serviceRecords[idx-1].date_to) {
-                            const prevTo = new Date(serviceRecords[idx-1].date_to);
-                            prevTo.setDate(prevTo.getDate() + 1);
-                            dateFrom.min = prevTo.toISOString().slice(0, 10);
-                        } else {
-                            dateFrom.removeAttribute('min');
-                        }
-                        // Next record's date_from
-                        if (idx < serviceRecords.length - 1 && serviceRecords[idx+1].date_from) {
-                            const nextFrom = new Date(serviceRecords[idx+1].date_from);
-                            nextFrom.setDate(nextFrom.getDate() - 1);
-                            dateTo.max = nextFrom.toISOString().slice(0, 10);
-                        } else {
-                            dateTo.removeAttribute('max');
-                        }
-                    }
-                }
-                // --- Set date_to min according to date_from ---
-                dateFrom.addEventListener('change', function() {
-                    if (dateFrom.value) {
-                        dateTo.min = dateFrom.value;
-                        if (dateTo.value && dateTo.value < dateFrom.value) {
-                            dateTo.value = '';
-                        }
-                    }
-                });
-                dateTo.addEventListener('change', function() {
-                    if (dateFrom.value && dateTo.value < dateFrom.value) {
-                        alert('The TO date cannot be earlier than the FROM date.');
-                        dateTo.value = '';
-                        dateTo.focus();
-                    }
-                });
-            }
-        });
-    }
-    // Listen for modal show events (Bootstrap 5)
-    document.querySelectorAll('.modal').forEach(function(modal) {
-        modal.addEventListener('shown.bs.modal', validateDateOrder);
-    });
-    // For already visible modals on page load (rare)
-    validateDateOrder();
+    const searchInput = document.getElementById('searchEmployee');
+    const tableBody = document.querySelector('.table tbody');
 
-    // Initialize any form validation or date pickers here if needed
+    searchInput.addEventListener('input', debounce(function() {
+        const searchTerm = this.value.toLowerCase();
+        if (searchTerm.length >= 2 || searchTerm.length === 0) {
+            window.location.href = `{{ route('service_records.filter') }}?search=${searchTerm}&page=1`;
+        }
+    }, 500));
+
+    // Add debounce function to prevent excessive requests
+    function debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this, args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
     
-    // Close alert messages after 5 seconds
-    setTimeout(function() {
-        const alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
-            const closeButton = alert.querySelector('.btn-close');
-            if (closeButton) {
-                closeButton.click();
-            }
-        });
-    }, 5000);
-
-    // If any service record is job_order, set salaryFormat to daily
-    const serviceRecords = @json($serviceRecords ?? []);
-    let hasJobOrder = false;
-    serviceRecords.forEach(record => {
-        if (record.status === 'job_order' || record.status === 'joborder' || record.status === 'Job Order') {
-            hasJobOrder = true;
-        }
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
     });
-    if (hasJobOrder) {
-        const salaryFormatSelect = document.getElementById('salaryFormat');
-        if (salaryFormatSelect) {
-            salaryFormatSelect.value = 'daily';
-            updateSalaryFormat('daily');
-        }
-    }
 });
-
-function updateSalaryFormat(format) {
-    const header = document.getElementById('salaryHeader');
-    header.textContent = 'Salary Per';
-    
-    // Update the salary values in the table
-    const salaryCells = document.querySelectorAll('td[data-salary]');
-    salaryCells.forEach(cell => {
-        const originalSalary = parseFloat(cell.dataset.salary);
-        if (format === 'monthly') {
-            cell.textContent = new Intl.NumberFormat('en-PH', {
-                style: 'currency',
-                currency: 'PHP'
-            }).format(originalSalary / 12);
-        } else if (format === 'daily') {
-            cell.textContent = new Intl.NumberFormat('en-PH', {
-                style: 'currency',
-                currency: 'PHP'
-            }).format(originalSalary / 365);
-        } else {
-            cell.textContent = new Intl.NumberFormat('en-PH', {
-                style: 'currency',
-                currency: 'PHP'
-            }).format(originalSalary);
-        }
-    });
-}
 </script>
 
 

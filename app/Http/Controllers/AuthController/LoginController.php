@@ -61,8 +61,8 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
 
-            // Check user status
-            switch ($user->status) {
+            // Check user status (case-insensitive comparison)
+            switch (strtolower($user->status)) {
                 case 'blocked':
                     Auth::logout();
                     return redirect()->back()->withErrors([

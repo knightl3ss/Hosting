@@ -151,6 +151,9 @@
             <h5 class="mb-0 text-primary">
                 <i class="fas fa-clipboard-list me-2"></i>Employees Who Have Made Requests
             </h5>
+            <a href="{{ route('reports.employees-with-requests') }}" class="btn btn-sm btn-primary">
+                <i class="fas fa-file-export me-1"></i>Generate Report
+            </a>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -232,6 +235,15 @@
                                         </div>
                                         @if($purpose->employee)
                                             <span>{{ $purpose->employee->first_name }} {{ $purpose->employee->last_name }}</span>
+                                        @elseif(Schema::hasColumn('record_purposes', 'item_no') && $purpose->item_no)
+                                            @php
+                                                $itemNoEmployee = \App\Models\AppointmentModel\Appointment::where('item_no', $purpose->item_no)->first();
+                                            @endphp
+                                            @if($itemNoEmployee)
+                                                <span>{{ $itemNoEmployee->first_name }} {{ $itemNoEmployee->last_name }}</span>
+                                            @else
+                                                <span class="text-muted">Employee #{{ $purpose->item_no }}</span>
+                                            @endif
                                         @else
                                             <span class="text-muted">N/A</span>
                                         @endif

@@ -2,380 +2,396 @@
 console.log('edit.js loaded');
 
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('editAccountForm');
-    if (!form) {
-        console.warn('editAccountForm not found');
-        return;
+    // Initialize validation for account forms
+    const accountValidation = new AccountValidation();
+});
+
+// Account Validation class for admin account forms
+class AccountValidation {
+    constructor() {
+        this.initializeValidation();
     }
 
-    // Helper: Show error message next to input
-    function showError(input, message) {
-        let errorElem = input.parentElement.querySelector('.invalid-feedback');
-        if (!errorElem) {
-            errorElem = document.createElement('div');
-            errorElem.className = 'invalid-feedback';
-            input.parentElement.appendChild(errorElem);
-        }
-        errorElem.textContent = message;
-        input.classList.add('is-invalid');
+    initializeValidation() {
+        // Initialize validation for both registration and edit forms
+        this.initializeFormValidation('adminRegistrationForm');
+        this.initializeFormValidation('editAccountForm');
     }
 
-    // Helper: Clear error message
-    function clearError(input) {
-        let errorElem = input.parentElement.querySelector('.invalid-feedback');
-        if (errorElem) errorElem.textContent = '';
-        input.classList.remove('is-invalid');
-    }
+    initializeFormValidation(formId) {
+        const form = document.getElementById(formId);
+        if (!form) return;
 
-    // --- Philippine Mobile Number Validation ---
-    function isValidPhilippineMobile(number) {
-        // Accepts +63 XXX-XXX-XXXX, +63XXXXXXXXXX, 09XXXXXXXXX, 09XX XXX XXXX
-        const pattern = /^(\+63|0)9\d{2}[- ]?\d{3}[- ]?\d{4}$/;
-        return pattern.test(number.trim());
-    }
+        // Get all input elements
+        const inputs = form.querySelectorAll('input, select');
 
-    // --- Password Validation ---
-    function isValidPassword(password) {
-        // Min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
-        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/.test(password);
-    }
-
-    // --- Confirm Password Validation ---
-    const passwordInput = form.querySelector('#edit_password');
-    const confirmPasswordInput = form.querySelector('#edit_password_confirmation');
-    if (confirmPasswordInput) {
-        confirmPasswordInput.addEventListener('input', function () {
-            if (confirmPasswordInput.value !== passwordInput.value) {
-                showError(confirmPasswordInput, 'Passwords do not match.');
-            } else {
-                clearError(confirmPasswordInput);
-            }
-        });
-    }
-
-    // --- Email Validation for Allowed Accounts ---
-    const restrictedDomains = ['@test.com', '@blocked.com', '@example.com', '@root.com', '@superuser.com','@user.com'];
-    const restrictedUsernames = ['user', 'example', 'root', 'superuser'];
-    function isValidEmail(input) {
-        const emailPattern = /^[^\s@]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailPattern.test(input.value)) return false;
-        const email = input.value.toLowerCase();
-        // Block restricted domains
-        if (restrictedDomains.some(domain => email.endsWith(domain))) return false;
-        // Block if username contains any restricted username
-        const username = email.split('@')[0];
-        if (restrictedUsernames.some(word => username.includes(word))) return false;
-        return true;
-    }
-
-    // --- Custom Required Fields List (JS only) ---
-    const requiredFieldNames = [
-        'first_name', 'last_name', 'age', 'birthday', 'gender',
-        'address_street', 'address_city', 'address_state', 'address_postal_code',
-        'employee_id', 'username', 'email', 'phone_number', 'role'
-    ]; // Add/remove as needed
-
-    // Single field validation
-    let prevValidateField = null;
-    function validateField(input) {
-        clearError(input);
-        // JS-only required check
-        if (requiredFieldNames.includes(input.name) && !input.value.trim()) {
-            showError(input, 'This field is required.');
-            return false;
-        }
-        if (input.name === 'email' && input.value) {
-            if (!isValidEmail(input)) {
-                showError(input, "Email must not include restricted domains or usernames.");
-                return false;
-            }
-        }
-        // Capitalize first letter (for text inputs)
-        if (input.type === 'text' && input.value.length > 0) {
-            let val = input.value;
-            // Only capitalize if NOT status or role
-            if (input.name !== 'status' && input.name !== 'role' && input.name !== 'password' && input.name !== 'password_confirmation' 
-                && input.name !== 'extension_name' && input.name !== 'employee_id' && input.name !== 'username') {
-                val = val.charAt(0).toUpperCase() + val.slice(1);
-            }
-            // Remove double spaces
-            val = val.replace(/\s{2,}/g, ' ');
-            if (val !== input.value) {
-                input.value = val;
-            }
-            // Check for double spaces (shouldn't be possible after replace, but just in case)
-            if (/\s{2,}/.test(input.value)) {
-                showError(input, 'Double spaces are not allowed.');
-                return false;
-            }
-        }
-        if (input.name === 'email' && input.value) {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(input.value)) {
-                showError(input, 'Please enter a valid email address.');
-                return false;
-            }
-        }
-        if (input.name === 'phone_number' && input.value) {
-            if (!isValidPhilippineMobile(input.value)) {
-                showError(input, 'Please enter a valid Philippine mobile number.');
-                return false;
-            }
-        }
-        if (input.name === 'password_confirmation' && input.value) {
-            if (input.value !== passwordInput.value) {
-                showError(input, 'Passwords do not match.');
-                return false;
-            }
-        }
-        // Prevent numbers in name fields
-        if ((input.name === 'first_name' || input.name === 'last_name') && input.value) {
-            if (/\d/.test(input.value)) {
-                showError(input, 'Name cannot contain numbers.');
-                return false;
-            }
-        }
-        // Prevent letters in phone_number field
-        if (input.name === 'phone_number' && input.value) {
-            if (/[^0-9+\-\s]/.test(input.value)) {
-                showError(input, 'Mobile number cannot contain letters.');
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // --- Real-time Password Strength Feedback ---
-    if (passwordInput) {
-        passwordInput.addEventListener('input', function() {
-            const pwd = passwordInput.value;
-            let msg = '';
-            if (pwd.length < 8) {
-                msg = 'Password must be at least 8 characters.';
-            } else if (!/[A-Z]/.test(pwd)) {
-                msg = 'Include at least one uppercase letter.';
-            } else if (!/[a-z]/.test(pwd)) {
-                msg = 'Include at least one lowercase letter.';
-            } else if (!/[0-9]/.test(pwd)) {
-                msg = 'Include at least one number.';
-            } else if (!/[^A-Za-z0-9]/.test(pwd)) {
-                msg = 'Include at least one special character.';
-            }
-            let feedbackElem = passwordInput.parentElement.querySelector('.edit-password-feedback');
-            if (!feedbackElem) {
-                feedbackElem = document.createElement('small');
-                feedbackElem.className = 'edit-password-feedback text-danger';
-                passwordInput.parentElement.appendChild(feedbackElem);
-            }
-            feedbackElem.textContent = msg;
-            if (msg) {
-                showError(passwordInput, msg);
-            } else {
-                clearError(passwordInput);
-            }
-        });
-    }
-
-    // --- Real-time Error Message for All Fields ---
-    form.querySelectorAll('input, select, textarea').forEach(input => {
-        input.addEventListener('input', () => {
-            validateField(input);
-        });
-        input.addEventListener('blur', () => {
-            validateField(input);
-        });
-    });
-
-    // --- Restrict Leading Spaces for All Text Inputs ---
-    form.querySelectorAll('input[type="text"]').forEach(input => {
-        input.addEventListener('input', function() {
-            // Remove leading spaces
-            let val = input.value;
-            val = val.replace(/^\s+/, '');
-            if (val !== input.value) {
-                input.value = val;
-            }
-        });
-    });
-
-    // --- Name Fields: Restrict Numbers, Prevent Leading Spaces ---
-    const nameFields = ['first_name', 'middle_name', 'last_name', 'extension_name'];
-    nameFields.forEach(fieldId => {
-        const field = form.querySelector(`#${fieldId}`);
-        if (field) {
-            field.addEventListener('input', function(e) {
-                // Remove any digit
-                val = val.replace(/[0-9]/g, '');
+        // Track original values for unique fields
+        const originalValues = {};
+        if (formId === 'editAccountForm') {
+            const uniqueFields = ['username', 'email', 'employee_id'];
+            uniqueFields.forEach(field => {
+                const input = form.querySelector(`#edit_${field}`);
+                if (input) originalValues[field] = input.value;
             });
         }
-    });
 
-    // Track uniqueness validation state
-    let uniqueState = {
-        username: true,
-        email: true,
-        employee_id: true
-    };
+        // Add event listeners for real-time validation
+        inputs.forEach(input => {
+            input.addEventListener('input', () => this.validateField(input, originalValues));
+            input.addEventListener('change', () => this.validateField(input, originalValues));
+            input.addEventListener('blur', () => this.validateField(input, originalValues));
+        });
 
-    // --- Store original values for username, email, employee_id ---
-    const originalValues = {
-        username: usernameInput ? usernameInput.value : '',
-        email: emailInput ? emailInput.value : '',
-        employee_id: employeeIdInput ? employeeIdInput.value : ''
-    };
+        // Auto-calculate age when birthday changes
+        const dobField = formId === 'editAccountForm'
+            ? form.querySelector('#edit_birthday')
+            : form.querySelector('#birthday');
 
-    // --- Uniqueness Check for Username, Email, Employee ID ---
-    function checkUniqueField(type, value, input) {
-        if (!value) return;
-        fetch('/check-unique', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ type, value })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.exists) {
-                let msg = `${type.replace('_', ' ')} is already taken.`;
-                showError(input, msg.charAt(0).toUpperCase() + msg.slice(1));
-                uniqueState[type] = false;
-            } else {
-                clearError(input);
-                uniqueState[type] = true;
-            }
-        })
-        .catch(() => {
-            showError(input, 'Could not validate uniqueness.');
-            uniqueState[type] = false;
-        });
-    }
+        const ageField = formId === 'editAccountForm'
+            ? form.querySelector('#edit_age')
+            : form.querySelector('#age');
 
-    // Attach uniqueness validation on blur
-    const usernameInput = form.querySelector('[name="username"]');
-    const emailInput = form.querySelector('[name="email"]');
-    const employeeIdInput = form.querySelector('[name="employee_id"]');
-    if (usernameInput) {
-        usernameInput.addEventListener('blur', function() {
-            if (usernameInput.value !== originalValues.username) {
-                checkUniqueField('username', usernameInput.value, usernameInput);
-            } else {
-                clearError(usernameInput);
-                uniqueState.username = true;
-            }
-        });
-    }
-    if (emailInput) {
-        emailInput.addEventListener('blur', function() {
-            if (emailInput.value !== originalValues.email) {
-                checkUniqueField('email', emailInput.value, emailInput);
-            } else {
-                clearError(emailInput);
-                uniqueState.email = true;
-            }
-        });
-    }
-    if (employeeIdInput) {
-        employeeIdInput.addEventListener('blur', function() {
-            if (employeeIdInput.value !== originalValues.employee_id) {
-                checkUniqueField('employee_id', employeeIdInput.value, employeeIdInput);
-            } else {
-                clearError(employeeIdInput);
-                uniqueState.employee_id = true;
-            }
-        });
-    }
-
-    // Validation logic (whole form)
-    function validateForm() {
-        let valid = true;
-        requiredFieldNames.forEach(fieldName => {
-            const input = form.elements.namedItem(fieldName);
-            if (input && !validateField(input)) valid = false;
-        });
-        // Also check for any .is-invalid fields
-        if (form.querySelector('.is-invalid')) valid = false;
-        // Prevent submit if any uniqueness check failed, but only if the value was changed
-        if ((usernameInput && usernameInput.value !== originalValues.username && !uniqueState.username) ||
-            (emailInput && emailInput.value !== originalValues.email && !uniqueState.email) ||
-            (employeeIdInput && employeeIdInput.value !== originalValues.employee_id && !uniqueState.employee_id)) {
-            valid = false;
+        if (dobField && ageField) {
+            ageField.readOnly = true;
+            dobField.addEventListener('change', () => {
+                const dob = new Date(dobField.value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const monthDiff = today.getMonth() - dob.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+                ageField.value = age > 0 ? age : '';
+                this.validateField(dobField, originalValues);
+            });
         }
-        return valid;
-    }
 
-    // Prevent duplicate submissions
-    let submitting = false;
-    form.addEventListener('submit', function (e) {
-        if (submitting) {
-            e.preventDefault();
-            return;
-        }
-        if (!validateForm()) {
-            e.preventDefault();
-            return;
-        }
-        // Extra safety: prevent if any field is marked invalid
-        if (form.querySelector('.is-invalid')) {
-            e.preventDefault();
-            alert('Please fix all errors in the form before submitting.');
-            return;
-        }
-        submitting = true;
-        // Optionally: Add loading spinner or disable button
-    });
+        // Password toggle functionality
+        const toggleButtons = form.querySelectorAll('.toggle-password');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const passwordInput = document.getElementById(targetId);
+                const icon = this.querySelector('i');
 
-    // --- Birthday to Age auto-calculation ---
-    const birthdayInput = form.querySelector('#birthday');
-    const ageInput = form.querySelector('#age');
-    if (birthdayInput && ageInput) {
-        // Prevent manual edit of age
-        ageInput.readOnly = true;
-        birthdayInput.addEventListener('change', function () {
-            const birthDate = new Date(this.value);
-            if (isNaN(birthDate)) {
-                ageInput.value = '';
+                // Toggle password visibility
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Add form submit validation
+        form.addEventListener('submit', (e) => {
+            if (!this.validateForm(form, originalValues)) {
+                e.preventDefault();
                 return;
             }
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            ageInput.value = age > 0 ? age : '';
-        });
-    }
-    // --- End Birthday to Age auto-calculation ---
 
-    // --- Persist and Restore Form Data ---
-    const FORM_STORAGE_KEY = 'editAccountForm';
-    // Restore data if present
-    const savedData = localStorage.getItem(FORM_STORAGE_KEY);
-    if (savedData) {
-        try {
-            const values = JSON.parse(savedData);
-            Object.keys(values).forEach(function(key) {
-                const field = form.elements.namedItem(key);
-                if (field) field.value = values[key];
-            });
-        } catch (e) { console.warn('Could not parse saved form data'); }
-    }
-    // On input change, save to localStorage
-    form.querySelectorAll('input, select, textarea').forEach(function(input) {
-        input.addEventListener('input', function() {
-            const data = {};
-            form.querySelectorAll('input, select, textarea').forEach(function(f) {
-                if (f.name) data[f.name] = f.value;
-            });
-            localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(data));
+            // Handle readonly fields for submission
+            if (formId === 'editAccountForm') {
+                const uniqueFields = ['username', 'email', 'employee_id'];
+                uniqueFields.forEach(field => {
+                    const input = form.querySelector(`#edit_${field}`);
+                    const readonlyField = document.getElementById(`${field}_readonly`);
+
+                    if (input && readonlyField && readonlyField.value === 'true') {
+                        // If field is still readonly, ensure we submit the original value
+                        input.value = input.getAttribute('data-original-value') || input.value;
+                    }
+                });
+            }
         });
-    });
-    // On successful submit, clear localStorage
-    form.addEventListener('submit', function(e) {
-        // You may want to check for errors before clearing, but for now we'll clear on submit
-        localStorage.removeItem(FORM_STORAGE_KEY);
-    });
-});
+    }
+
+    validateField(input, originalValues = {}) {
+        const value = input.value.trim();
+        let isValid = true;
+
+        // Clear previous error
+        this.clearError(input);
+
+        // Skip validation if disabled or readonly
+        if (input.disabled || input.readOnly) {
+            return true;
+        }
+
+        // Skip validation for unique fields if the value hasn't changed from original (for edit form)
+        const fieldId = input.id;
+        if (fieldId === 'edit_username' || fieldId === 'edit_email' || fieldId === 'edit_employee_id') {
+            // If the field hasn't been edited (no data-edited attribute) or 
+            // value matches original value, skip validation
+            if (!input.hasAttribute('data-edited') ||
+                (input.hasAttribute('data-original-value') &&
+                    value === input.getAttribute('data-original-value'))) {
+                return true;
+            }
+        }
+
+        // Required field validation
+        if (input.required && !value) {
+            this.showError(input, 'This field is required');
+            return false;
+        }
+
+        // Field-specific validation
+        if (value) {
+            const fieldName = input.name;
+            const fieldId = input.id;
+
+            // Name validations
+            if (fieldName === 'first_name' || fieldName === 'middle_name' ||
+                fieldName === 'last_name' || fieldName === 'extension_name') {
+                isValid = this.validateName(input);
+            }
+            // Age and birthday validations
+            else if (fieldName === 'birthday' || fieldId === 'edit_birthday') {
+                isValid = this.validateAge(input);
+            }
+            else if (fieldName === 'age' || fieldId === 'edit_age') {
+                // Age is calculated automatically, so just check range
+                const age = parseInt(value);
+                if (isNaN(age) || age < 18 || age > 100) {
+                    this.showError(input, 'Age must be between 18 and 100');
+                    isValid = false;
+                }
+            }
+            // Employee ID validation
+            else if (fieldName === 'employee_id' || fieldId === 'edit_employee_id') {
+                isValid = this.validateEmployeeId(input);
+            }
+            // Username validation
+            else if (fieldName === 'username' || fieldId === 'edit_username') {
+                isValid = this.validateUsername(input);
+            }
+            // Email validation
+            else if (fieldName === 'email' || fieldId === 'edit_email') {
+                isValid = this.validateEmail(input);
+            }
+            // Phone number validation
+            else if (fieldName === 'phone_number' || fieldId === 'edit_phone_number') {
+                isValid = this.validatePhoneNumber(input);
+            }
+            // Password validation
+            else if (fieldName === 'password' || fieldId === 'edit_password') {
+                if (value.length > 0) {
+                    isValid = this.validatePassword(input);
+                }
+            }
+            // Password confirmation validation
+            else if (fieldName === 'password_confirmation' || fieldId === 'edit_password_confirmation') {
+                if (value.length > 0) {
+                    isValid = this.validatePasswordConfirmation(input);
+                }
+            }
+            // Address validation
+            else if (fieldName.includes('address_')) {
+                isValid = this.validateAddress(input);
+            }
+        }
+
+        return isValid;
+    }
+
+    validateForm(form, originalValues = {}) {
+        let isValid = true;
+        const inputs = form.querySelectorAll('input, select');
+
+        inputs.forEach(input => {
+            if (!this.validateField(input, originalValues)) {
+                isValid = false;
+            }
+        });
+
+        // Cross-field validations
+        if (form.id === 'editAccountForm' || form.id === 'adminRegistrationForm') {
+            const prefix = form.id === 'editAccountForm' ? 'edit_' : '';
+
+            // Password and confirmation match
+            const passwordField = document.getElementById(`${prefix}password`);
+            const confirmField = document.getElementById(`${prefix}password_confirmation`);
+
+            if (passwordField && confirmField &&
+                passwordField.value &&
+                passwordField.value !== confirmField.value) {
+                this.showError(confirmField, 'Passwords do not match');
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+    validateName(input) {
+        let value = input.value.trim();
+        // Remove double spaces
+        value = value.replace(/\s{2,}/g, ' ');
+        // Uppercase the first letter of each word
+        value = value.replace(/\b\w/g, c => c.toUpperCase());
+        input.value = value;
+
+        // Name validation
+        const namePattern = /^[a-zA-Z\s\-'\.]+$/;
+        if (input.name !== 'middle_name' && input.name !== 'extension_name' && value.length < 2) {
+            this.showError(input, 'Name must be at least 2 characters long');
+            return false;
+        }
+        if (!namePattern.test(value)) {
+            this.showError(input, 'Name can only contain letters, spaces, hyphens, apostrophes, and periods');
+            return false;
+        }
+        return true;
+    }
+
+    validateAge(input) {
+        const dob = new Date(input.value);
+        const today = new Date();
+        let age = today.getFullYear() - dob.getFullYear();
+        const monthDiff = today.getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        // Find the age input field
+        const ageInput = input.id === 'birthday' ?
+            document.getElementById('age') :
+            document.getElementById('edit_age');
+
+        if (ageInput) {
+            ageInput.value = age > 0 ? age : '';
+        }
+
+        if (age < 18 || age > 100) {
+            this.showError(input, 'Age must be between 18 and 100 years');
+            return false;
+        }
+        return true;
+    }
+
+    validateEmployeeId(input) {
+        const value = input.value.trim();
+        const pattern = /^[a-zA-Z0-9\-]+$/;
+
+        if (!pattern.test(value)) {
+            this.showError(input, 'Employee ID can only contain letters, numbers, and hyphens');
+            return false;
+        }
+
+        return true;
+    }
+
+    validateUsername(input) {
+        const value = input.value.trim();
+        const pattern = /^[A-Za-z0-9_]+$/;
+
+        if (!pattern.test(value)) {
+            this.showError(input, 'Username can only contain letters, numbers, and underscores');
+            return false;
+        }
+
+        if (value.length < 3) {
+            this.showError(input, 'Username must be at least 3 characters long');
+            return false;
+        }
+
+        return true;
+    }
+
+    validateEmail(input) {
+        const value = input.value.trim();
+        const pattern = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+
+        if (!pattern.test(value)) {
+            this.showError(input, 'Please enter a valid email address');
+            return false;
+        }
+
+        return true;
+    }
+
+    validatePhoneNumber(input) {
+        const value = input.value.trim();
+        // Format for Philippine mobile numbers: 09XXXXXXXXX (11 digits)
+        const pattern = /^09\d{9}$/;
+
+        // Clean the input - remove any non-digit characters
+        const cleanedValue = value.replace(/\D/g, '');
+
+        if (!pattern.test(cleanedValue)) {
+            this.showError(input, 'Please enter a valid Philippine mobile number (09XXXXXXXXX)');
+            return false;
+        }
+
+        // Update the field with the cleaned value
+        if (cleanedValue !== value) {
+            input.value = cleanedValue;
+        }
+
+        return true;
+    }
+
+    validatePassword(input) {
+        const value = input.value;
+        // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special char
+        const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
+
+        if (!pattern.test(value)) {
+            this.showError(input, 'Password must contain at least 8 characters, including uppercase, lowercase, number, and special character');
+            return false;
+        }
+
+        return true;
+    }
+
+    validatePasswordConfirmation(input) {
+        const passwordInput = input.id === 'password_confirmation' ?
+            document.getElementById('password') :
+            document.getElementById('edit_password');
+
+        if (input.value !== passwordInput.value) {
+            this.showError(input, 'Passwords do not match');
+            return false;
+        }
+
+        return true;
+    }
+
+    validateAddress(input) {
+        const value = input.value.trim();
+
+        if (input.name === 'address_postal_code') {
+            // Postal code should be numeric
+            const pattern = /^\d+$/;
+            if (!pattern.test(value)) {
+                this.showError(input, 'Postal code must contain only numbers');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    showError(input, message) {
+        input.classList.add('is-invalid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    }
+
+    clearError(input) {
+        input.classList.remove('is-invalid');
+        const errorDiv = input.nextElementSibling;
+        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+            errorDiv.textContent = '';
+            errorDiv.style.display = 'none';
+        }
+    }
+}

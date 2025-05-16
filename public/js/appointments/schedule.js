@@ -73,13 +73,13 @@ function toggleEditModal(button) {
     bsModal.show();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (typeof bootstrap !== 'undefined') {
         console.log('Bootstrap is loaded correctly');
         const addModal = document.getElementById('addSchedModal');
         const editModal = document.getElementById('editSchedModal');
         document.querySelectorAll('[data-bs-dismiss="modal"]').forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const modal = this.closest('.modal');
                 const bsModal = bootstrap.Modal.getInstance(modal);
                 if (bsModal) {
@@ -90,63 +90,24 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('Bootstrap is not defined. Modal functionality may not work properly.');
     }
-    document.getElementById('appointmentTypeFilter').addEventListener('change', function() {
+
+    // Filter by appointment type
+    document.getElementById('appointmentTypeFilter').addEventListener('change', function () {
         const selectedType = this.value;
         const url = new URL(window.location.href);
         url.searchParams.set('appointment_type', selectedType);
         window.location.href = url.toString();
     });
-    const addAppointmentType = document.getElementById('appointment_type');
-    const addIdLabel = document.getElementById('id_label');
-    if (addAppointmentType.value === 'job_order') {
-        addIdLabel.textContent = 'Employee ID';
-    } else if (addAppointmentType.value !== '') {
-        addIdLabel.textContent = 'Item No';
-    }
-    function calculateAge(birthdate) {
-        const dob = new Date(birthdate);
-        const today = new Date();
-        let age = today.getFullYear() - dob.getFullYear();
-        const monthDiff = today.getMonth() - dob.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-            age--;
-        }
-        return age;
-    }
-    document.getElementById('dob').addEventListener('change', function() {
-        const age = calculateAge(this.value);
-        document.getElementById('age').value = age;
-    });
-    document.getElementById('editDob').addEventListener('change', function() {
-        const age = calculateAge(this.value);
-        document.getElementById('editAge').value = age;
-    });
-    document.getElementById('appointment_type').addEventListener('change', function() {
-        const selectedType = this.value;
-        const idLabel = document.getElementById('id_label');
-        if (selectedType === 'job_order') {
-            idLabel.textContent = 'Employee ID';
-        } else {
-            idLabel.textContent = 'Item No';
-        }
-    });
-    document.getElementById('edit_appointment_type').addEventListener('change', function() {
-        const selectedType = this.value;
-        const idLabel = document.getElementById('edit_id_label');
-        if (selectedType === 'job_order') {
-            idLabel.textContent = 'Employee ID';
-        } else {
-            idLabel.textContent = 'Item No';
-        }
-    });
 });
 
+// Initialize tooltips
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
-document.getElementById('csvFile').addEventListener('change', function() {
+// CSV Import handling
+document.getElementById('csvFile').addEventListener('change', function () {
     const fileName = this.files[0].name;
     const fileSize = this.files[0].size / 1024 / 1024;
     const fileSizeElement = document.querySelector('.file-size');
@@ -155,7 +116,7 @@ document.getElementById('csvFile').addEventListener('change', function() {
     }
 });
 
-document.getElementById('csvImportForm').addEventListener('submit', function(e) {
+document.getElementById('csvImportForm').addEventListener('submit', function (e) {
     e.preventDefault();
     const submitBtn = document.getElementById('importSubmitBtn');
     const progressBar = document.querySelector('.progress-bar');
@@ -175,7 +136,7 @@ document.getElementById('csvImportForm').addEventListener('submit', function(e) 
     }
     const file = fileInput.files[0];
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         const csv = event.target.result;
         const rows = csv.split(/\r?\n/).filter(r => r.trim().length > 0);
         if (rows.length < 2) {
@@ -220,34 +181,34 @@ document.getElementById('csvImportForm').addEventListener('submit', function(e) 
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({appointments: data})
+            body: JSON.stringify({ appointments: data })
         })
-        .then(response => response.json())
-        .then(result => {
-            progressBar.style.width = '100%';
-            if (result.success) {
-                submitBtn.textContent = 'Imported!';
-                location.reload();
-            } else {
-                let errorMsg = result.message || 'Import failed.';
-                if (result.errors && Array.isArray(result.errors)) {
-                    errorMsg += '\n' + result.errors.join('\n');
+            .then(response => response.json())
+            .then(result => {
+                progressBar.style.width = '100%';
+                if (result.success) {
+                    submitBtn.textContent = 'Imported!';
+                    location.reload();
+                } else {
+                    let errorMsg = result.message || 'Import failed.';
+                    if (result.errors && Array.isArray(result.errors)) {
+                        errorMsg += '\n' + result.errors.join('\n');
+                    }
+                    alert(errorMsg);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Import';
                 }
-                alert(errorMsg);
+            })
+            .catch(err => {
+                alert('Import failed.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Import';
-            }
-        })
-        .catch(err => {
-            alert('Import failed.');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Import';
-        });
+            });
     };
     reader.readAsText(file);
 });
 
-document.getElementById('importCsvModal').addEventListener('hidden.bs.modal', function() {
+document.getElementById('importCsvModal').addEventListener('hidden.bs.modal', function () {
     document.getElementById('csvImportForm').reset();
     const progressBar = document.querySelector('.progress-bar');
     const progressContainer = document.querySelector('.progress-container');

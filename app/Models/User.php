@@ -6,11 +6,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\EncryptsAttributes;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, EncryptsAttributes;
+    
+    /**
+     * The attributes that should be encrypted.
+     *
+     * @var array
+     */
+    protected $encrypted = [
+        'address_street',
+        'address_city',
+        'address_state',
+        'address_postal_code',
+        'phone_number'
+        // 'email' removed from encryption to prevent length issues
+    ];
 
     /**
      * The attributes that are mass assignable.

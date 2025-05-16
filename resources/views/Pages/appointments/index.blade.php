@@ -7,7 +7,7 @@
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="text-primary">Appointment Management</h1>
+            <h1 class="text-primary">Employee Management</h1>
         </div>
     </div>
     
@@ -22,7 +22,7 @@
                             <i class="fas fa-calendar-alt fs-3 text-primary"></i>
                         </div>
                         <div>
-                            <h3 class="card-title fs-5 fw-bold text-dark mb-1">Appointment Schedule</h3>
+                            <h3 class="card-title fs-5 fw-bold text-dark mb-1">Employee Schedule</h3>
                             <p class="card-text text-muted mb-0">Manage your appointment calendar and scheduling</p>
                         </div>
                         <div class="ms-auto">

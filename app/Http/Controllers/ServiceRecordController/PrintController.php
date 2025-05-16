@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ServiceRecordController;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\AppointmentModel\Appointment;
+use App\Models\ServiceRecordModel\ServiceRecord;
 use App\Http\Controllers\Controller;
 
 class PrintController extends Controller
@@ -17,14 +18,12 @@ class PrintController extends Controller
         $selectedAppointmentId = request()->query('appointment_id');
         if ($selectedAppointmentId) {
             $employee = Appointment::findOrFail($selectedAppointmentId);
-            $serviceRecords = DB::table('service_records')
-                ->where('employee_id', $selectedAppointmentId)
+            $serviceRecords = ServiceRecord::where('employee_id', $selectedAppointmentId)
                 ->orderBy('date_from', 'asc')
                 ->get();
         } else {
             $employee = Appointment::findOrFail($id);
-            $serviceRecords = DB::table('service_records')
-                ->where('employee_id', $id)
+            $serviceRecords = ServiceRecord::where('employee_id', $id)
                 ->orderBy('date_from', 'asc')
                 ->get();
         }

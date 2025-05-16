@@ -9,27 +9,7 @@
     <!-- Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/auth/login.css') }}" rel="stylesheet">
-    <style>
-        /* Overlay logo background styling */
-        .logo-bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 0;
-            opacity: 50; /* Adjust for subtlety */
-            pointer-events: none; /* Let clicks pass through */
-            user-select: none;
-        }
-        .main-content {
-            position: relative;
-            z-index: 2;
-        }
-    </style>
+    <!-- Styles moved to login.css -->
 </head>
 <body>
     <!-- Logo Overlay Background -->
@@ -286,20 +266,34 @@
 
     <!-- Centered Logo and Main Content -->
     <div class="container d-flex flex-column align-items-center justify-content-center main-content" style="min-height:60vh;">
-        <!--<img src="{{ asset('images/Municipal Logo of Magallanes.png') }}" alt="Logo" width="400" height="400" class="my-4" style="border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.08);">-->
-        @if(auth()->check())
-        <!-- Action Links (only show if logged in) -->
-        <div class="d-flex gap-4 justify-content-center my-4">
-            <a href="{{ url('/dashboard') }}" class="btn-dashboard d-flex align-items-center">
-                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-            </a>
-            <a href="{{ url('/appointments') }}" class="btn-appointment d-flex align-items-center">
-                <i class="fas fa-calendar-check me-2"></i> Appointment
-            </a>
-        </div>
-        @endif
-        <!-- Add more content here as needed -->
+        <!-- Add content here as needed -->
     </div>
+    
+    @if(auth()->check())
+    <!-- Action Links (only show if logged in) - Positioned at bottom center -->
+    <div class="fixed-bottom d-flex justify-content-center mb-5 pb-2">
+        <div class="action-buttons-container" style="max-width: 400px;">
+            <div class="row justify-content-center">
+                <div class="col-6 text-center">
+                    <a href="{{ url('/dashboard') }}" class="action-card dashboard-card small-action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="action-text">Dashboard</div>
+                    </a>
+                </div>
+                <div class="col-6 text-center">
+                    <a href="{{ url('/appointments') }}" class="action-card appointment-card small-action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="action-text">Appointment</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- Mini Footer -->
     <footer class="bg-dark text-light py-2 mt-auto w-100 shadow-sm mini-footer" style="position:fixed;bottom:0;left:0;z-index:1050;">

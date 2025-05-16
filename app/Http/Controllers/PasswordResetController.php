@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use App\Services\AuthService;
 
 class PasswordResetController extends Controller
 {
@@ -18,19 +19,26 @@ class PasswordResetController extends Controller
     public function sendOTP(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ], [
-            'email.exists' => 'No account found with this email address',
+            'email' => 'required|email',
         ]);
         
         $email = $request->email;
         
+        // Find user with encrypted email
+        $user = AuthService::findUserByEmail($email);
+        
+        if (!$user) {
+            return response()->json(['message' => 'No account found with this email address'], 404);
+        }
+        
         // Generate 6-digit OTP
         $otp = sprintf("%06d", mt_rand(1, 999999));
         
-        // Store OTP in password_resets table
+        // Store OTP in password_resets table with a hash of the email to avoid encryption issues
+        $emailHash = md5($email); // Use a hash as the lookup key
+        
         DB::table('password_resets')->updateOrInsert(
-            ['email' => $email],
+            ['email' => $emailHash],
             [
                 'token' => $otp,
                 'created_at' => Carbon::now()
@@ -62,10 +70,11 @@ class PasswordResetController extends Controller
         
         $email = $request->email;
         $otp = $request->otp;
+        $emailHash = md5($email); // Use the same hash as in sendOTP
         
         // Check if OTP is valid and not expired (10 minutes validity)
         $reset = DB::table('password_resets')
-                   ->where('email', $email)
+                   ->where('email', $emailHash)
                    ->where('token', $otp)
                    ->where('created_at', '>', Carbon::now()->subMinutes(10))
                    ->first();
@@ -88,9 +97,10 @@ class PasswordResetController extends Controller
         ]);
         
         $email = $request->email;
+        $emailHash = md5($email); // Use the same hash as in sendOTP and verifyOTP
         
-        // Find user
-        $user = User::where('email', $email)->first();
+        // Find user with encrypted email
+        $user = AuthService::findUserByEmail($email);
         
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
@@ -101,8 +111,8 @@ class PasswordResetController extends Controller
         $user->save();
         
         // Delete password reset tokens
-        DB::table('password_resets')->where('email', $email)->delete();
+        DB::table('password_resets')->where('email', $emailHash)->delete();
         
         return response()->json(['message' => 'Password has been reset successfully'], 200);
     }
-} 
+}

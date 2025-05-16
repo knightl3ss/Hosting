@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('Layout.app')
 
 @section('content')
 <div class="container-fluid py-4">
@@ -123,12 +123,41 @@
                                         data-role="{{ $user->role }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('delete_account', ['id' => $user->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this account? This action cannot be undone.');">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete Account">
+                                    @if(isset($usersWithRecords[$user->id]) && $usersWithRecords[$user->id])
+                                        <!-- For users with service records, show block/unblock based on status -->
+                                        @php
+                                            $status = strtolower($user->status);
+                                        @endphp
+                                        
+                                        @if($status === 'blocked')
+                                            <!-- Unblock button for blocked users with service records -->
+                                            <button type="button" class="btn btn-success btn-sm unblock-account-btn" title="Unblock Account" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#unblockAccountModal" 
+                                                data-user-id="{{ $user->id }}" 
+                                                data-username="{{ $user->username }}">
+                                                <i class="fas fa-unlock"></i>
+                                            </button>
+                                        @else
+                                            <!-- Block button for active users with service records -->
+                                            <button type="button" class="btn btn-danger btn-sm block-account-btn" title="Block Account" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#blockAccountModal" 
+                                                data-user-id="{{ $user->id }}" 
+                                                data-username="{{ $user->username }}">
+                                                <i class="fas fa-ban"></i>
+                                            </button>
+                                        @endif
+                                    @else
+                                        <!-- Delete button for users without service records -->
+                                        <button type="button" class="btn btn-danger btn-sm delete-account-btn" title="Delete Account" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#deleteAccountModal" 
+                                            data-user-id="{{ $user->id }}" 
+                                            data-username="{{ $user->username }}">
                                             <i class="fas fa-trash"></i>
                                         </button>
-                                    </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -142,6 +171,7 @@
 
 {{-- Separated Registration Modal --}}
 @include('Pages.Account.account_modal')
+@include('Pages.Account.temp_unblock_modal')
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 
@@ -150,6 +180,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Handle Edit Account Button Clicks
     const editButtons = document.querySelectorAll('.edit-account-btn');
     editButtons.forEach(btn => {
         btn.addEventListener('click', function() {
@@ -177,6 +208,38 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear password fields
             document.getElementById('edit_password').value = '';
             document.getElementById('edit_password_confirmation').value = '';
+        });
+    });
+    
+    // Handle Delete Account Button Clicks
+    const deleteButtons = document.querySelectorAll('.delete-account-btn');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Get the user ID and username from the button's data attributes
+            const userId = this.dataset.userId;
+            const username = this.dataset.username;
+            
+            // Update the delete form action with the correct user ID
+            const deleteForm = document.getElementById('deleteAccountForm');
+            deleteForm.action = `{{ route('delete_account', '') }}/${userId}`;
+            
+            // Update the confirmation message with the username
+            const confirmationMessage = document.querySelector('#deleteAccountModal .alert-warning strong:last-child');
+            if (confirmationMessage) {
+                confirmationMessage.textContent = `"${username}"`;
+            }
+            
+            // Clear the confirmation input field
+            const confirmUsernameInput = document.getElementById('confirm_username');
+            if (confirmUsernameInput) {
+                confirmUsernameInput.value = '';
+                confirmUsernameInput.classList.remove('is-valid', 'is-invalid');
+            }
+            
+            // Store the username in a data attribute for validation
+            if (confirmUsernameInput) {
+                confirmUsernameInput.dataset.usernameToMatch = username;
+            }
         });
     });
 });

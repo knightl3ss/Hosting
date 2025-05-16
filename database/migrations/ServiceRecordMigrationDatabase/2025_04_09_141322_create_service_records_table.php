@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date_to')->nullable();
             $table->string('designation')->nullable();
             $table->string('status')->nullable();
-            $table->decimal('salary', 12, 2)->nullable();
+            $table->string('salary')->nullable();
             $table->string('station')->nullable();
             $table->string('separation_date')->nullable();
             $table->string('service_status')->nullable();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AppointmentModel\Appointment;
 use App\Models\ServiceRecordModel\RecordPurpose;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class RecordPurposeController extends Controller
 {
@@ -34,6 +35,7 @@ class RecordPurposeController extends Controller
             'purpose_details' => 'nullable|string',
             'other_purpose' => 'nullable|string',
             'requested_date' => 'required|date',
+            'item_no' => 'nullable|string',
         ]);
 
         // Determine the final purpose
@@ -41,14 +43,22 @@ class RecordPurposeController extends Controller
             ? $validated['other_purpose']
             : $validated['purpose_type'];
 
-        // Save to the database
-        \App\Models\ServiceRecordModel\RecordPurpose::create([
+        // Create record purpose data array
+        $recordPurposeData = [
             'employee_id' => $validated['employee_id'],
             'purpose_type' => $validated['purpose_type'],
             'purpose' => $purpose,
             'purpose_details' => $validated['purpose_details'] ?? null,
             'requested_date' => $validated['requested_date'],
-        ]);
+        ];
+
+        // Check if item_no field exists and was provided
+        if (Schema::hasColumn('record_purposes', 'item_no') && isset($validated['item_no'])) {
+            $recordPurposeData['item_no'] = $validated['item_no'];
+        }
+
+        // Save to the database
+        \App\Models\ServiceRecordModel\RecordPurpose::create($recordPurposeData);
 
         return redirect()->back()->with('success', 'Record purpose submitted successfully.');
     }
@@ -61,6 +71,7 @@ class RecordPurposeController extends Controller
         $purpose = \App\Models\ServiceRecordModel\RecordPurpose::findOrFail($id);
         $purpose->status = 'Completed';
         $purpose->save();
+        
         return redirect()->back()->with('success', 'Purpose status updated to Completed.');
     }
 }

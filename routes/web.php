@@ -43,6 +43,17 @@ Route::middleware(['auth', 'prevent-back'])->group(function () {
     require base_path('routes/appointment.php');
     // Include Plantilla routes
     // require base_path('routes/plantilla.php');
+    
+    // Report routes
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/male-employees', [\App\Http\Controllers\ReportsController::class, 'maleEmployees'])->name('male-employees');
+        Route::get('/female-employees', [\App\Http\Controllers\ReportsController::class, 'femaleEmployees'])->name('female-employees');
+        Route::get('/in-service-employees', [\App\Http\Controllers\ReportsController::class, 'inServiceEmployees'])->name('in-service-employees');
+        Route::get('/suspension-employees', [\App\Http\Controllers\ReportsController::class, 'suspensionEmployees'])->name('suspension-employees');
+        Route::get('/not-in-service-employees', [\App\Http\Controllers\ReportsController::class, 'notInServiceEmployees'])->name('not-in-service-employees');
+        Route::get('/service-years/{group}', [\App\Http\Controllers\ReportsController::class, 'serviceYears'])->name('service-years');
+        Route::get('/employees-with-requests', [\App\Http\Controllers\ReportsController::class, 'employeesWithRequests'])->name('employees-with-requests');
+    });
 });
 
 // Notification routes
@@ -79,4 +90,4 @@ Route::post('/check-unique', [RegisterController::class, 'checkUnique'])->name('
 Route::post('/appointments/{id}/set-active', [\App\Http\Controllers\AppointmentController\AppointmentScheduleController::class, 'setActive'])->name('appointments.setActive');
 
 // AJAX endpoint for real-time uniqueness check
-Route::post('/appointment/check-unique', [App\Http\Controllers\AppointmentController\AppointmentController::class, 'checkUnique'])->name('appointment.checkUnique');
+Route::get('/appointments/check-unique', [App\Http\Controllers\AppointmentController\AppointmentController::class, 'checkUnique'])->name('appointment.checkUnique');

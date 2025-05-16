@@ -1,0 +1,201 @@
+appointment_type,employee_id,item_no,first_name,middle_name,last_name,extension_name,gender,birthday,age,location,position,rate_per_day,employment_start,employment_end,source_of_fund,office_assignment
+Contractual,,ITM-1000,Terry,Daniel,Kaiser,Jr.,Female,15/04/1996,29,Underwoodview,Tree surgeon,1964.63,24/01/2023,30/07/2026,20% Development Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Casual,,ITM-1001,Christopher,Joseph,Haney,Sr.,Male,11/07/1985,40,Williamshaven,Community pharmacist,1178.26,18/10/2022,02/11/2022,SEF,OFFICE OF THE MUNICIPAL ASSESSOR
+Coterminous,,ITM-1002,Andrew,Brenda,Holder,,Male,03/01/1986,39,West Eric,English as a second language teacher,1097.02,01/10/2024,06/12/2026,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Contractual,,ITM-1003,Jeffrey,Matthew,Williams,,Female,14/09/1997,28,Parsonsland,"Exhibitions officer, museum/gallery",1862.85,17/12/2020,24/10/2026,Others,OFFICE OF THE SANGUNIANG BAYAN
+Coterminous,,ITM-1004,Ashley,Christopher,Harris,,Male,16/02/1965,60,Myerston,Hydrogeologist,1438.47,23/09/2022,16/07/2026,SEF,OFFICE OF THE SANGUNIANG BAYAN
+Elected,,ITM-1005,Jesus,Corey,Brock,Jr.,Female,15/12/1977,48,North Ericaside,Armed forces technical officer,816.25,18/03/2021,26/08/2021,20% Development Fund,GENERAL SERVICES OFFICE
+Contractual,,ITM-1006,Samuel,Misty,Hughes,,Female,26/01/1974,51,West Brittany,Horticultural therapist,1946,07/06/2022,02/09/2022,Others,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Substitute,,ITM-1007,Christopher,Robert,Harper,Sr.,Female,29/09/2002,23,Elizabethshire,Conference centre manager,310.15,05/10/2022,07/08/2025,20% Development Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Regular Permanent,,ITM-1008,Caroline,Cynthia,Graham,III,Female,16/04/1993,32,West Cynthiaborough,Network engineer,654.25,29/05/2023,08/02/2024,SEF,OFFICE OF THE MAYOR
+Temporary,,ITM-1009,Jessica,Heather,Jones,Jr.,Male,04/08/1980,45,East David,Paediatric nurse,555.98,05/07/2024,05/03/2025,Others,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Provisional,,ITM-1010,John,Danny,Winters,,Male,08/03/1985,40,Walshport,Actor,857.09,17/06/2020,13/08/2021,20% Development Fund,OFFICE OF THE MAYOR
+Provisional,,ITM-1011,Michael,Donna,Thompson,Sr.,Female,26/06/1964,61,North Donaldburgh,"Designer, textile",1256.63,10/11/2020,06/12/2020,SEF,OFFICE OF THE LOCAL REGISTRAR
+Temporary,,ITM-1012,Nicole,Jennifer,Lang,III,Male,25/01/2004,21,New Amandaton,"Horticulturist, commercial",703.1,22/12/2021,09/01/2022,20% Development Fund,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Provisional,,ITM-1013,Emily,Donna,Brooks,,Female,03/11/2001,24,New Christophershire,Health service manager,1516.34,14/04/2024,12/11/2026,General Fund,OFFICE OF THE MAYOR
+Coterminous - Temporary,,ITM-1014,Elizabeth,Martha,Hughes,Jr.,Male,18/10/2003,22,Torreshaven,Writer,372.04,23/06/2023,10/05/2024,SEF,GENERAL SERVICES OFFICE
+Coterminous,,ITM-1015,Jason,Ashley,Middleton,,Female,20/12/1977,48,Bettyfurt,Maintenance engineer,953.28,12/11/2023,23/03/2024,SEF,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Coterminous,,ITM-1016,Alexandria,Margaret,Webster,Sr.,Female,08/03/1993,32,Greenchester,Higher education lecturer,564.33,31/12/2024,13/03/2027,Others,GENERAL SERVICES OFFICE
+Substitute,,ITM-1017,Sarah,Stephen,Fleming,Jr.,Female,05/07/1972,53,Donaldfurt,"Librarian, academic",768.87,19/11/2024,31/03/2027,Others,OFFICE OF THE MAYOR
+Elected,,ITM-1018,Roberta,Maureen,Castro,Sr.,Male,24/02/1996,29,Munozside,Retail banker,1657.68,26/10/2022,21/01/2027,Others,OFFICE OF THE SANGUNIANG BAYAN
+Temporary,,ITM-1019,Jacqueline,Rodney,Goodwin,III,Female,15/03/2002,23,Caitlinstad,Retail merchandiser,1011.59,17/10/2024,30/11/2025,Others,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Contractual,,ITM-1020,Nancy,Mary,Webb,III,Female,16/05/1990,35,Jonathanland,Private music teacher,665.92,26/02/2022,07/10/2022,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Regular Permanent,,ITM-1021,Christopher,Patrick,Harris,Sr.,Female,25/10/1979,46,East Andrea,"Engineer, civil (contracting)",1596.13,02/01/2022,06/02/2022,Others,OFFICE OF THE MUNICIPAL ASSESSOR
+Job Order,EMP-2022,,Wayne,Hayden,Moreno,Jr.,Female,27/10/1993,32,Charlesmouth,Race relations officer,1358.99,06/05/2022,13/01/2023,Others,GENERAL SERVICES OFFICE
+Coterminous - Temporary,,ITM-1023,Jeremy,Peter,Simpson,Jr.,Male,31/05/1999,26,Cindyshire,"Administrator, Civil Service",1508.25,18/11/2024,17/05/2026,SEF,OFFICE OF THE MAYOR
+Substitute,,ITM-1024,Alexander,Alex,Flores,Jr.,Female,27/08/1980,45,Wendyside,Stage manager,576.92,27/03/2022,01/03/2025,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Provisional,,ITM-1025,Phyllis,Caitlyn,Collins,Sr.,Male,14/11/1985,40,South Stevenborough,"Clinical scientist, histocompatibility and immunogenetics",1126.55,19/09/2024,30/01/2027,20% Development Fund,OFFICE OF THE LOCAL REGISTRAR
+Regular Permanent,,ITM-1026,Donald,Martha,Gutierrez,Sr.,Female,19/01/1981,44,New Jennifer,"Pilot, airline",960.72,10/06/2024,16/03/2025,General Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Substitute,,ITM-1027,Margaret,Spencer,Woods,Sr.,Male,28/03/1977,48,West Sandraport,Energy engineer,671.07,22/01/2023,26/07/2023,General Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Substitute,,ITM-1028,Dwayne,Angelica,Murphy,III,Male,11/09/2000,25,East Robertbury,Industrial buyer,1736.39,16/08/2021,28/04/2023,General Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Contractual,,ITM-1029,Shane,Jacqueline,Watson,Sr.,Male,17/04/1991,34,North Peter,"Optician, dispensing",948.78,12/06/2022,02/10/2025,General Fund,GENERAL SERVICES OFFICE
+Casual,,ITM-1030,Sandra,Meghan,Lester,Sr.,Female,21/03/1975,50,Vaughntown,Secondary school teacher,606.45,28/03/2021,04/05/2026,SEF,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Elected,,ITM-1031,Donald,Andrew,Velasquez,Sr.,Male,03/02/2002,23,Lake Christopherhaven,"Psychologist, occupational",1226.07,01/04/2024,06/04/2026,20% Development Fund,OFFICE OF THE LOCAL REGISTRAR
+Substitute,,ITM-1032,Erika,Courtney,Cohen,,Female,14/08/1974,51,West Austin,Actuary,1443.34,28/09/2020,02/07/2021,20% Development Fund,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Job Order,EMP-2033,,Michelle,Nicholas,Johnson,III,Male,17/05/1998,27,Murrayfort,Microbiologist,1601.82,27/02/2021,26/01/2024,SEF,HUMAN RESOURCE MANAGEMENT OFFICE
+Temporary,,ITM-1034,Gabriella,Elizabeth,Ballard,III,Male,30/03/1984,41,Ryanburgh,Broadcast journalist,428.81,23/12/2022,24/01/2025,SEF,OFFICE OF THE MAYOR
+Contractual,,ITM-1035,Thomas,Justin,Parker,Jr.,Male,28/06/1966,59,North Wanda,Location manager,368.1,14/04/2021,10/04/2025,General Fund,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Provisional,,ITM-1036,Ashley,Alyssa,Miller,III,Female,29/03/1984,41,South Jesseville,"Accountant, chartered",1842.82,12/08/2020,11/04/2022,SEF,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Regular Permanent,,ITM-1037,Sherry,Sharon,Rose,III,Male,30/01/1981,44,North Patrickfort,"Pharmacist, hospital",1889.4,07/01/2023,04/09/2026,General Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Regular Permanent,,ITM-1038,Brent,Megan,Watson,Jr.,Male,18/10/1969,56,Davidshire,Quality manager,1511.91,10/08/2024,17/09/2024,Others,OFFICE OF THE SANGUNIANG BAYAN
+Coterminous - Temporary,,ITM-1039,Eric,Matthew,Brown,,Male,11/09/1999,26,West Tinachester,"Teacher, primary school",1266.87,29/12/2024,06/02/2026,20% Development Fund,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Temporary,,ITM-1040,Savannah,Mallory,Campbell,Jr.,Female,24/01/1999,26,Lake Jeffshire,Museum education officer,435.71,26/09/2020,20/04/2025,Others,OFFICE OF THE MAYOR
+Substitute,,ITM-1041,Edgar,Anne,Rodriguez,Sr.,Male,05/03/1968,57,Horneshire,Volunteer coordinator,1731.84,22/10/2020,10/02/2022,SEF,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Coterminous - Temporary,,ITM-1042,Sandra,Wanda,Brown,Sr.,Male,24/01/2000,25,North Patriciachester,Media buyer,1079.91,02/09/2023,18/02/2026,20% Development Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Job Order,EMP-2043,,Charles,Tammy,Cuevas,Sr.,Male,12/05/1970,55,West Johnmouth,Aeronautical engineer,1546.51,04/06/2022,29/03/2025,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Coterminous,,ITM-1044,Rodney,Andre,Fernandez,,Female,27/08/1985,40,Orozcoville,"Engineer, manufacturing systems",576.26,12/11/2024,06/04/2027,SEF,OFFICE OF THE MUNICIPAL TREASURER
+Provisional,,ITM-1045,Jacob,Matthew,Scott,Sr.,Male,10/01/1971,54,Paulville,"Exhibitions officer, museum/gallery",988.02,06/09/2021,16/04/2023,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Regular Permanent,,ITM-1046,Carla,Jay,Bradford,,Male,19/11/1984,41,North Mary,Public librarian,310.23,02/07/2023,20/09/2023,General Fund,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Temporary,,ITM-1047,Timothy,Erik,Willis,III,Female,30/11/1985,40,Jonathanmouth,Environmental consultant,626.29,25/09/2023,22/10/2026,General Fund,OFFICE OF THE SANGUNIANG BAYAN
+Casual,,ITM-1048,Christopher,Darrell,Anderson,III,Male,16/10/1981,44,Georgeshire,Risk analyst,532.29,10/10/2022,07/11/2025,SEF,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Coterminous,,ITM-1049,Jeffrey,Brandy,Ross,Sr.,Female,27/03/1978,47,Thomasstad,Immunologist,453.62,04/08/2023,04/09/2023,20% Development Fund,OFFICE OF THE SANGUNIANG BAYAN
+Coterminous,,ITM-1050,Brooke,Cindy,Simpson,,Female,31/01/1966,59,Elizabethview,Tax adviser,1419.17,23/08/2022,31/07/2026,20% Development Fund,OFFICE OF THE MAYOR
+Elected,,ITM-1051,David,Mark,Wright,III,Female,07/07/1997,28,Parkstad,Stage manager,707.46,22/02/2021,23/07/2022,SEF,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Elected,,ITM-1052,Derek,Rebecca,Benjamin,Sr.,Male,24/11/1996,29,Lake Omar,"Therapist, music",645.29,25/05/2021,20/09/2024,SEF,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Substitute,,ITM-1053,Brianna,Amy,Jackson,,Female,19/11/1981,44,East Paulton,Editorial assistant,1759.15,17/08/2024,21/02/2025,Others,HUMAN RESOURCE MANAGEMENT OFFICE
+Elected,,ITM-1054,Kyle,Charles,Warren,,Female,03/12/1998,27,Lake Robert,Holiday representative,731.71,18/11/2024,26/11/2024,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Job Order,EMP-2055,,Dorothy,Alejandra,Sanchez,Jr.,Female,18/12/2004,21,Kathrynfurt,"Editor, magazine features",400.65,20/03/2022,22/12/2024,Others,OFFICE OF THE MUNICIPAL TREASURER
+Job Order,EMP-2056,,Alexis,Timothy,Davis,Jr.,Female,06/09/1972,53,Turnershire,Telecommunications researcher,1394.42,29/08/2024,16/03/2027,Others,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Job Order,EMP-2057,,Susan,Darryl,Howard,,Female,28/02/1999,26,Richardstown,Tourist information centre manager,1860.39,12/05/2022,17/01/2026,Others,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Provisional,,ITM-1058,Rose,Natasha,Martin,,Male,10/12/1997,28,Bassberg,Dentist,690.71,05/10/2021,16/02/2024,Others,OFFICE OF THE MUNICIPAL ENGINEER
+Contractual,,ITM-1059,Timothy,Alicia,Fields,Jr.,Female,13/01/1975,50,Hernandezton,Forensic psychologist,745.56,31/03/2023,19/07/2026,General Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Job Order,EMP-2060,,Carol,Allison,Thomas,,Female,17/06/1976,49,East Christineton,Chief Financial Officer,1627.69,28/03/2024,14/11/2025,20% Development Fund,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Temporary,,ITM-1061,Glen,Pamela,Gross,III,Female,15/06/1983,42,West Christinamouth,Veterinary surgeon,379.32,20/02/2023,19/11/2024,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Regular Permanent,,ITM-1062,Brandon,Joshua,Hodge,,Female,16/06/2000,25,Georgefurt,Claims inspector/assessor,576.31,04/08/2020,16/01/2025,20% Development Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Regular Permanent,,ITM-1063,Joshua,Jim,Oliver,III,Male,29/08/1986,39,Heatherton,Clinical molecular geneticist,654.68,19/03/2025,18/02/2027,Others,OFFICE OF THE MAYOR
+Regular Permanent,,ITM-1064,Jason,Nathaniel,Boyd,Jr.,Female,20/04/1967,58,Davidshire,"Scientist, research (maths)",1247.7,17/08/2023,30/12/2024,General Fund,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Job Order,EMP-2065,,Sandra,Jill,Cervantes,Sr.,Male,27/11/1986,39,Andersonmouth,Video editor,1893.35,09/01/2023,02/11/2026,Others,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Substitute,,ITM-1066,William,Nicole,Flores,III,Male,26/01/2002,23,Murphyton,Ship broker,445.97,31/07/2022,20/12/2022,Others,OFFICE OF THE SANGUNIANG BAYAN
+Temporary,,ITM-1067,Samantha,Michael,Martin,Jr.,Male,08/11/1993,32,West Ashleyville,Microbiologist,1297.48,19/01/2025,21/04/2026,SEF,OFFICE OF THE SANGUNIANG BAYAN
+Elected,,ITM-1068,Emily,Robin,Mcdonald,,Male,22/02/1991,34,Kingchester,Probation officer,1012.96,12/12/2024,20/02/2025,20% Development Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Coterminous - Temporary,,ITM-1069,Brian,Max,Watkins,III,Male,19/04/1983,42,Lake Jacquelinefurt,Seismic interpreter,733,23/11/2022,20/07/2026,General Fund,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Regular Permanent,,ITM-1070,Peter,Christopher,Perkins,Sr.,Male,01/01/1973,52,Petersmouth,Education administrator,1989.13,19/02/2024,28/02/2024,20% Development Fund,GENERAL SERVICES OFFICE
+Provisional,,ITM-1071,Richard,Ashley,Potter,,Male,28/07/1977,48,Bryanport,Facilities manager,1654.96,23/12/2020,16/12/2021,Others,OFFICE OF THE MUNICIPAL ASSESSOR
+Substitute,,ITM-1072,Christine,Nicholas,Morris,Sr.,Male,01/09/1975,50,West Thomas,Local government officer,1229.02,17/01/2023,02/10/2023,20% Development Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Job Order,EMP-2073,,Janice,Tammy,Porter,,Female,30/07/1983,42,Maryville,Information systems manager,1253.03,24/08/2020,06/11/2025,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Casual,,ITM-1074,Karla,Christopher,Cross,Sr.,Female,01/07/1966,59,Williamsport,Ambulance person,909.74,15/11/2022,19/07/2023,General Fund,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Provisional,,ITM-1075,Pamela,Michael,Leon,Jr.,Female,14/10/1992,33,Lake Chadburgh,Accommodation manager,1574.42,18/09/2024,16/01/2025,General Fund,OFFICE OF THE MAYOR
+Temporary,,ITM-1076,Amanda,Paul,Hall,,Male,02/07/1996,29,West Justin,Art therapist,1957.83,26/06/2020,01/07/2024,General Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Coterminous,,ITM-1077,Christina,Daniel,Pena,Jr.,Female,22/10/1983,42,Melanieville,Audiological scientist,1807.63,09/10/2023,12/10/2025,Others,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Temporary,,ITM-1078,Anthony,Michelle,Griffin,Jr.,Female,08/06/2001,24,West Stevenside,Systems analyst,581.63,23/02/2025,26/05/2025,Others,OFFICE OF THE MUNICIPAL ASSESSOR
+Contractual,,ITM-1079,Cesar,Frank,Strickland,Jr.,Female,29/09/1976,49,Thomasbury,Museum education officer,673.2,12/06/2020,22/09/2021,General Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Coterminous - Temporary,,ITM-1080,Wayne,Veronica,Mullins,Jr.,Male,02/05/2005,20,Butlerfort,Hospital pharmacist,1936.92,01/05/2021,24/08/2026,SEF,OFFICE OF THE MUNICIPAL TREASURER
+Contractual,,ITM-1081,Michael,Lance,Hammond,III,Female,29/11/1979,46,Port Annaborough,"Surveyor, land/geomatics",633.93,12/06/2021,09/09/2023,20% Development Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Temporary,,ITM-1082,Brooke,Michael,Miller,Sr.,Male,16/03/1972,53,Lake Thomas,Magazine journalist,698.06,05/01/2022,28/01/2023,20% Development Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Job Order,EMP-2083,,Jessica,Melissa,Bryant,Jr.,Male,13/03/1983,42,New Jacquelinemouth,"Surveyor, minerals",1673.97,09/04/2025,24/04/2027,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Provisional,,ITM-1084,Sarah,Phillip,Kelley,Sr.,Female,28/05/1995,30,East Lorraine,Police officer,824.76,18/05/2024,17/09/2025,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Regular Permanent,,ITM-1085,David,Victoria,Marshall,III,Male,04/04/2005,20,Margaretberg,Purchasing manager,1101.92,20/08/2023,21/07/2025,20% Development Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Contractual,,ITM-1086,Peggy,Suzanne,Price,,Male,08/07/1974,51,East Norman,Camera operator,1003.25,18/04/2024,08/05/2026,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Casual,,ITM-1087,Nicole,Carolyn,Chang,,Male,21/07/1991,34,Brittanyfurt,"Engineer, electronics",683.74,01/12/2021,27/06/2025,20% Development Fund,GENERAL SERVICES OFFICE
+Coterminous,,ITM-1088,Steven,Jennifer,Nelson,III,Female,09/04/1970,55,East Gary,Chartered certified accountant,805.78,23/06/2024,29/03/2026,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Coterminous - Temporary,,ITM-1089,Christopher,Amanda,Brown,Jr.,Female,20/02/2002,23,New Jeffery,Technical sales engineer,1556.44,25/03/2025,20/07/2025,20% Development Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Coterminous,,ITM-1090,Lisa,Chelsea,Mcdaniel,Sr.,Male,07/08/1970,55,Elizabethhaven,Insurance account manager,1537.31,03/08/2021,12/07/2024,20% Development Fund,OFFICE OF THE LOCAL REGISTRAR
+Job Order,EMP-2091,,Janet,Douglas,Hurley,III,Male,26/08/1990,35,Autumnborough,Hydrologist,1385.97,26/05/2024,18/08/2025,Others,OFFICE OF THE MUNICIPAL ENGINEER
+Regular Permanent,,ITM-1092,Jessica,Evan,Jarvis,Sr.,Male,01/02/1976,49,East Michael,Customer service manager,831.04,01/02/2022,17/08/2022,SEF,HUMAN RESOURCE MANAGEMENT OFFICE
+Contractual,,ITM-1093,Jacob,Alicia,Blackburn,,Female,17/10/1998,27,West Christopherborough,English as a second language teacher,468.03,25/06/2023,21/09/2026,SEF,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Provisional,,ITM-1094,Sandra,Jerry,Calderon,,Female,05/06/1977,48,South Maryview,Garment/textile technologist,673.89,06/08/2023,15/10/2023,Others,HUMAN RESOURCE MANAGEMENT OFFICE
+Casual,,ITM-1095,Tina,Veronica,Murphy,Jr.,Male,06/09/1976,49,West Dianeborough,"Lighting technician, broadcasting/film/video",747.88,01/12/2022,09/08/2026,General Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Casual,,ITM-1096,Michelle,Stephen,Neal,,Female,03/11/2000,25,Hortonland,Holiday representative,1708.65,23/07/2022,29/12/2022,20% Development Fund,OFFICE OF THE MUNICIPAL TREASURER
+Elected,,ITM-1097,Paula,Michael,Whitaker,III,Male,28/08/1966,59,Pottschester,Orthoptist,735.2,27/04/2022,23/03/2024,General Fund,OFFICE OF THE SANGUNIANG BAYAN
+Casual,,ITM-1098,Tabitha,Stephanie,Ruiz,III,Male,17/11/1980,45,New Leah,Dispensing optician,1536.25,11/02/2021,28/09/2025,General Fund,OFFICE OF THE MAYOR
+Casual,,ITM-1099,Amanda,Michelle,Moore,III,Female,12/05/1996,29,East Carlville,"Development worker, community",354.47,25/04/2021,09/11/2025,General Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Temporary,,ITM-1100,Brandon,Joseph,Green,,Male,12/12/1993,32,Drewborough,IT consultant,1964.51,28/05/2023,14/09/2023,20% Development Fund,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Temporary,,ITM-1101,Regina,Amber,Edwards,Jr.,Male,02/10/1983,42,Kathleenview,Brewing technologist,1359.56,07/11/2023,18/01/2027,General Fund,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Coterminous - Temporary,,ITM-1102,Alexandra,Francisco,Hubbard,Sr.,Female,29/12/1970,55,East Karenmouth,"Engineer, control and instrumentation",495.79,04/05/2021,16/04/2023,20% Development Fund,GENERAL SERVICES OFFICE
+Casual,,ITM-1103,Jeremy,Roberto,Hutchinson,III,Female,28/10/2000,25,Kennethside,Adult nurse,1926.02,19/10/2022,15/07/2026,SEF,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Temporary,,ITM-1104,Courtney,Matthew,Adkins,III,Male,24/02/1968,57,North Ashley,Company secretary,1208.64,12/10/2020,21/11/2026,20% Development Fund,OFFICE OF THE MAYOR
+Contractual,,ITM-1105,Mary,Michael,Nguyen,III,Male,01/07/1970,55,West Joelside,"Administrator, arts",1684.74,14/04/2022,25/07/2024,Others,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Elected,,ITM-1106,Bradley,Sarah,Duncan,Sr.,Male,05/01/1974,51,Spencerbury,Licensed conveyancer,971.83,24/12/2020,23/07/2022,SEF,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Elected,,ITM-1107,Joseph,David,Griffin,,Female,31/10/1996,29,Evansmouth,Sports coach,739.26,07/10/2024,05/08/2026,20% Development Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Coterminous - Temporary,,ITM-1108,Kristina,Kyle,Lewis,Jr.,Male,19/04/1970,55,Ayalatown,"Conservation officer, historic buildings",1463.96,11/05/2025,15/10/2025,General Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Substitute,,ITM-1109,Jennifer,Teresa,Velasquez,III,Male,06/11/1976,49,North Marcia,Media planner,1004.3,02/04/2022,03/03/2027,20% Development Fund,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Coterminous - Temporary,,ITM-1110,Denise,Tammy,Mcpherson,Jr.,Male,12/12/1971,54,Jenniferfort,"Psychologist, educational",936.76,12/02/2023,05/12/2024,General Fund,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Coterminous - Temporary,,ITM-1111,Pamela,Angela,Jackson,III,Female,23/11/1986,39,Lake Laura,Health and safety adviser,848.07,15/07/2024,20/03/2025,General Fund,OFFICE OF THE LOCAL REGISTRAR
+Regular Permanent,,ITM-1112,Christopher,Dominique,Perez,III,Male,01/08/1973,52,New Stephen,Environmental health practitioner,1348.9,10/08/2024,05/07/2026,SEF,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Coterminous,,ITM-1113,Paul,Michael,Davis,Jr.,Male,23/12/2001,24,Port Andrew,"Therapist, sports",318.27,08/12/2024,23/05/2026,20% Development Fund,HUMAN RESOURCE MANAGEMENT OFFICE
+Coterminous,,ITM-1114,George,Christopher,Bowman,III,Male,29/07/1976,49,Lake Crystal,Ambulance person,1445.04,23/04/2022,03/07/2022,SEF,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Coterminous,,ITM-1115,Kenneth,Antonio,May,Jr.,Male,16/01/1989,36,West Jonborough,"Engineer, maintenance",1861.68,15/04/2022,03/10/2023,General Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Provisional,,ITM-1116,Dawn,Shannon,Porter,Jr.,Male,31/08/1967,58,Lake Jeanne,Transport planner,1267.7,10/03/2021,23/09/2022,SEF,HUMAN RESOURCE MANAGEMENT OFFICE
+Provisional,,ITM-1117,Alexandra,Ronald,Bryant,III,Female,04/08/1991,34,Valerieview,Investment analyst,1587.78,25/12/2023,20/04/2025,20% Development Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Substitute,,ITM-1118,Maria,Heidi,Leon,Jr.,Female,08/03/1991,34,Haynesfort,Investment analyst,1756.5,02/07/2021,08/01/2026,Others,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Regular Permanent,,ITM-1119,Michelle,Amber,Watkins,,Male,03/03/1983,42,Rioschester,Writer,1707.02,09/05/2025,20/04/2027,SEF,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Casual,,ITM-1120,Stephanie,Donald,Johnson,,Male,27/07/1989,36,North Lori,Clinical psychologist,915.19,20/03/2025,01/04/2027,Others,OFFICE OF THE MUNICIPAL TREASURER
+Casual,,ITM-1121,Victoria,Pamela,Schroeder,III,Male,27/09/1978,47,Ryanchester,Geographical information systems officer,472.11,27/11/2021,10/09/2026,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Elected,,ITM-1122,Jennifer,Thomas,Adams,Sr.,Male,28/02/1995,30,Lake Elijahburgh,"Engineer, water",1786.4,24/07/2021,22/03/2027,20% Development Fund,OFFICE OF THE LOCAL REGISTRAR
+Provisional,,ITM-1123,Anthony,Danielle,Gutierrez,Sr.,Male,03/10/1985,40,North John,"Journalist, magazine",725.66,05/10/2024,06/02/2026,General Fund,OFFICE OF THE LOCAL REGISTRAR
+Coterminous - Temporary,,ITM-1124,Jill,Erica,Davila,,Male,06/03/1976,49,Port Patrick,Field trials officer,731.57,26/02/2021,19/06/2022,SEF,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Elected,,ITM-1125,James,Willie,Chavez,III,Male,31/12/2001,24,Butlerstad,Recruitment consultant,1160.56,24/12/2020,06/10/2026,20% Development Fund,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Temporary,,ITM-1126,Hailey,Olivia,Baxter,,Male,12/05/1977,48,Castromouth,Engineering geologist,1777.32,01/09/2020,13/07/2025,Others,OFFICE OF THE SANGUNIANG BAYAN
+Temporary,,ITM-1127,Crystal,Craig,Garcia,III,Male,08/06/1967,58,Port Jamesfurt,Fisheries officer,496.89,03/06/2020,11/10/2020,Others,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Regular Permanent,,ITM-1128,Robert,Nicole,Evans,III,Male,03/01/1966,59,Jaredhaven,Facilities manager,914.69,07/09/2020,13/09/2025,General Fund,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Coterminous,,ITM-1129,Austin,Ann,Olson,III,Female,12/11/2002,23,West Christopher,Mining engineer,783.99,07/10/2021,14/07/2025,General Fund,GENERAL SERVICES OFFICE
+Provisional,,ITM-1130,Andrew,Jim,Hayden,III,Female,27/10/1989,36,North Madison,Statistician,1627.17,28/08/2023,23/07/2024,Others,OFFICE OF THE MUNICIPAL ENGINEER
+Coterminous - Temporary,,ITM-1131,Stephen,Carrie,Hall,Sr.,Male,23/07/1976,49,Paulborough,Media buyer,1298.64,27/12/2022,18/12/2025,Others,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Casual,,ITM-1132,Stephanie,Connor,Combs,III,Female,18/05/1999,26,South Melissamouth,"Biochemist, clinical",1862.65,16/10/2020,24/12/2026,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Job Order,EMP-2133,,Tiffany,Felicia,Estrada,III,Female,20/11/1974,51,North Monique,Corporate treasurer,876.11,05/12/2020,04/07/2023,Others,GENERAL SERVICES OFFICE
+Substitute,,ITM-1134,Sydney,Gina,Allen,III,Male,19/11/1990,35,Wendybury,Public house manager,1602.56,05/03/2021,26/06/2022,20% Development Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Coterminous - Temporary,,ITM-1135,Lisa,Leslie,Alexander,Sr.,Female,23/07/1994,31,Port Lisa,"Engineer, structural",1410.88,19/09/2022,12/06/2026,General Fund,OFFICE OF THE MAYOR
+Casual,,ITM-1136,Cameron,Frederick,Zamora,,Female,02/07/1995,30,East Steven,General practice doctor,605.76,30/11/2020,05/02/2023,20% Development Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Contractual,,ITM-1137,Jill,Dustin,Webb,Sr.,Male,08/07/1991,34,Pattonfurt,Press sub,794.29,10/07/2023,05/02/2026,General Fund,GENERAL SERVICES OFFICE
+Casual,,ITM-1138,Tiffany,Jared,Perez,Jr.,Male,29/08/1997,28,Tranmouth,Furniture designer,1601.5,18/02/2024,24/01/2026,SEF,HUMAN RESOURCE MANAGEMENT OFFICE
+Coterminous - Temporary,,ITM-1139,Bradley,Christopher,Martinez,Jr.,Female,05/06/1981,44,Micheleberg,Adult guidance worker,1156.46,29/03/2022,14/12/2024,SEF,OFFICE OF THE MUNICIPAL ASSESSOR
+Job Order,EMP-2140,,Keith,Nicole,Cooper,Jr.,Male,03/05/1975,50,Lake Austinchester,Fashion designer,842.81,13/02/2025,30/08/2025,20% Development Fund,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Job Order,EMP-2141,,Lauren,Ernest,Davis,Jr.,Male,24/07/1999,26,Beckshire,Biomedical scientist,648.03,28/08/2022,08/11/2024,20% Development Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Elected,,ITM-1142,Karen,Anne,Reed,III,Female,09/09/1966,59,Port Jeremy,"Production assistant, television",1332.99,16/04/2025,22/11/2026,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Coterminous - Temporary,,ITM-1143,Andrea,Tonya,King,III,Male,02/01/1997,28,West Robinborough,"Nurse, learning disability",1130.4,17/07/2021,13/07/2026,Others,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Elected,,ITM-1144,David,Timothy,Greene,,Female,12/12/2001,24,East Jenniferville,Best boy,655.9,19/11/2020,30/04/2024,General Fund,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Regular Permanent,,ITM-1145,Micheal,Justin,Velasquez,,Female,24/08/1991,34,Christianchester,"Teacher, special educational needs",1974.39,19/05/2021,07/09/2026,General Fund,OFFICE OF THE SANGUNIANG BAYAN
+Regular Permanent,,ITM-1146,Louis,Kenneth,Williams,,Male,21/01/1988,37,Lake Larry,"Pharmacist, community",850.13,20/04/2025,07/11/2025,Others,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Temporary,,ITM-1147,James,Eric,Gonzales,Jr.,Male,25/07/1998,27,Port Linda,"Production assistant, television",1304.56,25/02/2021,25/10/2024,General Fund,OFFICE OF THE MAYOR
+Job Order,EMP-2148,,Lorraine,Debra,Lewis,III,Male,11/02/1991,34,North Timothymouth,Building services engineer,1224.76,22/01/2022,04/06/2025,Others,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Provisional,,ITM-1149,Sean,Mason,Jones,Jr.,Male,15/11/1967,58,New Donna,Nutritional therapist,1931,30/05/2023,02/11/2023,20% Development Fund,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Coterminous,,ITM-1150,Jacqueline,Jeremy,Duran,Sr.,Male,08/06/1994,31,Walterborough,"Teacher, English as a foreign language",579.82,04/03/2024,08/09/2024,SEF,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Casual,,ITM-1151,Dennis,Cindy,Lowe,,Male,25/08/2002,23,Lake Michaelburgh,"Designer, furniture",370.64,09/08/2023,20/11/2023,General Fund,OFFICE OF THE LOCAL REGISTRAR
+Contractual,,ITM-1152,Robert,Alan,Hernandez,Sr.,Female,15/05/1989,36,Andrewsside,Adult guidance worker,833.81,10/07/2021,17/11/2026,20% Development Fund,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Coterminous - Temporary,,ITM-1153,Sally,Sandy,Martin,Sr.,Female,10/09/1980,45,North Debratown,Mudlogger,1993.86,28/05/2022,14/02/2025,Others,OFFICE OF THE LOCAL REGISTRAR
+Provisional,,ITM-1154,Kyle,Greg,Tucker,Jr.,Female,23/12/1972,53,Port Brianton,Health physicist,1263.4,13/01/2025,08/06/2026,SEF,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Provisional,,ITM-1155,Julie,Edwin,Tran,Sr.,Female,14/03/1986,39,West Taylor,Cartographer,1786.53,07/01/2021,14/04/2023,SEF,OFFICE OF THE MUNICIPAL ASSESSOR
+Coterminous - Temporary,,ITM-1156,Michelle,John,Harrison,,Female,16/05/1972,53,Johnsonberg,Stage manager,1948.88,27/05/2021,31/12/2026,Others,MUNICIPAL PLANNING & DEVELOPMENT COORDINATOR
+Provisional,,ITM-1157,Joshua,Ellen,Gilbert,Jr.,Female,21/10/1985,40,Andrewburgh,Heritage manager,1598.45,12/04/2023,10/06/2024,SEF,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Temporary,,ITM-1158,James,Erik,Dominguez,,Male,14/11/1985,40,Alecchester,Research scientist (life sciences),372.92,30/06/2020,15/01/2026,Others,OFFICE OF THE MUNICIPAL ASSESSOR
+Provisional,,ITM-1159,Alice,Paul,Caldwell,III,Male,06/07/1982,43,Mccallhaven,Public affairs consultant,1264.01,10/02/2024,22/09/2024,SEF,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Coterminous,,ITM-1160,Brandon,Marcia,Harrell,III,Male,02/08/1970,55,East Petershire,Horticultural therapist,1665.42,14/09/2023,10/05/2026,General Fund,OFFICE OF THE MUNICIPAL ENGINEER
+Regular Permanent,,ITM-1161,Lynn,Timothy,Davis,III,Male,09/11/1990,35,Hamiltonborough,Best boy,336.96,10/06/2021,13/10/2025,Others,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Coterminous - Temporary,,ITM-1162,Brandy,Tony,Perez,Jr.,Male,03/03/1986,39,South Carolyn,"Scientist, research (physical sciences)",1240.56,21/08/2023,21/10/2023,Others,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Casual,,ITM-1163,Darlene,Michael,Parker,Sr.,Female,01/09/1977,48,East Johnberg,Agricultural engineer,1500.75,14/08/2021,11/12/2021,20% Development Fund,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Coterminous - Temporary,,ITM-1164,Joshua,Jay,Wiley,,Female,04/08/1974,51,New Katelyn,Publishing rights manager,1438.95,13/01/2021,25/07/2025,Others,OFFICE OF THE MUNICIPAL AGRICULTURIST
+Substitute,,ITM-1165,Maria,Dominique,Baldwin,Sr.,Female,01/12/1978,47,West Christine,Agricultural engineer,1367.27,25/05/2021,16/03/2023,General Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Coterminous,,ITM-1166,Molly,Dustin,Davis,Jr.,Female,20/04/1977,48,Wellshaven,"Optician, dispensing",380.85,21/12/2021,25/11/2023,20% Development Fund,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Elected,,ITM-1167,Jason,Duane,Wood,Sr.,Male,16/07/1988,37,Port Ashleymouth,"Engineer, broadcasting (operations)",862.15,04/09/2024,20/07/2025,SEF,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Job Order,EMP-2168,,Lisa,Christine,Jones,,Male,18/08/1967,58,South Brittanytown,Network engineer,1921.52,09/11/2023,18/05/2025,General Fund,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Job Order,EMP-2169,,Jacqueline,Ivan,Howell,Sr.,Male,06/04/1988,37,New Victoriaburgh,Metallurgist,1305.12,13/12/2022,09/06/2024,Others,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Temporary,,ITM-1170,Evelyn,Kristen,Roberts,Jr.,Female,14/05/2001,24,Lake Jon,Sports development officer,1221.94,05/04/2021,18/05/2025,Others,OFFICE OF THE MUNICIPAL ENGINEER
+Substitute,,ITM-1171,Shelley,Gabriela,Torres,,Female,07/11/1985,40,Davidfurt,"Nurse, children's",892.93,18/02/2024,09/03/2027,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Elected,,ITM-1172,Christopher,Jay,Sutton,,Female,18/03/1999,26,Hollandmouth,Chief Marketing Officer,1106.43,07/09/2022,23/06/2026,SEF,OFFICE OF THE MUNICIPAL ENGINEER
+Regular Permanent,,ITM-1173,Stephanie,John,Shaffer,III,Male,09/11/1981,44,Edwinstad,"Teacher, early years/pre",585.01,12/05/2024,18/03/2027,Others,OFFICE OF THE SANGUNIANG BAYAN
+Provisional,,ITM-1174,John,Barbara,Shaffer,,Female,27/06/1993,32,Lake Kathleen,Microbiologist,1464.98,16/09/2021,01/05/2022,General Fund,OFFICE OF THE MAYOR
+Regular Permanent,,ITM-1175,Catherine,Savannah,Miles,III,Male,24/02/1997,28,New Steven,Data scientist,856.46,30/10/2022,05/12/2025,SEF,OFFICE OF THE MAYOR
+Coterminous,,ITM-1176,James,Luke,Griffin,Sr.,Male,25/01/1966,59,Danielberg,Writer,1358.12,28/09/2020,20/04/2027,Others,OFFICE OF THE MUNICIPAL TREASURER
+Contractual,,ITM-1177,Kevin,Amanda,Hanson,,Male,16/04/1973,52,Reyesfort,"Therapist, nutritional",1080,03/06/2022,22/06/2025,SEF,HUMAN RESOURCE MANAGEMENT OFFICE
+Provisional,,ITM-1178,Carlos,Audrey,Cox,Sr.,Female,16/10/1986,39,South Michael,Barista,1219.25,17/10/2024,22/07/2026,20% Development Fund,OFFICE OF THE MAYOR
+Contractual,,ITM-1179,Evan,Thomas,Barron,Jr.,Female,19/10/1976,49,Murphyfort,Travel agency manager,1610.85,07/07/2021,27/01/2023,General Fund,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Coterminous - Temporary,,ITM-1180,Beth,Sarah,Richards,Jr.,Female,09/10/1972,53,Briggsmouth,Network engineer,1538.38,19/07/2023,01/06/2025,General Fund,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Contractual,,ITM-1181,Ronald,Stephanie,Davis,III,Female,28/09/2001,24,New Jennifer,Careers adviser,1835.98,08/05/2024,12/07/2024,SEF,OFFICE OF THE LOCAL REGISTRAR
+Coterminous - Temporary,,ITM-1182,Leah,Kaitlin,Freeman,III,Male,21/11/2000,25,Jennaside,Exhibition designer,1635.45,09/10/2023,05/04/2027,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Provisional,,ITM-1183,Darius,Sarah,Hicks,,Male,01/09/1990,35,Maryburgh,"Scientist, biomedical",1154.18,24/03/2023,14/01/2027,20% Development Fund,ERGONOMIC ENTERPRISE DEVELOPMENT MANAGEMENT
+Temporary,,ITM-1184,Danielle,Ashley,Hobbs,,Female,23/07/1983,42,Fieldsside,Location manager,652.74,01/03/2023,19/05/2024,General Fund,OFFICE OF THE MUNICIPAL ASSESSOR
+Elected,,ITM-1185,Michael,Mark,Martinez,Sr.,Male,29/01/1974,51,Keithstad,Herbalist,1712.29,20/02/2023,07/03/2025,SEF,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Substitute,,ITM-1186,Teresa,Allison,Smith,Jr.,Female,26/02/1970,55,Goldenview,Immigration officer,645.71,20/04/2023,22/11/2025,Others,OFFICE OF THE MUNICIPAL ACCOUNTANT
+Provisional,,ITM-1187,Gregory,Donna,Duncan,Sr.,Male,22/11/1998,27,Robinport,Dentist,1484.23,26/10/2021,18/10/2022,Others,OFFICE OF THE SANGUNIANG BAYAN
+Elected,,ITM-1188,Caleb,Sheri,Hoffman,,Female,08/12/1972,53,Port Morgan,"Engineer, structural",552.23,13/10/2020,26/08/2026,SEF,OFFICE OF THE MAYOR
+Coterminous - Temporary,,ITM-1189,Thomas,Alexandra,Johnson,,Male,25/05/1971,54,Port Brandon,Advertising copywriter,552.16,19/02/2025,28/09/2026,General Fund,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Regular Permanent,,ITM-1190,Aaron,Priscilla,Smith,Jr.,Male,20/04/1993,32,Claytonshire,Meteorologist,994.3,08/11/2023,24/07/2026,General Fund,GENERAL SERVICES OFFICE
+Substitute,,ITM-1191,Nicholas,Stephanie,Green,III,Male,24/01/2004,21,South Kimton,"Engineer, agricultural",1165.26,24/09/2020,21/06/2024,General Fund,OFFICE OF THE LOCAL REGISTRAR
+Temporary,,ITM-1192,Barbara,Anne,Rodgers,Jr.,Female,22/03/1977,48,North Susanfort,Occupational psychologist,470.59,18/12/2021,16/01/2023,20% Development Fund,MUNICIPAL ENVIRONMENT AND NATURAL RESOURCES OFFICE
+Coterminous - Temporary,,ITM-1193,Alexander,Hailey,Moore,,Male,04/09/1994,31,West Justinshire,"Exhibitions officer, museum/gallery",1439.32,08/05/2022,06/05/2023,Others,GENERAL SERVICES OFFICE
+Temporary,,ITM-1194,Jessica,Linda,Smith,Sr.,Female,22/10/1983,42,North Pamela,Hydrologist,760.27,03/02/2025,19/03/2026,20% Development Fund,OFFICE OF THE MUNICIPAL BUDGET OFFICER
+Coterminous - Temporary,,ITM-1195,Marie,Paul,Fox,Jr.,Female,10/07/1998,27,East Brianville,"Engineer, land",930.25,09/07/2020,13/09/2020,Others,OFFICE OF THE MUNICIPAL HEALTH OFFICER
+Temporary,,ITM-1196,Cynthia,Maria,Mcneil,III,Female,14/04/1970,55,Susanberg,Horticultural therapist,865.19,10/06/2021,12/01/2022,SEF,LOCAL DISASTER RISK REDUCTION & MANAGEMENT
+Elected,,ITM-1197,Samuel,Holly,Johnson,Sr.,Male,11/03/1994,31,North Andreberg,Theme park manager,385.47,21/08/2022,05/07/2024,20% Development Fund,SOCIAL WELFARE & DEVELOPMENT OFFICER
+Elected,,ITM-1198,John,Jose,Lara,Jr.,Female,28/07/1982,43,Lake Chelsea,"Pharmacist, hospital",741.49,16/03/2023,30/11/2023,General Fund,OFFICE OF THE MUNICIPAL TREASURER
+Coterminous,,ITM-1199,Patricia,Troy,Blair,III,Female,13/02/1973,52,Elizabethchester,Building surveyor,535.06,16/06/2020,01/08/2021,General Fund,HUMAN RESOURCE MANAGEMENT OFFICE

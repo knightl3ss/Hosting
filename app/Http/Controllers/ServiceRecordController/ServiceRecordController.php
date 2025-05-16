@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\AppointmentModel\Appointment;
+use App\Models\ServiceRecordModel\ServiceRecord;
 
 class ServiceRecordController extends Controller
 {
@@ -47,18 +48,19 @@ class ServiceRecordController extends Controller
             'date_to' => 'required|date',
             'designation' => 'required|string|max:255',
             'status' => 'required|string|max:50',
-            'salary' => 'required|numeric',
+            'salary' => 'required|string|max:50',
             'payment_frequency' => 'required|string|max:50',
             'station' => 'required|string|max:255',
             'separation_date' => 'nullable|string|max:255',
             'service_status' => 'required|string|max:50',
         ]);
-        $validated['employee_id'] = $appointment->id;
+        $validated['employee_id'] = (int)$appointment->id;
         $validated['created_by'] = auth()->id();
         $validated['updated_by'] = auth()->id();
-        $validated['created_at'] = now();
-        $validated['updated_at'] = now();
-        DB::table('service_records')->insert($validated);
+        
+        // Use the model instead of DB facade to properly handle encryption
+        ServiceRecord::create($validated);
+        
         $appointment->touch();
         return redirect()->route('Employee_records', ['id' => $employeeId])
             ->with('success', 'Service record entry added successfully.');
@@ -110,7 +112,7 @@ class ServiceRecordController extends Controller
             'date_to' => 'required|date',
             'designation' => 'required|string|max:255',
             'status' => 'required|string|max:50',
-            'salary' => 'required|numeric',
+            'salary' => 'required|string|max:50',
             'payment_frequency' => 'required|string|max:50',
             'station' => 'required|string|max:255',
             'separation_date' => 'nullable|string|max:255',
@@ -118,13 +120,11 @@ class ServiceRecordController extends Controller
         ]);
 
         $validated['updated_by'] = auth()->id();
-        $validated['updated_at'] = now();
-
-        unset($validated['record_id']);
-
-        DB::table('service_records')
-            ->where('id', $request->input('record_id'))
-            ->update($validated);
+        
+        // Find the record and update it using the model
+        $record = ServiceRecord::findOrFail($request->input('record_id'));
+        $record->update($validated);
+        
         $appointment = Appointment::find($employeeId);
         if ($appointment) {
             $appointment->touch();
@@ -139,8 +139,8 @@ class ServiceRecordController extends Controller
     public function destroy($id)
     {
         try {
-            // Find the service record
-            $serviceRecord = DB::table('service_records')->where('id', $id)->first();
+            // Find the service record using the model
+            $serviceRecord = ServiceRecord::find($id);
             
             if (!$serviceRecord) {
                 return redirect()->back()->with('error', 'Service record not found.');
@@ -150,7 +150,7 @@ class ServiceRecordController extends Controller
             $employeeId = $serviceRecord->employee_id;
 
             // Delete the service record
-            DB::table('service_records')->where('id', $id)->delete();
+            $serviceRecord->delete();
 
             // Update the appointment's updated_at timestamp
             $appointment = Appointment::find($employeeId);

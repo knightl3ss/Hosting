@@ -36,11 +36,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ms-md-auto mt-2 mt-md-0 text-center">
-                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                                    <i class="fas fa-edit me-1"></i>Edit
-                                </button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -119,33 +114,6 @@
                         <div class="col-6 mb-2">
                             <label class="form-label small mb-1">Account Status</label>
                             <input type="text" class="form-control form-control-sm" value="{{ ucfirst($status) }}" readonly>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Security Section -->
-    <div class="row g-3 mt-1">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0 small">
-                        <i class="fas fa-shield-alt me-2"></i>Account Security
-                    </h5>
-                </div>
-                <div class="card-body p-3">
-                    <div class="row g-2">
-                        <div class="col-12 col-md-6 mb-2">
-                            <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
-                                <i class="fas fa-key me-2"></i>Change Password
-                            </button>
-                        </div>
-                        <div class="col-12 col-md-6 mb-2">
-                            <button class="btn btn-outline-secondary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#twoFactorModal">
-                                <i class="fas fa-lock me-2"></i>Two-Factor Auth
-                            </button>
                         </div>
                     </div>
                 </div>

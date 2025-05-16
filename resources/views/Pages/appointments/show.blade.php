@@ -52,7 +52,7 @@
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="text-primary">Appointment Details</h1>
+            <h1 class="text-primary">Employee Details</h1>
         </div>
         <div class="d-flex gap-2">
             <a href="{{ route('appointment.schedule') }}" class="btn btn-outline-secondary d-flex align-items-center">

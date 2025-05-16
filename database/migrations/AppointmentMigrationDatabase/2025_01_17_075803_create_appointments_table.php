@@ -12,7 +12,7 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('position')->nullable();
-            $table->decimal('rate_per_day', 8, 2)->nullable();
+            $table->string('rate_per_day')->nullable();
             $table->date('employment_start')->nullable();
             $table->date('employment_end')->nullable();
             $table->string('source_of_fund')->nullable();

@@ -59,16 +59,25 @@
                     <div class="employee-info mb-4">
                         <div class="employee-name">{{ $employee->name }}</div>
                         <div class="employee-details mt-2">
-                            <div><strong>Employee ID:</strong> {{ $employee->employee_id }}</div>
                             <div><strong>Position:</strong> {{ $employee->position ?? 'Not specified' }}</div>
                             <div><strong>Office:</strong> {{ $employee->office_assignment ?? 'Not assigned' }}</div>
                             <div><strong>Employment Status:</strong> {{ $typeLabels[$employee->appointment_type] ?? ucfirst($employee->appointment_type ?? 'Unknown') }}</div>
+                            <div>
+                                @if($employee->appointment_type === 'job_order' || $employee->appointment_type === 'JO')
+                                    <strong>Employee ID:</strong> {{ $employee->employee_id }}
+                                @else
+                                    <strong>Item No.:</strong> {{ $employee->item_no ?? $employee->employee_id }}
+                                @endif
+                            </div>
                         </div>
                     </div>
                     
                     <form action="{{ route('record_purpose.store') }}" method="POST" class="purpose-form">
                         @csrf
                         <input type="hidden" name="employee_id" value="{{ $employee->id }}">
+                        @if($employee->item_no)
+                            <input type="hidden" name="item_no" value="{{ $employee->item_no }}">
+                        @endif
                         
                         <div class="mb-4">
                             <label for="purpose_type" class="form-label">Select Purpose</label>

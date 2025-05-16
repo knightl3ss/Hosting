@@ -81,8 +81,9 @@ class AppointmentSeeder extends Seeder
             $location = $faker->city;
             $officeAssignment = $officeAssignments[array_rand($officeAssignments)];
             $position = $positions[array_rand($positions)];
-            // All appointments get employee_id, only non-job_order gets item_no
-            $employeeId = 'EMP' . str_pad($i, 3, '0', STR_PAD_LEFT);
+            
+            // Only job_order gets employee_id, only non-job_order gets item_no
+            $employeeId = $isJobOrder ? 'EMP' . str_pad($i, 3, '0', STR_PAD_LEFT) : null;
             $itemNo = $isJobOrder ? null : 'ITEM' . str_pad($i, 3, '0', STR_PAD_LEFT);
 
             Appointment::create([

@@ -117,7 +117,6 @@
                                 <th>Employee Name</th>
                                 <th>Gender</th>
                                 <th>Employment Status</th>
-                                <th class="text-center">Appointment</th>
                                 <th>Office Assignment</th>
                                 <th>Remarks</th>
                                 <th>Admin</th>
@@ -170,13 +169,6 @@
                                         <td>{{ $employee->full_name }}</td>
                                         <td>{{ ucfirst($employee->gender) }}</td>
                                         <td>{{ $appointmentText }}</td>
-                                        <td class="text-center">
-                                            @if($activeAppointment)
-                                                {{ \Carbon\Carbon::parse($activeAppointment->employment_start)->format('M d, Y') }}
-                                            @else
-                                                <span class="text-muted">No Appointment</span>
-                                            @endif
-                                        </td>
                                         <td>{{ $employee->office_assignment ?? 'Not Assigned' }}</td>
                                         <td>
                                             @php

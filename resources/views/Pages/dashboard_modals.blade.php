@@ -7,7 +7,12 @@
                 <h5 class="modal-title" id="maleEmployeesModalLabel">
                     <i class="fas fa-male text-primary me-2"></i>Male Employees
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.male-employees') }}" class="btn btn-sm btn-primary me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -64,7 +69,12 @@
                 <h5 class="modal-title" id="femaleEmployeesModalLabel">
                     <i class="fas fa-female text-danger me-2"></i>Female Employees
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.female-employees') }}" class="btn btn-sm btn-danger me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -121,7 +131,12 @@
                 <h5 class="modal-title" id="inServiceEmployeesModalLabel">
                     <i class="fas fa-user-check text-success me-2"></i>In Service Employees
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.in-service-employees') }}" class="btn btn-sm btn-success me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -169,7 +184,12 @@
                 <h5 class="modal-title" id="suspensionEmployeesModalLabel">
                     <i class="fas fa-user-clock text-warning me-2"></i>Employees on Suspension
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.suspension-employees') }}" class="btn btn-sm btn-warning me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -217,7 +237,12 @@
                 <h5 class="modal-title" id="notInServiceEmployeesModalLabel">
                     <i class="fas fa-user-times text-danger me-2"></i>Not in Service Employees
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.not-in-service-employees') }}" class="btn btn-sm btn-danger me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -262,10 +287,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center w-100" id="modal10YearsLabel">
+                <h5 class="modal-title" id="modal10YearsLabel">
                     <i class="fas fa-users text-primary me-2"></i>Employees with 10+ Years of Service
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.service-years', ['group' => '10-plus']) }}" class="btn btn-sm btn-primary me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -308,10 +338,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center w-100" id="modal5to9YearsLabel">
+                <h5 class="modal-title" id="modal5to9YearsLabel">
                     <i class="fas fa-user-friends text-success me-2"></i>Employees with 5-9 Years of Service
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.service-years', ['group' => '5-9']) }}" class="btn btn-sm btn-success me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
@@ -354,10 +389,15 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center w-100" id="modalBelow5YearsLabel">
+                <h5 class="modal-title" id="modalBelow5YearsLabel">
                     <i class="fas fa-user-plus text-info me-2"></i>Employees with Below 5 Years of Service
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div>
+                    <a href="{{ route('reports.service-years', ['group' => 'below-5']) }}" class="btn btn-sm btn-info me-2">
+                        <i class="fas fa-file-export me-1"></i>Generate Report
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="table-responsive">

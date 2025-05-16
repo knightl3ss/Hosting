@@ -156,25 +156,80 @@ class DashboardController extends Controller
         }
 
         // --- Custom: Employees by Years of Service ---
-        $now = now();
-        $appointments = $appointmentQuery->get();
-        $appointments = $appointments->map(function ($appt) use ($now) {
-            $appt->years_of_service = $appt->employment_start ? $now->diffInYears($appt->employment_start) : 0;
-            return $appt;
-        });
+        // Create empty collections for each service group
+        $tenYearsPlus = collect();
+        $fiveToNineYears = collect();
+        $belowFiveYears = collect();
+        
+        // Get all appointments
+        $allAppointments = $appointmentQuery->get();
+        \Log::info('Total appointments: ' . $allAppointments->count());
+        
+        // Process each appointment and categorize by years of service
+        foreach ($allAppointments as $appt) {
+            $now = now();
+            $yearsOfService = 0;
+            
+            try {
+                // Use the same calculation method as in the employee report
+                $dateHired = \Carbon\Carbon::parse($appt->employment_start ?? $appt->date_hired);
+                $yearsOfService = (int)$dateHired->diffInYears($now);
+                \Log::info("Employee {$appt->first_name} {$appt->last_name}: {$yearsOfService} years of service");
+            } catch (\Exception $e) {
+                \Log::error("Error calculating years of service for {$appt->first_name} {$appt->last_name}: {$e->getMessage()}");
+            }
+            
+            // Set the years_of_service property on the appointment
+            $appt->years_of_service = $yearsOfService;
+            
+            // Categorize the appointment based on years of service
+            if ($yearsOfService >= 10) {
+                $tenYearsPlus->push($appt);
+                \Log::info("Added {$appt->first_name} {$appt->last_name} to 10+ Years group");
+            } elseif ($yearsOfService >= 5) {
+                $fiveToNineYears->push($appt);
+                \Log::info("Added {$appt->first_name} {$appt->last_name} to 5-9 Years group");
+            } else {
+                $belowFiveYears->push($appt);
+                \Log::info("Added {$appt->first_name} {$appt->last_name} to Below 5 Years group");
+            }
+        }
+        
+        // Debug counts
+        \Log::info('10+ Years count: ' . $tenYearsPlus->count());
+        \Log::info('5-9 Years count: ' . $fiveToNineYears->count());
+        \Log::info('Below 5 Years count: ' . $belowFiveYears->count());
+        
+        // Create the service groups array
         $serviceGroups = [
-            '10 Years+' => $appointments->filter(fn($a) => $a->years_of_service >= 10),
-            '5-9 Years' => $appointments->filter(fn($a) => $a->years_of_service >= 5 && $a->years_of_service < 10),
-            'Below 5 Years' => $appointments->filter(fn($a) => $a->years_of_service < 5),
+            '10 Years+' => $tenYearsPlus,
+            '5-9 Years' => $fiveToNineYears,
+            'Below 5 Years' => $belowFiveYears,
         ];
 
         // --- Custom: Employees who have made requests ---
         $requestedEmployeeIds = RecordPurpose::distinct()->pluck('employee_id');
-        $employeesWithRequests = $appointmentQuery->whereIn('id', $requestedEmployeeIds)->get();
+        
+        // Check if item_no column exists in record_purposes table
+        $itemNoExists = Schema::hasColumn('record_purposes', 'item_no');
+        $requestedItemNos = collect();
+        
+        if ($itemNoExists) {
+            $requestedItemNos = RecordPurpose::whereNotNull('item_no')->distinct()->pluck('item_no');
+        }
+        
+        $employeesWithRequests = $appointmentQuery
+            ->where(function($query) use ($requestedEmployeeIds, $requestedItemNos, $itemNoExists) {
+                $query->whereIn('id', $requestedEmployeeIds);
+                if ($itemNoExists && $requestedItemNos->count() > 0) {
+                    $query->orWhereIn('item_no', $requestedItemNos);
+                }
+            })
+            ->get();
 
         // Fetch recent completed record purposes with strict filtering
         $recentCompletedPurposes = RecordPurpose::with(['employee' => function($query) use ($selectedAppointmentType) {
-                $query->select('id', 'first_name', 'last_name');
+                $query->select('id', 'first_name', 'last_name', 'item_no');
                 if ($selectedAppointmentType) {
                     $query->where('appointment_type', $selectedAppointmentType);
                 }

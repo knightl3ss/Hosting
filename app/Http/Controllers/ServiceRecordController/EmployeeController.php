@@ -21,8 +21,7 @@ class EmployeeController extends Controller
 
         // Map each appointment to include the latest update time (from either appointment or service record)
         $employees = $appointments->map(function($employee) {
-            $latestServiceRecord = DB::table('service_records')
-                ->where('employee_id', $employee->id)
+            $latestServiceRecord = ServiceRecord::where('employee_id', $employee->id)
                 ->orderBy('updated_at', 'desc')
                 ->first();
 

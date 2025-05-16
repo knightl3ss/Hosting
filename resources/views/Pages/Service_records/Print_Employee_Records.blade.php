@@ -7,6 +7,24 @@
 </head>
 <body>
     
+@php
+    $typeLabels = config('appointment_types');
+    $salaryPer = 'Annum';
+    $salaryDivisor = 1;
+    if (count($serviceRecords) > 0) {
+        $latest = $serviceRecords->last();
+        if (isset($latest->payment_frequency)) {
+            if (strtolower($latest->payment_frequency) === 'monthly') {
+                $salaryPer = 'Monthly';
+                $salaryDivisor = 12;
+            } elseif (strtolower($latest->payment_frequency) === 'daily') {
+                $salaryPer = 'Daily';
+                $salaryDivisor = 365;
+            }
+        }
+    }
+@endphp
+
 <div class="card-body p-0">
 <div class="action-buttons no-print">
     <button class="btn btn-print" onclick="window.print()">Print this page</button>
@@ -79,18 +97,7 @@
                                 <th colspan="2">Inclusive Dates</th>
                                 <th>Designation</th>
                                 <th>Status Salary</th>
-                                <th>Salary Per 
-                                    @php
-                                        $jobOrderRecord = $serviceRecords->first(function($record) {
-                                            return in_array(strtolower($record->status ?? ''), ['job_order', 'joborder', 'job order']);
-                                        });
-                                    @endphp
-                                    @if($jobOrderRecord)
-                                        Daily
-                                    @else
-                                        Annum
-                                    @endif
-                                </th>
+                                <th>Salary Per {{ $salaryPer }}</th>
                                 <th>Station Place</th>
                                 <th colspan="2">Branch</th>
                                 <th>Without Pay</th>
@@ -111,11 +118,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(isset($record->status) && isset($hasJobOrder) && $hasJobOrder)
-                                            {{ number_format($record->salary / 365, 2) }}
-                                        @else
-                                            {{ number_format($record->salary, 2) }}
-                                        @endif
+                                        ₱{{ isset($record->salary) ? number_format((float)$record->salary, 2) : '0.00' }}
                                     </td>
                                     <td colspan="4" style="border: 1px solid black;">{{ $record->station }}{{ !empty($record->branch) ? ', '.$record->branch : '' }}{{ !empty($record->location) ? ', '.$record->location : '' }}{{ !empty($record->lwop) ? ', '.$record->lwop : '' }}</td>
                                     <td>{{ $record->separation_date}}</td>
@@ -125,7 +128,7 @@
                             <tr>
                                 <td colspan="11" class="text">No service records found</td>
                             </tr>
-                            @endif
+                            @endif  
                             <tr>
                                 <th colspan="11" class="text">*** Nothing follow ***</th>
                             </tr>
@@ -170,7 +173,7 @@
     </div>  
    
 </body>
-@php $typeLabels = config('appointment_types'); @endphp
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const toggleButton = document.getElementById('toggle-alternate-signatory');
