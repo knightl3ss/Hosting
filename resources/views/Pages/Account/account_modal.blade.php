@@ -235,7 +235,7 @@
                 <h5 class="modal-title" id="editAccountModalLabel">Edit Admin Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('update_account', $user->id ?? '') }}" method="POST" id="editAccountForm">
+            <form action="#" method="POST" id="editAccountForm">
                 @csrf
                 @method('PUT')
                 @if ($errors->any())
@@ -252,7 +252,7 @@
                     <div class="row ">
                         <div class="col-md-3 mb-2">
                             <label class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="first_name" id="edit_first_name" pattern="[A-Za-z\s]+" title="Please enter alphabets only" maxlength="50" value="{{ old('first_name', $user->first_name ?? '') }}">
+                            <input type="text" class="form-control" name="first_name" id="edit_first_name" pattern="[A-Za-z\s]+" title="Please enter alphabets only" maxlength="50">
                             @error('first_name')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -263,7 +263,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Middle Name</label>
-                            <input type="text" class="form-control" name="middle_name" id="edit_middle_name" value="{{ $user->middle_name ?? '' }}">
+                            <input type="text" class="form-control" name="middle_name" id="edit_middle_name">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -271,7 +271,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" id="edit_last_name" value="{{ $user->last_name ?? '' }}">
+                            <input type="text" class="form-control" name="last_name" id="edit_last_name">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -279,7 +279,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Extension Name</label>
-                            <input type="text" class="form-control" id="edit_extension_name" name="extension_name" value="{{ $user->extension_name ?? '' }}">
+                            <input type="text" class="form-control" id="edit_extension_name" name="extension_name">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -289,7 +289,7 @@
                     <div class="row">
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Age</label>
-                            <input type="number" class="form-control" name="age" id="edit_age" min="18" max="100" value="{{ $user->age ?? '' }}" data-validation="age" data-related="birthday">
+                            <input type="number" class="form-control" name="age" id="edit_age" min="18" max="100" data-validation="age" data-related="birthday">
                             <div class="invalid-feedback"></div>
                             @error('age')
                                 <div class="text-danger">{{ $message }}</div>
@@ -297,7 +297,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Birthday</label>
-                            <input type="date" class="form-control" name="birthday" id="edit_birthday" value="{{ $user->birthday ?? '' }}" max="{{ date('Y-m-d', strtotime('-18 years')) }}" data-validation="birthday" data-related="age">
+                            <input type="date" class="form-control" name="birthday" id="edit_birthday" max="{{ date('Y-m-d', strtotime('-18 years')) }}" data-validation="birthday" data-related="age">
                             <div class="invalid-feedback"></div>
                             @error('birthday')
                                 <div class="text-danger">{{ $message }}</div>
@@ -306,9 +306,9 @@
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Status</label>
                             <select name="status" id="edit_status" class="form-select">
-                                <option value="Active" {{ (isset($user) && $user->status == 'Active') ? 'selected' : '' }}>Active</option>
-                                <option value="Pending" {{ (isset($user) && $user->status == 'Pending') ? 'selected' : '' }}>Pending</option>
-                                <option value="Blocked" {{ (isset($user) && $user->status == 'Blocked') ? 'selected' : '' }}>Blocked</option>
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Blocked">Blocked</option>
                             </select>
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
@@ -318,9 +318,9 @@
                         <div class="col-md-3 mb-2">
                             <label class="form-label">Gender Identity</label>
                             <select name="gender" id="edit_gender" class="form-select">
-                                <option value="male" {{ (isset($user) && $user->gender == 'male') ? 'selected' : '' }}>Male</option>
-                                <option value="female" {{ (isset($user) && $user->gender == 'female') ? 'selected' : '' }}>Female</option>
-                                <option value="other" {{ (isset($user) && $user->gender == 'other') ? 'selected' : '' }}>Other</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
                             </select>
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
@@ -334,7 +334,7 @@
                         <h6 class="section-header">Address Information</h6>
                         <div class="col-md-3 mb-2">
                             <label for="edit_address_street" class="form-label">Street Address</label>
-                            <input type="text" class="form-control address-input" id="edit_address_street" name="address_street" value="{{ $user->address_street ?? '' }}" maxlength="100">
+                            <input type="text" class="form-control address-input" id="edit_address_street" name="address_street" maxlength="100">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -342,7 +342,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="edit_address_city" class="form-label">Municipality</label>
-                            <input type="text" class="form-control address-input" id="edit_address_city" name="address_city" value="{{ $user->address_city ?? '' }}" maxlength="50">
+                            <input type="text" class="form-control address-input" id="edit_address_city" name="address_city" maxlength="50">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -350,7 +350,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="edit_address_state" class="form-label">Province</label>
-                            <input type="text" class="form-control address-input" id="edit_address_state" name="address_state" value="{{ $user->address_state ?? '' }}" maxlength="50">
+                            <input type="text" class="form-control address-input" id="edit_address_state" name="address_state" maxlength="50">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -358,7 +358,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="edit_address_postal_code" class="form-label">Postal Code</label>
-                            <input type="text" class="form-control address-input" id="edit_address_postal_code" name="address_postal_code" value="{{ $user->address_postal_code ?? '' }}" maxlength="10">
+                            <input type="text" class="form-control address-input" id="edit_address_postal_code" name="address_postal_code" maxlength="10">
                             <div class="invalid-feedback"></div>
                             @error('$field_name')
                                 <div class="text-danger">{{ $message }}</div>
@@ -372,7 +372,7 @@
                         <div class="col-md-3 mb-2">
                             <label for="edit_employee_id" class="form-label">Employee ID</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="edit_employee_id" name="employee_id" value="{{ $user->employee_id ?? '' }}" readonly data-validation="employee_id" data-original-value="{{ $user->employee_id ?? '' }}">
+                                <input type="text" class="form-control" id="edit_employee_id" name="employee_id" readonly data-validation="employee_id" data-original-value="">
                                 <button type="button" class="btn btn-outline-secondary" onclick="toggleEditField('edit_employee_id')">Edit</button>
                             </div>
                             <div class="invalid-feedback"></div>
@@ -384,7 +384,7 @@
                         <div class="col-md-3 mb-2">
                             <label for="edit_username" class="form-label">Username</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="edit_username" name="username" value="{{ $user->username ?? '' }}" maxlength="255" readonly data-validation="username" data-original-value="{{ $user->username ?? '' }}">
+                                <input type="text" class="form-control" id="edit_username" name="username" readonly data-validation="username" data-original-value="">
                                 <button type="button" class="btn btn-outline-secondary" onclick="toggleEditField('edit_username')">Edit</button>
                             </div>
                             <div class="invalid-feedback"></div>
@@ -396,7 +396,7 @@
                         <div class="col-md-3 mb-2">
                             <label for="edit_email" class="form-label">Email</label>
                             <div class="input-group">
-                                <input type="email" class="form-control" id="edit_email" name="email" value="{{ $user->email ?? '' }}" maxlength="100" readonly data-validation="email" data-original-value="{{ $user->email ?? '' }}">
+                                <input type="email" class="form-control" id="edit_email" name="email" readonly data-validation="email" data-original-value="">
                                 <button type="button" class="btn btn-outline-secondary" onclick="toggleEditField('edit_email')">Edit</button>
                             </div>
                             <div class="invalid-feedback"></div>
@@ -407,7 +407,7 @@
                         </div>
                         <div class="col-md-3 mb-2">
                             <label for="edit_phone_number" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" value="{{ $user->phone_number ?? '' }}" maxlength="15" data-validation="phone_number">
+                            <input type="tel" class="form-control" id="edit_phone_number" name="phone_number" data-validation="phone_number">
                             <div class="invalid-feedback"></div>
                             <small class="text-muted">Enter a valid Philippine mobile number (09171234567)</small>
                             @error('phone_number')
@@ -463,8 +463,8 @@
                     <div class="bg-white border border-3 border-primary rounded-circle mb-3 d-flex align-items-center justify-content-center" style="width:110px;height:110px; box-shadow: 0 0 15px #0d6efd33;">
                         <i class="fas fa-user fa-5x text-primary"></i>
                     </div>
-                    <h6 class="fw-bold mb-1" style="font-size:1.3rem;">{{ $user->first_name }} {{ $user->last_name }}</h6>
-                    <span class="badge bg-gradient fw-bold fs-6" style="background: linear-gradient(90deg, #6f42c1 40%, #0d6efd 100%); color:black;" >{{ ucfirst($user->role) }}</span>
+                    <h6 class="fw-bold mb-1" style="font-size:1.3rem;" id="viewModalFullName">User Name</h6>
+                    <span class="badge bg-gradient fw-bold fs-6" style="background: linear-gradient(90deg, #6f42c1 40%, #0d6efd 100%); color:black;" id="viewModalRole">Role</span>
                 </div>
                 <hr class="my-4">
                 <div class="row g-4">
@@ -473,48 +473,37 @@
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Employee ID:</span><br>
-                                    <span>{{ $user->employee_id }}</span>
+                                    <span id="viewModalEmployeeId"></span>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Full Name:</span><br>
-                                    <span>{{ $user->first_name }} {{ $user->middle_name }} {{ $user->last_name }} {{ $user->extension_name }}</span>
+                                    <span id="viewModalFullNameDetails"></span>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Username:</span><br>
-                                    <span>{{ $user->username }}</span>
+                                    <span id="viewModalUsername"></span>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Email:</span><br>
-                                    <span>{{ $user->email }}</span>
+                                    <span id="viewModalEmail"></span>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Phone Number:</span><br>
-                                    <span>{{ $user->phone_number }}</span>
+                                    <span id="viewModalPhone"></span>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Role:</span><br>
-                                    <span class="badge bg-info text-dark"><i class="fas fa-user-tag me-1"></i>{{ ucfirst($user->role) }}</span>
+                                    <span class="badge bg-info text-dark" id="viewModalRoleBadge"><i class="fas fa-user-tag me-1"></i>Admin</span>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <div class="col-md-6 mb-2">
                                     <span class="text-secondary fw-semibold">Status:</span><br>
-                                    <span class="badge d-inline-flex align-items-center
-                                        @if($user->status == 'active') bg-success 
-                                        @elseif($user->status == 'pending') bg-warning text-dark
-                                        @else bg-danger 
-                                        @endif">
-                                        @if($user->status == 'Active')
-                                            <i class="fas fa-check-circle me-1"></i>Active
-                                        @elseif($user->status == 'Pending')
-                                            <i class="fas fa-hourglass-half me-1"></i>Pending
-                                        @else
-                                            <i class="fas fa-times-circle me-1"></i>Inactive
-                                        @endif
+                                    <span class="badge d-inline-flex align-items-center" id="viewModalStatus">
                                     </span>
                                 </div>
                             </div>
@@ -538,7 +527,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('delete_account', '') }}" method="POST" id="deleteAccountForm">
+                <form action="#" method="POST" id="deleteAccountForm">
                     @csrf
                     {{-- Using POST method as required by the route --}}
                     <div class="text-center mb-4">
@@ -862,4 +851,61 @@ function toggleEditField(fieldId) {
     // Focus the input
     input.focus();
 }
+</script>
+
+<!-- Modal for viewing user data JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle view account modal display
+    const viewModal = document.getElementById('viewAccountModal');
+    if (viewModal) {
+        viewModal.addEventListener('show.bs.modal', function(event) {
+            // Get the button that triggered the modal
+            const button = event.relatedTarget;
+            
+            // Extract data from data attributes
+            const userId = button.getAttribute('data-user-id');
+            const firstName = button.getAttribute('data-first-name');
+            const middleName = button.getAttribute('data-middle-name') || '';
+            const lastName = button.getAttribute('data-last-name');
+            const extensionName = button.getAttribute('data-extension-name') || '';
+            const username = button.getAttribute('data-username');
+            const email = button.getAttribute('data-email');
+            const phoneNumber = button.getAttribute('data-phone-number') || 'Not provided';
+            const role = button.getAttribute('data-role');
+            const status = button.getAttribute('data-status');
+            const employeeId = button.getAttribute('data-employee-id') || 'Not assigned';
+            
+            // Update modal content
+            document.getElementById('viewModalFullName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('viewModalRole').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+            document.getElementById('viewModalEmployeeId').textContent = employeeId;
+            document.getElementById('viewModalFullNameDetails').textContent = `${firstName} ${middleName} ${lastName} ${extensionName}`.replace(/\s+/g, ' ').trim();
+            document.getElementById('viewModalUsername').textContent = username;
+            document.getElementById('viewModalEmail').textContent = email;
+            document.getElementById('viewModalPhone').textContent = phoneNumber;
+            document.getElementById('viewModalRoleBadge').innerHTML = `<i class="fas fa-user-tag me-1"></i>${role.charAt(0).toUpperCase() + role.slice(1)}`;
+            
+            // Status badge
+            const statusBadge = document.getElementById('viewModalStatus');
+            let statusClass = 'bg-secondary';
+            let statusIcon = 'fa-question-circle';
+            let statusText = status;
+            
+            if (status === 'Active') {
+                statusClass = 'bg-success';
+                statusIcon = 'fa-check-circle';
+            } else if (status === 'Pending') {
+                statusClass = 'bg-warning text-dark';
+                statusIcon = 'fa-hourglass-half';
+            } else if (status === 'Blocked') {
+                statusClass = 'bg-danger';
+                statusIcon = 'fa-times-circle';
+            }
+            
+            statusBadge.className = `badge d-inline-flex align-items-center ${statusClass}`;
+            statusBadge.innerHTML = `<i class="fas ${statusIcon} me-1"></i>${status}`;
+        });
+    }
+});
 </script>

@@ -89,14 +89,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#viewAccountModal"
                                         data-user-id="{{ $user->id }}"
-                                        data-first_name="{{ $user->first_name }}"
-                                        data-middle_name="{{ $user->middle_name }}"
-                                        data-last_name="{{ $user->last_name }}"
-                                        data-extension_name="{{ $user->extension_name }}"
-                                        data-employee_id="{{ $user->employee_id }}"
+                                        data-first-name="{{ $user->first_name }}"
+                                        data-middle-name="{{ $user->middle_name }}"
+                                        data-last-name="{{ $user->last_name }}"
+                                        data-extension-name="{{ $user->extension_name }}"
+                                        data-employee-id="{{ $user->employee_id }}"
                                         data-username="{{ $user->username }}"
                                         data-email="{{ $user->email }}"
-                                        data-phone_number="{{ $user->phone_number }}"
+                                        data-phone-number="{{ $user->phone_number }}"
                                         data-role="{{ $user->role }}"
                                         data-status="{{ $user->status }}"
                                     >
@@ -197,14 +197,26 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit_address_city').value = this.dataset.address_city || '';
             document.getElementById('edit_address_state').value = this.dataset.address_state || '';
             document.getElementById('edit_address_postal_code').value = this.dataset.address_postal_code || '';
-            document.getElementById('edit_employee_id').value = this.dataset.employee_id || '';
-            document.getElementById('edit_username').value = this.dataset.username || '';
-            document.getElementById('edit_email').value = this.dataset.email || '';
+            
+            // Set value and original value for fields that can be toggled for editing
+            const employeeIdField = document.getElementById('edit_employee_id');
+            employeeIdField.value = this.dataset.employee_id || '';
+            employeeIdField.setAttribute('data-original-value', this.dataset.employee_id || '');
+            
+            const usernameField = document.getElementById('edit_username');
+            usernameField.value = this.dataset.username || '';
+            usernameField.setAttribute('data-original-value', this.dataset.username || '');
+            
+            const emailField = document.getElementById('edit_email');
+            emailField.value = this.dataset.email || '';
+            emailField.setAttribute('data-original-value', this.dataset.email || '');
+            
             document.getElementById('edit_phone_number').value = this.dataset.phone_number || '';
-            document.getElementById('edit_role').value = this.dataset.role || '';
+            
             // Update form action with correct user id
             const form = document.getElementById('editAccountForm');
             form.action = `/update_account/${this.dataset.userId}`;
+            
             // Clear password fields
             document.getElementById('edit_password').value = '';
             document.getElementById('edit_password_confirmation').value = '';
@@ -241,6 +253,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 confirmUsernameInput.dataset.usernameToMatch = username;
             }
         });
+    });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+    $('#adminTable').DataTable({
+        "order": [], // Disable initial sorting
+        "responsive": true,
+        "language": {
+            "search": "_INPUT_",
+            "searchPlaceholder": "Search accounts...",
+            "lengthMenu": "Show _MENU_ entries",
+            "info": "Showing _START_ to _END_ of _TOTAL_ accounts",
+            "infoEmpty": "Showing 0 to 0 of 0 accounts",
+            "infoFiltered": "(filtered from _MAX_ total accounts)"
+        },
+        "columnDefs": [
+            { "orderable": false, "targets": [7] } // Disable sorting on actions column
+        ]
     });
 });
 </script>
