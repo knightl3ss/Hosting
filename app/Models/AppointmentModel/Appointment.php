@@ -56,6 +56,19 @@ class Appointment extends Model
     ];
     
     /**
+     * Explicitly set the rate_per_day attribute to ensure it's a string.
+     * This helps prevent PostgreSQL from trying to cast it to numeric.
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function setRatePerDayAttribute($value)
+    {
+        // Force the value to be a string to prevent numeric conversion in PostgreSQL
+        $this->attributes['rate_per_day'] = (string)$value;
+    }
+    
+    /**
      * Get the user's full name.
      *
      * @return string
