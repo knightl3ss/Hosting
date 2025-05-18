@@ -87,6 +87,7 @@
                                 <option value="transfer">Transfer</option>
                                 <option value="retirement">Retirement</option>
                                 <option value="loan">Loan Application</option>
+                                <option value="certificate">Certificate of Employment</option>
                                 <option value="other">Other Purpose</option>
                             </select>
                             <div class="form-text mt-2">
